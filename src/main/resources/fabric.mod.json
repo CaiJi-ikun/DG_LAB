@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "dg_lab",
+  "version": "${version}",
+  "name": "DG_LAB",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/dg_lab/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "buzz.kbpf.dg_lab.client.Dg_labClient"
+    ],
+    "main": [
+      "buzz.kbpf.dg_lab.Dg_lab"
+    ]
+  },
+  "mixins": [
+    "dg_lab.mixins.json",
+    {
+      "config": "dg_lab.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

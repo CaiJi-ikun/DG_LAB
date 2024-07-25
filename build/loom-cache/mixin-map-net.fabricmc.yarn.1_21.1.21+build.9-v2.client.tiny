@@ -1,0 +1,3 @@
+v1	named	intermediary
+METHOD	buzz/kbpf/dg_lab/mixin/ClientPlayerEntityMixin	(F)V	heal	method_6025
+METHOD	buzz/kbpf/dg_lab/mixin/tick	()V	tick	method_1574
