@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jcraft:jorbis:0.0.17" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.jcraft" artifactId="jorbis" version="0.0.17" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jcraft/jorbis/0.0.17/8872d22b293e8f5d7d56ff92be966e6dc28ebdc6/jorbis-0.0.17.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jcraft/jorbis/0.0.17/7a1521e64d41aef939c1d0421455f6ac77afadeb/jorbis-0.0.17-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jcraft/jorbis/0.0.17/5446be5d62e4c6b347c8e6cd28dc00a936417ba2/jorbis-0.0.17-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

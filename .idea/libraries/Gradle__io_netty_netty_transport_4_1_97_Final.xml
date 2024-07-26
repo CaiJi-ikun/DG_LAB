@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Gradle: io.netty:netty-transport:4.1.97.Final" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="io.netty" artifactId="netty-transport" version="4.1.97.Final" />
+    <ANNOTATIONS>
+      <root url="jar://$APPLICATION_PLUGINS_DIR$/Minecraft Development/lib/resources/externalAnnotations.jar!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport/4.1.97.Final/f37380d23c9bb079bc702910833b2fd532c9abd0/netty-transport-4.1.97.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport/4.1.97.Final/7570a3c29ed618a3aefabc0aaf6fb33f73e30511/netty-transport-4.1.97.Final-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport/4.1.97.Final/80452a42374b6c4e1a3596ce09f337b4ff4f4efb/netty-transport-4.1.97.Final-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -35,7 +35,7 @@ public class StrengthConfig {
         if (!file.exists()) {
             return new StrengthConfig(3, 3, 5, 5, 1, 1, 50, 50); // 默认的对象，可以根据需求初始化
         }
-        try (Reader reader = new FileReader("config/dg-lab/config.json")) {
+        try (Reader reader = new FileReader("config/dg-lab/StrengthConfig.json")) {
             return gson.fromJson(reader, StrengthConfig.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

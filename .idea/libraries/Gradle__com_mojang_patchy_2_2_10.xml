@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: com.mojang:patchy:2.2.10" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.mojang" artifactId="patchy" version="2.2.10" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mojang/patchy/2.2.10/da05971b07cbb379d002cf7eaec6a2048211fefc/patchy-2.2.10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

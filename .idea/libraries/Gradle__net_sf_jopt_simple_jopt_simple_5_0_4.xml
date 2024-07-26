@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: net.sf.jopt-simple:jopt-simple:5.0.4" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.sf.jopt-simple" artifactId="jopt-simple" version="5.0.4" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.jopt-simple/jopt-simple/5.0.4/4fdac2fbe92dfad86aa6e9301736f6b4342a3f5c/jopt-simple-5.0.4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.jopt-simple/jopt-simple/5.0.4/28ec088adeaedff5f9310ef29db91a90de14c392/jopt-simple-5.0.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.jopt-simple/jopt-simple/5.0.4/950831646d014c9162999019a3cb17d5fc01ac0d/jopt-simple-5.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

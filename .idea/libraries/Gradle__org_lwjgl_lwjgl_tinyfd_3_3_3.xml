@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: org.lwjgl:lwjgl-tinyfd:3.3.3" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.lwjgl" artifactId="lwjgl-tinyfd" version="3.3.3" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-tinyfd/3.3.3/82d755ca94b102e9ca77283b9e2dc46d1b15fbe5/lwjgl-tinyfd-3.3.3.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-tinyfd/3.3.3/9b446948c8803e6212fd9f740d00fe89e697542f/lwjgl-tinyfd-3.3.3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.lwjgl/lwjgl-tinyfd/3.3.3/dcda55223f2f940654d222bf4371baa969c60bb9/lwjgl-tinyfd-3.3.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

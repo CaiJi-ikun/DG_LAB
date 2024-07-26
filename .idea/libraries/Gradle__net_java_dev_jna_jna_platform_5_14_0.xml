@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: net.java.dev.jna:jna-platform:5.14.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.java.dev.jna" artifactId="jna-platform" version="5.14.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna-platform/5.14.0/28934d48aed814f11e4c584da55c49fa7032b31b/jna-platform-5.14.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna-platform/5.14.0/c9f0e80b1036a3f4b5c8ed5c90394070815d1c85/jna-platform-5.14.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna-platform/5.14.0/cefe3d258159eb44f4369ff5d8e12602a340bd15/jna-platform-5.14.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

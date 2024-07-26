@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Gradle: io.netty:netty-buffer:4.1.97.Final" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="io.netty" artifactId="netty-buffer" version="4.1.97.Final" />
+    <ANNOTATIONS>
+      <root url="jar://$APPLICATION_PLUGINS_DIR$/Minecraft Development/lib/resources/externalAnnotations.jar!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-buffer/4.1.97.Final/f8f3d8644afa5e6e1a40a3a6aeb9d9aa970ecb4f/netty-buffer-4.1.97.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-buffer/4.1.97.Final/2246afa3a94c57d7b150cc0e101012e6b2fb058b/netty-buffer-4.1.97.Final-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-buffer/4.1.97.Final/5d2c3a0c097b4fd07fe87c35ad6ad125a683cf05/netty-buffer-4.1.97.Final-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

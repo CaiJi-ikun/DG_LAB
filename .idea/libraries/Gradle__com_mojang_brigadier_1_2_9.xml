@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.mojang:brigadier:1.2.9" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.mojang" artifactId="brigadier" version="1.2.9" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mojang/brigadier/1.2.9/73e324f2ee541493a5179abf367237faa782ed21/brigadier-1.2.9.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mojang/brigadier/1.2.9/b81375eb6ee3fccbda1841a5620a61798655beb/brigadier-1.2.9-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

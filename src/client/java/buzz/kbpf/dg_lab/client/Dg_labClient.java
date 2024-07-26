@@ -13,6 +13,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.minecraft.text.Text;
 
+
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
@@ -25,6 +26,7 @@ public class Dg_labClient implements ClientModInitializer {
     private static final webSocketServer webSocketServer = new webSocketServer(new InetSocketAddress(9999));
     private static StrengthConfig StrengthConfig = new StrengthConfig();
     private static ModConfig modConfig = new ModConfig();
+//    private static KeyBinding keyBinding;
 
     @Override
     public void onInitializeClient() {
@@ -32,11 +34,26 @@ public class Dg_labClient implements ClientModInitializer {
         StrengthConfig = buzz.kbpf.dg_lab.client.entity.StrengthConfig.loadJson();
         modConfig = ModConfig.loadJson();
 
+//        keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+//                "key.examplemod.spook", // The translation key of the keybinding's name
+//                InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
+//                GLFW.GLFW_KEY_R, // The keycode of the key
+//                "category.examplemod.test" // The translation key of the keybinding's category.
+//        ));
+
+//        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+//            while (keyBinding.wasPressed()) {
+//                client.player.sendMessage(Text.literal("Key 1 was pressed!"), false);
+//            }
+//        });
+
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(literal("dglab")
                 .executes(context -> {
                             context.getSource().sendFeedback(Text.literal("此mod还在测试版"));
-                            context.getSource().sendFeedback(Text.literal("需使用请用/dglab startWebSocketServer开启连接服务器"));
-                            context.getSource().sendFeedback(Text.literal("然后使用/dglab createQR创建二维码"));
+                            context.getSource().sendFeedback(Text.literal("需使用请用/dglab createQR创建二维码"));
+                            context.getSource().sendFeedback(Text.literal("config配置强度设置"));
+                            context.getSource().sendFeedback(Text.literal("WebSocketServer配置连接服务器设置"));
+                            context.getSource().sendFeedback(Text.literal("设置自动保存"));
                             return 1;
                         }
                 )
@@ -140,7 +157,6 @@ public class Dg_labClient implements ClientModInitializer {
                                 )
                         )
                 )
-                .then(literal("abc").executes(context -> {webSocketServer.sendDgFrequency(3, false, 1); return 1;}))
         ));
 
         if(modConfig.getAutoStartWebSocketServer()) webSocketServer.start();
@@ -152,7 +168,7 @@ public class Dg_labClient implements ClientModInitializer {
         return webSocketServer;
     }
 
-    public static StrengthConfig getconfig() {
+    public static StrengthConfig getConfig() {
         return StrengthConfig;
     }
 
