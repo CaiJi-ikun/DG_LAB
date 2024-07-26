@@ -58,10 +58,7 @@ public class Dg_labClient implements ClientModInitializer {
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(literal("dglab")
                 .executes(context -> {
                             context.getSource().sendFeedback(Text.literal("此mod还在测试版"));
-                            context.getSource().sendFeedback(Text.literal("需使用请用/dglab createQR创建二维码"));
-                            context.getSource().sendFeedback(Text.literal("config配置强度设置"));
-                            context.getSource().sendFeedback(Text.literal("WebSocketServer配置连接服务器设置"));
-                            context.getSource().sendFeedback(Text.literal("设置自动保存"));
+                            context.getSource().sendFeedback(Text.literal("默认使用按键O打开配置页面"));
                             return 1;
                         }
                 )
@@ -176,10 +173,10 @@ public class Dg_labClient implements ClientModInitializer {
         return webSocketServer;
     }
 
-    public static StrengthConfig getConfig() {
+    public static StrengthConfig getStrengthConfig() {
         return StrengthConfig;
     }
 
-    public static void setConfig(StrengthConfig StrengthConfig) {Dg_labClient.StrengthConfig = StrengthConfig;}
-    public static void saveConfig(){Dg_labClient.StrengthConfig.savaFile();}
+    public static ModConfig getModConfig(){return modConfig;}
+
 }

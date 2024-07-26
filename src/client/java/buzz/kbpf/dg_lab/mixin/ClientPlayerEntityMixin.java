@@ -37,7 +37,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
 
             webSocketServer server = Dg_labClient.getServer();
-            StrengthConfig StrengthConfig = Dg_labClient.getConfig();
+            StrengthConfig StrengthConfig = Dg_labClient.getStrengthConfig();
             if (server != null && server.getConnected() && accessor1.getHealthInitialized()) {
                 float damage = this.getHealth() - health;
                 System.out.println("hurt" + damage + " " + this.getHealth() + " " + health);

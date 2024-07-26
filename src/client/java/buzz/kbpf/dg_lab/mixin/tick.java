@@ -46,7 +46,7 @@ public abstract class tick {
     public void onTick(CallbackInfo info) {
 
 
-        StrengthConfig StrengthConfig = Dg_labClient.getConfig(); // 获取配置对象
+        StrengthConfig StrengthConfig = Dg_labClient.getStrengthConfig(); // 获取配置对象
         webSocketServer server = Dg_labClient.getServer(); // 获取WebSocket服务器对象
         DGStrength dgStrength = server.getStrength(); // 获取DGStrength对象
         int ADelayTime = dgStrength.getADelayTime(), BDelayTime = dgStrength.getBDelayTime(); // 获取A和B的延迟时间

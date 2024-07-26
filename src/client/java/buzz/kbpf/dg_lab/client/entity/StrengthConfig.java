@@ -71,7 +71,7 @@ public class StrengthConfig {
     }
 
     public void setADownValue(int ADownValue) {
-        this.ADownValue = ADownValue;
+        this.ADownValue = Math.max(ADownValue, 0);
     }
 
     public int getBDownValue() {
@@ -79,7 +79,7 @@ public class StrengthConfig {
     }
 
     public void setBDownValue(int BDownValue) {
-        this.BDownValue = BDownValue;
+        this.BDownValue = Math.max(BDownValue, 0);
     }
 
     public int getADelayTime() {
@@ -87,7 +87,7 @@ public class StrengthConfig {
     }
 
     public void setADelayTime(int ADelayTime) {
-        this.ADelayTime = ADelayTime;
+        this.ADelayTime = Math.max(ADelayTime, 0);
     }
 
     public int getBDelayTime() {
@@ -95,7 +95,7 @@ public class StrengthConfig {
     }
 
     public void setBDelayTime(int BDelayTime) {
-        this.BDelayTime = BDelayTime;
+        this.BDelayTime = Math.max(BDelayTime, 0);
     }
 
     public float getADamageStrength() {
@@ -103,7 +103,8 @@ public class StrengthConfig {
     }
 
     public void setADamageStrength(float ADamageStrength) {
-        this.ADamageStrength = Math.round(ADamageStrength * 100.0f) / 100.0f;
+        if(ADamageStrength <= 0) this.ADamageStrength = 1;
+        else this.ADamageStrength = Math.round(ADamageStrength * 100.0f) / 100.0f;
     }
 
     public float getBDamageStrength() {
@@ -111,7 +112,9 @@ public class StrengthConfig {
     }
 
     public void setBDamageStrength(float BDamageStrength) {
-        this.BDamageStrength = Math.round(BDamageStrength * 100.0f) / 100.0f;
+        if(BDamageStrength <= 0) this.BDamageStrength = 1;
+        else this.BDamageStrength = Math.round(BDamageStrength * 100.0f) / 100.0f;
+
     }
 
     public int getADownTime() {
@@ -119,7 +122,7 @@ public class StrengthConfig {
     }
 
     public void setADownTime(int ADownTime) {
-        this.ADownTime = ADownTime;
+        this.ADownTime = Math.max(ADownTime, 1);
     }
 
     public int getBDownTime() {
@@ -127,6 +130,6 @@ public class StrengthConfig {
     }
 
     public void setBDownTime(int BDownTime) {
-        this.BDownTime = BDownTime;
+        this.BDownTime = Math.max(BDownTime, 1);
     }
 }

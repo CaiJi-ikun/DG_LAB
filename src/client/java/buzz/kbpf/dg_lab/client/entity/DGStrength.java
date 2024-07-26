@@ -22,7 +22,7 @@ public class DGStrength {
     }
 
     public void setADelayTime(int ADelayTime) {
-        this.ADelayTime = ADelayTime;
+        this.ADelayTime = Math.max(ADelayTime, 0);
     }
 
     public int getBDelayTime() {
@@ -30,7 +30,7 @@ public class DGStrength {
     }
 
     public void setBDelayTime(int BDelayTime) {
-        this.BDelayTime = BDelayTime;
+        this.BDelayTime = Math.max(BDelayTime, 0);
     }
 
     public int getAStrength() {
@@ -38,7 +38,7 @@ public class DGStrength {
     }
 
     public void setAStrength(int AStrength) {
-        this.AStrength = AStrength;
+        this.AStrength = Math.max(AStrength, 0);
     }
 
     public int getBStrength() {
@@ -46,7 +46,7 @@ public class DGStrength {
     }
 
     public void setBStrength(int BStrength) {
-        this.BStrength = BStrength;
+        this.BStrength = Math.max(BStrength, 0);
     }
 
     public int getAMaxStrength() {
