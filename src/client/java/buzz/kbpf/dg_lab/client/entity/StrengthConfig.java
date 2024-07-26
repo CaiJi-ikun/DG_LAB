@@ -103,7 +103,7 @@ public class StrengthConfig {
     }
 
     public void setADamageStrength(float ADamageStrength) {
-        this.ADamageStrength = ADamageStrength;
+        this.ADamageStrength = Math.round(ADamageStrength * 100.0f) / 100.0f;
     }
 
     public float getBDamageStrength() {
@@ -111,7 +111,7 @@ public class StrengthConfig {
     }
 
     public void setBDamageStrength(float BDamageStrength) {
-        this.BDamageStrength = BDamageStrength;
+        this.BDamageStrength = Math.round(BDamageStrength * 100.0f) / 100.0f;
     }
 
     public int getADownTime() {

@@ -3,6 +3,7 @@ package buzz.kbpf.dg_lab.client;
 import buzz.kbpf.dg_lab.client.entity.DGStrength;
 import buzz.kbpf.dg_lab.client.entity.ModConfig;
 import buzz.kbpf.dg_lab.client.entity.StrengthConfig;
+import buzz.kbpf.dg_lab.client.screen.ConfigScreen;
 import buzz.kbpf.dg_lab.client.webSocketServer.webSocketServer;
 import buzz.kbpf.dg_lab.client.createQR.ToolQR;
 import com.google.gson.Gson;
@@ -11,7 +12,13 @@ import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
+import org.lwjgl.glfw.GLFW;
 
 
 import java.net.InetAddress;
@@ -26,7 +33,7 @@ public class Dg_labClient implements ClientModInitializer {
     private static final webSocketServer webSocketServer = new webSocketServer(new InetSocketAddress(9999));
     private static StrengthConfig StrengthConfig = new StrengthConfig();
     private static ModConfig modConfig = new ModConfig();
-//    private static KeyBinding keyBinding;
+    private static KeyBinding keyBinding;
 
     @Override
     public void onInitializeClient() {
@@ -34,18 +41,19 @@ public class Dg_labClient implements ClientModInitializer {
         StrengthConfig = buzz.kbpf.dg_lab.client.entity.StrengthConfig.loadJson();
         modConfig = ModConfig.loadJson();
 
-//        keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-//                "key.examplemod.spook", // The translation key of the keybinding's name
-//                InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
-//                GLFW.GLFW_KEY_R, // The keycode of the key
-//                "category.examplemod.test" // The translation key of the keybinding's category.
-//        ));
+        keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.examplemod.spook", // The translation key of the keybinding's name
+                InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
+                GLFW.GLFW_KEY_R, // The keycode of the key
+                "category.examplemod.test" // The translation key of the keybinding's category.
+        ));
 
-//        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-//            while (keyBinding.wasPressed()) {
-//                client.player.sendMessage(Text.literal("Key 1 was pressed!"), false);
-//            }
-//        });
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (keyBinding.wasPressed()) {
+                Screen ConfigScreen = new ConfigScreen();
+                client.setScreen(ConfigScreen);
+            }
+        });
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> dispatcher.register(literal("dglab")
                 .executes(context -> {
@@ -172,7 +180,6 @@ public class Dg_labClient implements ClientModInitializer {
         return StrengthConfig;
     }
 
-    public static void setConfig(StrengthConfig StrengthConfig) {
-        Dg_labClient.StrengthConfig = StrengthConfig;
-    }
+    public static void setConfig(StrengthConfig StrengthConfig) {Dg_labClient.StrengthConfig = StrengthConfig;}
+    public static void saveConfig(){Dg_labClient.StrengthConfig.savaFile();}
 }
