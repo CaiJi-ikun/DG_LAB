@@ -103,7 +103,7 @@
       <recent name="buzz.kbpf.dg_lab.client.entity" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.DG_LAB [runClient]">
+  <component name="RunManager" selected="Gradle.DG_LAB [build]">
     <configuration name="DG_LAB [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -170,9 +170,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.DG_LAB [build]" />
         <item itemvalue="Gradle.DG_LAB [runClient]" />
         <item itemvalue="Gradle.DG_LAB" />
-        <item itemvalue="Gradle.DG_LAB [build]" />
       </list>
     </recent_temporary>
   </component>
