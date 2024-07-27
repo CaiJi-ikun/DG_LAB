@@ -46,7 +46,7 @@ public class ToolQR {
                 ImageIO.write(image, "png", qrCodeFile);
 
 
-                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", qrCodeFile.getAbsolutePath());
+                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", "",  "\"" + qrCodeFile.getAbsolutePath() + "\"");
                 pb.start();
 
 
