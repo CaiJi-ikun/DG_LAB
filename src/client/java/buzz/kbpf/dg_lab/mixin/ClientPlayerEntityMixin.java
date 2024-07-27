@@ -11,6 +11,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -20,7 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 
-    @Shadow public abstract void heal(float amount);
+    @Unique
+    float Dg_labHealth;
 
     public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
         super(world, profile);
@@ -33,28 +35,32 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
 
 
-        if (accessor1.getHealthInitialized()){
+
 
 
             webSocketServer server = Dg_labClient.getServer();
             StrengthConfig StrengthConfig = Dg_labClient.getStrengthConfig();
-            if (server != null && server.getConnected() && accessor1.getHealthInitialized()) {
-                float damage = this.getHealth() - health;
-                System.out.println("hurt" + damage + " " + this.getHealth() + " " + health);
+            if (server != null && server.getConnected() ) {
+                if (accessor1.getHealthInitialized()) {
+                    float damage = Dg_labHealth - health;
+                    System.out.println("hurt" + damage + " " + Dg_labHealth + " " + health);
 
 
-                if (damage > 0.0F) {
-                    server.setDelayTime(StrengthConfig.getADelayTime(), StrengthConfig.getBDelayTime());
-                    server.sendStrengthToClient((int) (damage * StrengthConfig.getADamageStrength()), 1, 1);
-                    server.sendStrengthToClient((int) (damage * StrengthConfig.getBDamageStrength()), 1, 2);
+                    if (damage > 0.0F) {
+                        server.setDelayTime(StrengthConfig.getADelayTime(), StrengthConfig.getBDelayTime());
+                        server.sendStrengthToClient((int) (damage * StrengthConfig.getADamageStrength()), 1, 1);
+                        server.sendStrengthToClient((int) (damage * StrengthConfig.getBDamageStrength()), 1, 2);
+                    }
+                    if (this.getHealth() <= 0) {
+                        DGStrength dgStrength = server.getStrength();
+                        server.sendStrengthToClient((Math.min(dgStrength.getAStrength() + 50, dgStrength.getAMaxStrength())), 2, 1);
+                        server.sendStrengthToClient((Math.min(dgStrength.getBStrength() + 50, dgStrength.getBMaxStrength())), 2, 2);
+                    }
                 }
-                if(this.getHealth() <= 0){
-                    DGStrength dgStrength = server.getStrength();
-                    server.sendStrengthToClient((Math.min(dgStrength.getAStrength() + 50, dgStrength.getAMaxStrength())) , 2, 1);
-                    server.sendStrengthToClient((Math.min(dgStrength.getBStrength() + 50, dgStrength.getBMaxStrength())) , 2, 2);
-                }
+                Dg_labHealth = this.getHealth();
             }
-        }
+
     }
+
 }
 
