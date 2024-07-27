@@ -48,7 +48,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
                     server.sendStrengthToClient((int) (damage * StrengthConfig.getADamageStrength()), 1, 1);
                     server.sendStrengthToClient((int) (damage * StrengthConfig.getBDamageStrength()), 1, 2);
                 }
-                if(this.getHealth() == 0){
+                if(this.getHealth() <= 0){
                     DGStrength dgStrength = server.getStrength();
                     server.sendStrengthToClient((Math.min(dgStrength.getAStrength() + 50, dgStrength.getAMaxStrength())) , 2, 1);
                     server.sendStrengthToClient((Math.min(dgStrength.getBStrength() + 50, dgStrength.getBMaxStrength())) , 2, 2);
