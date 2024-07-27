@@ -93,8 +93,8 @@ public class ConfigScreen extends Screen {
             protected void applyValue() {
                 int tmp = (int) (this.value * 125);
                 if(tmp == 0) tmp = 1;
-                this.setMessage(Text.literal("B强度下降间隔" + tmp * 40 + "ms"));
-                strengthConfig.setBDownTime(tmp);
+                this.setMessage(Text.literal("A强度下降间隔" + tmp * 40 + "ms"));
+                strengthConfig.setADownTime(tmp);
             }
         };
 
