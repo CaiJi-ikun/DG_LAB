@@ -44,7 +44,7 @@ public class Dg_labClient implements ClientModInitializer {
         keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "打开配置界面", // The translation key of the keybinding's name
                 InputUtil.Type.KEYSYM, // The type of the keybinding, KEYSYM for keyboard, MOUSE for mouse.
-                GLFW.GLFW_KEY_R, // The keycode of the key
+                GLFW.GLFW_KEY_O, // The keycode of the key
                 "DG_LAB" // The translation key of the keybinding's category.
         ));
 
@@ -64,7 +64,7 @@ public class Dg_labClient implements ClientModInitializer {
                 )
                 .then(literal("createQR")
                         .executes(context -> {
-                            ToolQR.CreateQR(context);
+                            ToolQR.CreateQR();
                             return 1;
                         }))
                 .then(literal("Strength").then(literal("get")

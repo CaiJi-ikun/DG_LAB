@@ -1,9 +1,7 @@
 package buzz.kbpf.dg_lab.client.createQR;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -14,6 +12,7 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.text.Text;
 
 import javax.imageio.ImageIO;
@@ -23,7 +22,7 @@ public class ToolQR {
     private ToolQR() {
     }
 
-    public static void CreateQR(com.mojang.brigadier.context.CommandContext<net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource> context) {
+    public static void CreateQR() {
         try {
             InetAddress localhost = InetAddress.getLocalHost();
             String ipAddress = localhost.getHostAddress();
@@ -45,22 +44,10 @@ public class ToolQR {
 
                 File qrCodeFile = new File(filePath);
                 ImageIO.write(image, "png", qrCodeFile);
-                context.getSource().sendFeedback(Text.literal("二维码已保存到：" + qrCodeFile.getAbsolutePath()));
 
-                File imageFile = new File("QR.png");
 
-                // 检查 Desktop 类是否支持打开文件
-                if (Desktop.isDesktopSupported()) {
-                    Desktop desktop = Desktop.getDesktop();
-                    try {
-                        // 使用系统默认应用程序打开图片
-                        desktop.open(imageFile);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    System.out.println("Desktop class is not supported on this platform.");
-                }
+                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", qrCodeFile.getAbsolutePath());
+                pb.start();
 
 
             } catch (Exception e) {
@@ -68,7 +55,6 @@ public class ToolQR {
             }
 
         } catch (UnknownHostException e) {
-            context.getSource().sendError(Text.literal("获取本地ip错误"));
         }
 
 

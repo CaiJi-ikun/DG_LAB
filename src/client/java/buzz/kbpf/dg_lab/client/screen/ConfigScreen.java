@@ -1,6 +1,7 @@
 package buzz.kbpf.dg_lab.client.screen;
 
 import buzz.kbpf.dg_lab.client.Dg_labClient;
+import buzz.kbpf.dg_lab.client.createQR.ToolQR;
 import buzz.kbpf.dg_lab.client.entity.ModConfig;
 import buzz.kbpf.dg_lab.client.entity.StrengthConfig;
 import net.fabricmc.api.EnvType;
@@ -10,7 +11,6 @@ import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.text.Text;
-import org.objectweb.asm.tree.analysis.Value;
 
 @Environment(EnvType.CLIENT)
 public class ConfigScreen extends Screen {
@@ -22,6 +22,7 @@ public class ConfigScreen extends Screen {
 
     public ButtonWidget button1;
     public ButtonWidget button2;
+    public ButtonWidget createQR;
 
     public SliderWidget ADamageStrength;
     public SliderWidget BDamageStrength;
@@ -150,6 +151,9 @@ public class ConfigScreen extends Screen {
                 })
                 .dimensions(width / 2 + 5, 20, 200, 20).tooltip(Tooltip.of(Text.literal("要在客户端启动时自动启动连接服务器\n如果关闭需要使用指令手动启动"))).build();
 
+        createQR = ButtonWidget.builder(Text.literal("创建连接二维码并打开"), button -> {
+            ToolQR.CreateQR();
+        }).dimensions(width / 2 - 205, 110, 200, 20).build();
 
 
         addDrawableChild(button1);
@@ -162,5 +166,6 @@ public class ConfigScreen extends Screen {
         addDrawableChild(BDownTime);
         addDrawableChild(ADownValue);
         addDrawableChild(BDownValue);
+        addDrawableChild(createQR);
     }
 }
