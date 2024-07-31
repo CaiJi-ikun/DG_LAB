@@ -47,8 +47,8 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
                     if (damage > 0.0F) {
                         server.setDelayTime(StrengthConfig.getADelayTime(), StrengthConfig.getBDelayTime());
-                        server.sendStrengthToClient((int) (damage * StrengthConfig.getADamageStrength()), 1, 1);
-                        server.sendStrengthToClient((int) (damage * StrengthConfig.getBDamageStrength()), 1, 2);
+                        server.sendStrengthToClient(Math.max(1, ((int) (damage * StrengthConfig.getADamageStrength()))), 1, 1);
+                        server.sendStrengthToClient(Math.max(1, ((int) (damage * StrengthConfig.getBDamageStrength()))), 1, 2);
                     }
                     if (this.getHealth() <= 0) {
                         server.setDelayTime(StrengthConfig.getADeathDelay(), StrengthConfig.getBDeathDelay());
