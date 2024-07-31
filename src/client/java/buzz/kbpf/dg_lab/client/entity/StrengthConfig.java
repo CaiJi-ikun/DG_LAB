@@ -8,7 +8,7 @@ import java.io.*;
 
 public class StrengthConfig {
 
-    private int ADownTime, BDownTime, ADownValue, BDownValue, ADelayTime, BDelayTime;
+    private int ADownTime, BDownTime, ADownValue, BDownValue, ADelayTime, BDelayTime, ADeathStrength, BDeathStrength, ADeathDelay, BDeathDelay;
     private float ADamageStrength, BDamageStrength;
 
 
@@ -63,8 +63,43 @@ public class StrengthConfig {
         this.BDownValue = BDownValue;
         this.ADelayTime = ADelayTime;
         this.BDelayTime = BDelayTime;
+        this.ADeathStrength = 50;
+        this.BDeathStrength = 50;
+        this.ADeathDelay = ADelayTime;
+        this.BDeathDelay = BDelayTime;
     }
 
+    public int getADeathStrength() {
+        return ADeathStrength;
+    }
+
+    public void setADeathStrength(int ADeathStrength) {
+        this.ADeathStrength = Math.max(0, ADeathStrength);
+    }
+
+    public int getBDeathStrength() {
+        return BDeathStrength;
+    }
+
+    public void setBDeathStrength(int BDeathStrength) {
+        this.BDeathStrength = Math.max(0, BDeathStrength);
+    }
+
+    public int getADeathDelay() {
+        return ADeathDelay;
+    }
+
+    public void setADeathDelay(int ADeathDelay) {
+        this.ADeathDelay = Math.max(0, ADeathDelay);
+    }
+
+    public int getBDeathDelay() {
+        return BDeathDelay;
+    }
+
+    public void setBDeathDelay(int BDeathDelay) {
+        this.BDeathDelay = Math.max(0, BDeathDelay);
+    }
 
     public int getADownValue() {
         return ADownValue;

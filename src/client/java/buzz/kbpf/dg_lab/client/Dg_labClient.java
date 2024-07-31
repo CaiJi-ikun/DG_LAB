@@ -14,9 +14,14 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
@@ -40,6 +45,7 @@ public class Dg_labClient implements ClientModInitializer {
 
         StrengthConfig = buzz.kbpf.dg_lab.client.entity.StrengthConfig.loadJson();
         modConfig = ModConfig.loadJson();
+        HudRenderCallback.EVENT.register(this::onHudRender);
 
         keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "打开配置界面", // The translation key of the keybinding's name
@@ -178,5 +184,31 @@ public class Dg_labClient implements ClientModInitializer {
     }
 
     public static ModConfig getModConfig(){return modConfig;}
+
+    private void onHudRender(DrawContext drawContext, RenderTickCounter tickDelta) {
+        MinecraftClient client = MinecraftClient.getInstance();
+
+        if (client.player != null && client.world != null && (modConfig.getRenderingPositionX() < client.getWindow().getScaledWidth() || modConfig.getRenderingPositionY() < client.getWindow().getScaledHeight())) {
+            // 假设强度数值是一个整数
+//            int strengthValue = getStrengthValue(client.player);
+
+            // 计算图标和文本的位置
+            int x = modConfig.getRenderingPositionX();
+            int y = modConfig.getRenderingPositionY();
+
+            // 渲染图标
+//            client.getTextureManager().bindTexture(STRENGTH_ICON);
+//            drawTexture(drawContext, x, y, 0, 0, 16, 16);
+
+            // 创建并渲染 OrderedText
+            Text strengthText = Text.literal("A:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
+            OrderedText orderedText = strengthText.asOrderedText();
+            drawContext.drawTextWithShadow(client.textRenderer, orderedText, x, y, 0xFFFFFF);
+            Text strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
+            OrderedText orderedText1 = strengthText1.asOrderedText();
+            drawContext.drawTextWithShadow(client.textRenderer, orderedText1, x, y + 8, 0xFFFFFF);
+        }
+    }
+
 
 }

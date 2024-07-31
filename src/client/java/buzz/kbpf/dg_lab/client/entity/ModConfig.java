@@ -8,6 +8,8 @@ import java.io.*;
 
 public class ModConfig {
     boolean AutoStartWebSocketServer = true;
+    int RenderingPositionX = 20;
+    int RenderingPositionY = 20 ;
 
     public void savaFile(){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -30,7 +32,7 @@ public class ModConfig {
         Gson gson = new Gson();
         File file = new File("config/dg-lab/ModConfig.json");
         if (!file.exists()) {
-            return new ModConfig(true); // 默认的对象，可以根据需求初始化
+            return new ModConfig(true, 20, 20); // 默认的对象，可以根据需求初始化
         }
         try (Reader reader = new FileReader("config/dg-lab/ModConfig.json")) {
             return gson.fromJson(reader, ModConfig.class);
@@ -45,11 +47,29 @@ public class ModConfig {
     }
 
 
+    public int getRenderingPositionX() {
+        return RenderingPositionX;
+    }
+
+    public void setRenderingPositionX(int renderingPositionX) {
+        RenderingPositionX = Math.max(0, renderingPositionX);
+    }
+
+    public int getRenderingPositionY() {
+        return RenderingPositionY;
+    }
+
+    public void setRenderingPositionY(int renderingPositionY) {
+        RenderingPositionY =Math.max(0, renderingPositionY);
+    }
+
     public ModConfig() {
     }
 
-    public ModConfig(boolean autoStartWebSocketServer) {
+    public ModConfig(boolean autoStartWebSocketServer, int x, int y) {
         AutoStartWebSocketServer = autoStartWebSocketServer;
+        RenderingPositionX = x;
+        RenderingPositionY = y;
     }
 
     public boolean getAutoStartWebSocketServer() {

@@ -43,7 +43,6 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
             if (server != null && server.getConnected() ) {
                 if (accessor1.getHealthInitialized()) {
                     float damage = Dg_labHealth - health;
-                    System.out.println("hurt" + damage + " " + Dg_labHealth + " " + health);
 
 
                     if (damage > 0.0F) {
@@ -52,9 +51,10 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
                         server.sendStrengthToClient((int) (damage * StrengthConfig.getBDamageStrength()), 1, 2);
                     }
                     if (this.getHealth() <= 0) {
+                        server.setDelayTime(StrengthConfig.getADeathDelay(), StrengthConfig.getBDeathDelay());
                         DGStrength dgStrength = server.getStrength();
-                        server.sendStrengthToClient((Math.min(dgStrength.getAStrength() + 50, dgStrength.getAMaxStrength())), 2, 1);
-                        server.sendStrengthToClient((Math.min(dgStrength.getBStrength() + 50, dgStrength.getBMaxStrength())), 2, 2);
+                        server.sendStrengthToClient((Math.min(dgStrength.getAStrength() + StrengthConfig.getADeathDelay(), dgStrength.getAMaxStrength())), 2, 1);
+                        server.sendStrengthToClient((Math.min(dgStrength.getBStrength() + StrengthConfig.getBDeathDelay(), dgStrength.getBMaxStrength())), 2, 2);
                     }
                 }
                 Dg_labHealth = this.getHealth();
