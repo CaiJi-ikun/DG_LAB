@@ -53,8 +53,8 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
                     if (this.getHealth() <= 0) {
                         server.setDelayTime(StrengthConfig.getADeathDelay(), StrengthConfig.getBDeathDelay());
                         DGStrength dgStrength = server.getStrength();
-                        server.sendStrengthToClient((Math.min(dgStrength.getAStrength() + StrengthConfig.getADeathDelay(), dgStrength.getAMaxStrength())), 2, 1);
-                        server.sendStrengthToClient((Math.min(dgStrength.getBStrength() + StrengthConfig.getBDeathDelay(), dgStrength.getBMaxStrength())), 2, 2);
+                        server.sendStrengthToClient((Math.min(dgStrength.getAStrength() + StrengthConfig.getADeathStrength(), dgStrength.getAMaxStrength())), 2, 1);
+                        server.sendStrengthToClient((Math.min(dgStrength.getBStrength() + StrengthConfig.getBDeathStrength(), dgStrength.getBMaxStrength())), 2, 2);
                     }
                 }
                 Dg_labHealth = this.getHealth();
