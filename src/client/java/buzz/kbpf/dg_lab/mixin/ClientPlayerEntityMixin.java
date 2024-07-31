@@ -16,49 +16,43 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import net.minecraft.network.packet.c2s.play.PlayerActionC2SPacket;
 
 
 @Mixin(ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
 
     @Unique
-    float Dg_labHealth;
+    float Dg_labHealth = 0.0f;
 
     public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
         super(world, profile);
     }
 
-    @Inject(method = "updateHealth", at = @At("HEAD"))
+    @Inject(method = "updateHealth", at = @At("TAIL"))
     private void afterSetHealth(float health, CallbackInfo ci) {
         LivingEntityAccessor accessor = (LivingEntityAccessor) this;
         ClientPlayerEntityAccessor accessor1 = (ClientPlayerEntityAccessor) this;
+        webSocketServer server = Dg_labClient.getServer();
+        StrengthConfig StrengthConfig = Dg_labClient.getStrengthConfig();
+        if (server != null && server.getConnected()) {
+            float damage = Dg_labHealth - health;
 
 
-
-
-
-
-            webSocketServer server = Dg_labClient.getServer();
-            StrengthConfig StrengthConfig = Dg_labClient.getStrengthConfig();
-            if (server != null && server.getConnected() ) {
-                if (accessor1.getHealthInitialized()) {
-                    float damage = Dg_labHealth - health;
-
-
-                    if (damage > 0.0F) {
-                        server.setDelayTime(StrengthConfig.getADelayTime(), StrengthConfig.getBDelayTime());
-                        server.sendStrengthToClient(Math.max(1, ((int) (damage * StrengthConfig.getADamageStrength()))), 1, 1);
-                        server.sendStrengthToClient(Math.max(1, ((int) (damage * StrengthConfig.getBDamageStrength()))), 1, 2);
-                    }
-                    if (this.getHealth() <= 0) {
-                        server.setDelayTime(StrengthConfig.getADeathDelay(), StrengthConfig.getBDeathDelay());
-                        DGStrength dgStrength = server.getStrength();
-                        server.sendStrengthToClient((Math.min(dgStrength.getAStrength() + StrengthConfig.getADeathStrength(), dgStrength.getAMaxStrength())), 2, 1);
-                        server.sendStrengthToClient((Math.min(dgStrength.getBStrength() + StrengthConfig.getBDeathStrength(), dgStrength.getBMaxStrength())), 2, 2);
-                    }
-                }
-                Dg_labHealth = this.getHealth();
+            if (damage > 0.0F) {
+                server.setDelayTime(StrengthConfig.getADelayTime(), StrengthConfig.getBDelayTime());
+                if(StrengthConfig.getADamageStrength() > 0) server.sendStrengthToClient(Math.max(1, ((int) (damage * StrengthConfig.getADamageStrength()))), 1, 1);
+                if(StrengthConfig.getBDamageStrength() > 0) server.sendStrengthToClient(Math.max(1, ((int) (damage * StrengthConfig.getBDamageStrength()))), 1, 2);
             }
+            if (health <= 0) {
+                server.setDelayTime(StrengthConfig.getADeathDelay(), StrengthConfig.getBDeathDelay());
+                DGStrength dgStrength = server.getStrength();
+                server.sendStrengthToClient((Math.min(dgStrength.getAStrength() + StrengthConfig.getADeathStrength(), dgStrength.getAMaxStrength())), 2, 1);
+                server.sendStrengthToClient((Math.min(dgStrength.getBStrength() + StrengthConfig.getBDeathStrength(), dgStrength.getBMaxStrength())), 2, 2);
+            }
+
+            Dg_labHealth = health;
+        }
 
     }
 

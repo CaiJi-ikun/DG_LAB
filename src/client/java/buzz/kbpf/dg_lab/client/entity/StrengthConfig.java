@@ -138,7 +138,7 @@ public class StrengthConfig {
     }
 
     public void setADamageStrength(float ADamageStrength) {
-        if(ADamageStrength <= 0) this.ADamageStrength = 1;
+        if(ADamageStrength < 0) this.ADamageStrength = 0;
         else this.ADamageStrength = Math.round(ADamageStrength * 100.0f) / 100.0f;
     }
 
@@ -147,7 +147,7 @@ public class StrengthConfig {
     }
 
     public void setBDamageStrength(float BDamageStrength) {
-        if(BDamageStrength <= 0) this.BDamageStrength = 1;
+        if(BDamageStrength < 0) this.BDamageStrength = 0;
         else this.BDamageStrength = Math.round(BDamageStrength * 100.0f) / 100.0f;
 
     }
