@@ -7,42 +7,54 @@ import buzz.kbpf.dg_lab.client.entity.StrengthConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.SliderWidget;
+import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 @Environment(EnvType.CLIENT)
 public class ConfigScreen extends Screen {
+
+    public ButtonWidget button1;
+    public ButtonWidget button2;
+    public ButtonWidget createQR;
+
+    private SliderWidget ADamageStrength;
+    private SliderWidget BDamageStrength;
+    private SliderWidget ADelayTime;
+    private SliderWidget BDelayTime;
+    private SliderWidget ADownTime;
+    private SliderWidget BDownTime;
+    private SliderWidget ADownValue;
+    private SliderWidget BDownValue;
+    private SliderWidget ADeathStrength;
+    private SliderWidget BDeathStrength;
+    private SliderWidget ADeathDelay;
+    private SliderWidget BDeathDelay;
+    private SliderWidget RenderingPositionX;
+    private SliderWidget RenderingPositionY;
+    private TextFieldWidget textFieldWidget;
+
     public ConfigScreen() {
         // 此参数为屏幕的标题，进入屏幕中，复述功能会复述。
         super(Text.literal("我的教程屏幕"));
     }
 
 
-    public ButtonWidget button1;
-    public ButtonWidget button2;
-    public ButtonWidget createQR;
+    public String getInputText(){
+        return this.textFieldWidget.getText();
+    }
 
-    public SliderWidget ADamageStrength;
-    public SliderWidget BDamageStrength;
-    public SliderWidget ADelayTime;
-    public SliderWidget BDelayTime;
-    public SliderWidget ADownTime;
-    public SliderWidget BDownTime;
-    public SliderWidget ADownValue;
-    public SliderWidget BDownValue;
-    public SliderWidget ADeathStrength;
-    public SliderWidget BDeathStrength;
-    public SliderWidget ADeathDelay;
-    public SliderWidget BDeathDelay;
-    public SliderWidget RenderingPositionX;
-    public SliderWidget RenderingPositionY;
 
 
     @Override
     protected void init() {
+
 
         StrengthConfig strengthConfig = Dg_labClient.getStrengthConfig();
         ModConfig modConfig = Dg_labClient.getModConfig();
@@ -243,6 +255,12 @@ public class ConfigScreen extends Screen {
         }).dimensions(width / 2 - 205, 140, 200, 20).tooltip(Tooltip.of(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir")))).build();
 
 
+        textFieldWidget = new TextFieldWidget(this.textRenderer,width / 2 -205, 170, 200, 20, Text.literal("Enter text..."));
+        textFieldWidget.setChangedListener(this::test);
+
+        textFieldWidget.setPlaceholder(Text.literal("占位字符串").setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+
+
         addDrawableChild(button1);
         addDrawableChild(button2);
         addDrawableChild(ADamageStrength);
@@ -260,5 +278,13 @@ public class ConfigScreen extends Screen {
         addDrawableChild(createQR);
         addDrawableChild(RenderingPositionX);
         addDrawableChild(RenderingPositionY);
+        addDrawableChild(textFieldWidget);
     }
+
+    public void test(String text){
+        System.out.println(text);
+    }
+
+
+
 }

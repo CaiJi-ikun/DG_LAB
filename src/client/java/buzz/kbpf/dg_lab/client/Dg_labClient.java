@@ -39,6 +39,7 @@ public class Dg_labClient implements ClientModInitializer {
     private static StrengthConfig StrengthConfig = new StrengthConfig();
     private static ModConfig modConfig = new ModConfig();
     private static KeyBinding keyBinding;
+    private final Screen ConfigScreen = new ConfigScreen();
 
     @Override
     public void onInitializeClient() {
@@ -56,7 +57,7 @@ public class Dg_labClient implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (keyBinding.wasPressed()) {
-                Screen ConfigScreen = new ConfigScreen();
+
                 client.setScreen(ConfigScreen);
             }
         });
@@ -168,6 +169,10 @@ public class Dg_labClient implements ClientModInitializer {
                                 )
                         )
                 )
+//                .then(literal("text").executes(context -> {
+//                    context.getSource().sendFeedback(Text.literal(ConfigScreen));
+//                    return 1;
+//                }))
         ));
 
         if(modConfig.getAutoStartWebSocketServer()) webSocketServer.start();
