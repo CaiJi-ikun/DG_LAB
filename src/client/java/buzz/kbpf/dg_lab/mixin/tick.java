@@ -42,6 +42,8 @@ public abstract class tick {
     @Unique
     private boolean hasDetectedBDelayZeroAndStrength = false; // 标志，表示是否检测到B的延迟为0且强度大于0
 
+
+
     @Inject(method = "tick", at = @At("HEAD"))
     public void onTick(CallbackInfo info) {
 

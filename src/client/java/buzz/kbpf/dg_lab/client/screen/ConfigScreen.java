@@ -71,52 +71,52 @@ public class ConfigScreen extends Screen {
             }
         };
 
-        ADelayTime = new SliderWidget(width / 2 + 5, 50, 100, 20, Text.literal("A强度下降等待" + strengthConfig.getADelayTime() * 40 + "ms"),  (double) strengthConfig.getADelayTime() / 125) {
+        ADelayTime = new SliderWidget(width / 2 + 5, 50, 100, 20, Text.literal("A强度下降等待" + strengthConfig.getADelayTime() * 50 + "ms"),  (double) strengthConfig.getADelayTime() / 120) {
             @Override
             protected void updateMessage() {}
 
             @Override
             protected void applyValue() {
-                int tmp = (int) (this.value * 125);
-                this.setMessage(Text.literal("A强度下降等待" + tmp * 40 + "ms"));
+                int tmp = (int) (this.value * 120);
+                this.setMessage(Text.literal("A强度下降等待" + tmp * 50 + "ms"));
                 strengthConfig.setADelayTime(tmp);
             }
         };
 
-        BDelayTime = new SliderWidget(width / 2 + 105, 50, 100, 20, Text.literal("B强度下降等待" + strengthConfig.getBDelayTime() * 40 + "ms"),  (double) strengthConfig.getBDelayTime() / 125) {
+        BDelayTime = new SliderWidget(width / 2 + 105, 50, 100, 20, Text.literal("B强度下降等待" + strengthConfig.getBDelayTime() * 50 + "ms"),  (double) strengthConfig.getBDelayTime() / 120) {
             @Override
             protected void updateMessage() {}
 
             @Override
             protected void applyValue() {
-                int tmp = (int) (this.value * 125);
-                this.setMessage(Text.literal("B强度下降等待" + tmp * 40 + "ms"));
+                int tmp = (int) (this.value * 120);
+                this.setMessage(Text.literal("B强度下降等待" + tmp * 50 + "ms"));
                 strengthConfig.setBDelayTime(tmp);
             }
         };
 
-        ADownTime = new SliderWidget(width / 2 + 5, 80, 100, 20, Text.literal("A强度下降间隔" + strengthConfig.getADownTime() * 40 + "ms"),  (double) strengthConfig.getADownTime() / 125) {
+        ADownTime = new SliderWidget(width / 2 + 5, 80, 100, 20, Text.literal("A强度下降间隔" + strengthConfig.getADownTime() * 50 + "ms"),  (double) strengthConfig.getADownTime() / 120) {
             @Override
             protected void updateMessage() {}
 
             @Override
             protected void applyValue() {
-                int tmp = (int) (this.value * 125);
+                int tmp = (int) (this.value * 120);
                 if(tmp == 0) tmp = 1;
-                this.setMessage(Text.literal("A强度下降间隔" + tmp * 40 + "ms"));
+                this.setMessage(Text.literal("A强度下降间隔" + tmp * 50 + "ms"));
                 strengthConfig.setADownTime(tmp);
             }
         };
 
-        BDownTime = new SliderWidget(width / 2 + 105, 80, 100, 20, Text.literal("B强度下降间隔" + strengthConfig.getBDownTime() * 40 + "ms"),  (double) strengthConfig.getBDownTime() / 125) {
+        BDownTime = new SliderWidget(width / 2 + 105, 80, 100, 20, Text.literal("B强度下降间隔" + strengthConfig.getBDownTime() * 50 + "ms"),  (double) strengthConfig.getBDownTime() / 120) {
             @Override
             protected void updateMessage() {}
 
             @Override
             protected void applyValue() {
-                int tmp = (int) (this.value * 125);
+                int tmp = (int) (this.value * 120);
                 if(tmp == 0) tmp = 1;
-                this.setMessage(Text.literal("B强度下降间隔" + tmp * 40 + "ms"));
+                this.setMessage(Text.literal("B强度下降间隔" + tmp * 50 + "ms"));
                 strengthConfig.setBDownTime(tmp);
             }
         };
@@ -169,26 +169,26 @@ public class ConfigScreen extends Screen {
             }
         };
 
-        ADeathDelay = new SliderWidget(width / 2 + 5, 110, 100, 20, Text.literal("A死亡时强度下降等待" + strengthConfig.getADeathDelay() * 40 + "ms"),  (double) strengthConfig.getADeathDelay() / 125) {
+        ADeathDelay = new SliderWidget(width / 2 + 5, 110, 100, 20, Text.literal("A死亡时强度下降等待" + strengthConfig.getADeathDelay() * 50 + "ms"),  (double) strengthConfig.getADeathDelay() / 120) {
             @Override
             protected void updateMessage() {}
 
             @Override
             protected void applyValue() {
-                int tmp = (int) (this.value * 125);
-                this.setMessage(Text.literal("A下降等待" + tmp * 40 + "ms"));
+                int tmp = (int) (this.value * 120);
+                this.setMessage(Text.literal("A下降等待" + tmp * 50 + "ms"));
                 strengthConfig.setADeathDelay(tmp);
             }
         };
 
-        BDeathDelay = new SliderWidget(width / 2 + 105, 110, 100, 20, Text.literal("B死亡时强度下降等待" + strengthConfig.getBDeathDelay() * 40 + "ms"),  (double) strengthConfig.getBDeathDelay() / 125) {
+        BDeathDelay = new SliderWidget(width / 2 + 105, 110, 100, 20, Text.literal("B死亡时强度下降等待" + strengthConfig.getBDeathDelay() * 50 + "ms"),  (double) strengthConfig.getBDeathDelay() / 120) {
             @Override
             protected void updateMessage() {}
 
             @Override
             protected void applyValue() {
-                int tmp = (int) (this.value * 125);
-                this.setMessage(Text.literal("B下降等待" + tmp * 40 + "ms"));
+                int tmp = (int) (this.value * 120);
+                this.setMessage(Text.literal("B下降等待" + tmp * 50 + "ms"));
                 strengthConfig.setBDeathDelay(tmp);
             }
         };
