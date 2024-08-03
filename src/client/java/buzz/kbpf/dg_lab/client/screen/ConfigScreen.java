@@ -24,25 +24,26 @@ public class ConfigScreen extends Screen {
     public ButtonWidget button2;
     public ButtonWidget createQR;
 
-    private SliderWidget ADamageStrength;
-    private SliderWidget BDamageStrength;
-    private SliderWidget ADelayTime;
-    private SliderWidget BDelayTime;
-    private SliderWidget ADownTime;
-    private SliderWidget BDownTime;
-    private SliderWidget ADownValue;
-    private SliderWidget BDownValue;
-    private SliderWidget ADeathStrength;
-    private SliderWidget BDeathStrength;
-    private SliderWidget ADeathDelay;
-    private SliderWidget BDeathDelay;
-    private SliderWidget RenderingPositionX;
-    private SliderWidget RenderingPositionY;
-    private TextFieldWidget textFieldWidget;
+    public SliderWidget ADamageStrength;
+    public SliderWidget BDamageStrength;
+    public SliderWidget ADelayTime;
+    public SliderWidget BDelayTime;
+    public SliderWidget ADownTime;
+    public SliderWidget BDownTime;
+    public SliderWidget ADownValue;
+    public SliderWidget BDownValue;
+    public SliderWidget ADeathStrength;
+    public SliderWidget BDeathStrength;
+    public SliderWidget ADeathDelay;
+    public SliderWidget BDeathDelay;
+    public SliderWidget RenderingPositionX;
+    public SliderWidget RenderingPositionY;
+    public TextFieldWidget textFieldWidget;
+
 
     public ConfigScreen() {
         // 此参数为屏幕的标题，进入屏幕中，复述功能会复述。
-        super(Text.literal("我的教程屏幕"));
+        super(Text.literal("配置界面"));
     }
 
 
@@ -54,7 +55,7 @@ public class ConfigScreen extends Screen {
 
     @Override
     protected void init() {
-
+        Screen WebSocketConfigScreen = new WebSocketConfigScreen();
 
         StrengthConfig strengthConfig = Dg_labClient.getStrengthConfig();
         ModConfig modConfig = Dg_labClient.getModConfig();
@@ -239,16 +240,10 @@ public class ConfigScreen extends Screen {
                     modConfig.savaFile();
                 })
                 .dimensions(width / 2 - 205, 20, 200, 20).tooltip(Tooltip.of(Text.literal("所有更改是临时更改\n点击此按钮保存到文件"))).build();
-        button2 = ButtonWidget.builder(Text.literal("连接服务器自动启动已" + (modConfig.getAutoStartWebSocketServer() ? "开启" : "关闭")), button -> {
-                    if(modConfig.getAutoStartWebSocketServer()) {
-                        button.setMessage(Text.literal("连接服务器自动启动已关闭"));
-                        modConfig.setAutoStartWebSocketServer(false);
-                    }else {
-                        button.setMessage(Text.literal("连接服务器自动启动已开启"));
-                        modConfig.setAutoStartWebSocketServer(true);
-                    }
+        button2 = ButtonWidget.builder(Text.literal("连接设置"), button -> {
+                    client.setScreen(WebSocketConfigScreen);
                 })
-                .dimensions(width / 2 + 5, 20, 200, 20).tooltip(Tooltip.of(Text.literal("要在客户端启动时自动启动连接服务器\n如果关闭需要使用指令手动启动"))).build();
+                .dimensions(width / 2 + 5, 20, 200, 20).tooltip(Tooltip.of(Text.literal("点击修改详细连接设置"))).build();
 
         createQR = ButtonWidget.builder(Text.literal("创建连接二维码并打开"), button -> {
             ToolQR.CreateQR();

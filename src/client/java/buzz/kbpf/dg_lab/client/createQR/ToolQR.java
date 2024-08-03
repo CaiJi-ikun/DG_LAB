@@ -7,13 +7,13 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
+import buzz.kbpf.dg_lab.client.Dg_labClient;
+import buzz.kbpf.dg_lab.client.entity.ModConfig;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.text.Text;
 
 import javax.imageio.ImageIO;
 
@@ -23,17 +23,22 @@ public class ToolQR {
     }
 
     public static void CreateQR() {
+        ModConfig modConfig = Dg_labClient.getModConfig();
         try {
-            InetAddress localhost = InetAddress.getLocalHost();
-            String ipAddress = localhost.getHostAddress();
-            String url = "https://www.dungeon-lab.com/app-download.php#DGLAB-SOCKET#ws://" + ipAddress + ":9999/1234-123456789-12345-12345-01";
+            String ipAddress = "";
+            int port = modConfig.getPort();
+            if(modConfig.getHost().equals("this")) {
+                InetAddress localhost = InetAddress.getLocalHost();
+                ipAddress = localhost.getHostAddress();
+            }else ipAddress = modConfig.getHost();
+            StringBuilder url = new StringBuilder("https://www.dungeon-lab.com/app-download.php#DGLAB-SOCKET#ws://").append(ipAddress).append(':').append(port).append("/1234-123456789-12345-12345-01");
             String filePath = "QR.png";
             try {
                 Map<EncodeHintType, Object> hints = new HashMap<>();
                 hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
                 hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 
-                BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, 300, 300, hints);
+                BitMatrix bitMatrix = new MultiFormatWriter().encode(url.toString(), BarcodeFormat.QR_CODE, 300, 300, hints);
 
                 BufferedImage image = new BufferedImage(300, 300, BufferedImage.TYPE_INT_RGB);
                 for (int x = 0; x < 300; x++) {

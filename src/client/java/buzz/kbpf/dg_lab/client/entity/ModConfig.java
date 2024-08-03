@@ -7,9 +7,43 @@ import com.google.gson.JsonSyntaxException;
 import java.io.*;
 
 public class ModConfig {
-    boolean AutoStartWebSocketServer = true;
-    int RenderingPositionX = 20;
-    int RenderingPositionY = 20 ;
+    private boolean AutoStartWebSocketServer = true;
+    private int RenderingPositionX = 20;
+    private int RenderingPositionY = 20;
+    private int port = 9999, serverPort = port;
+    private String host = "this";
+
+
+
+    public ModConfig(boolean autoStartWebSocketServer, int x, int y) {
+        AutoStartWebSocketServer = autoStartWebSocketServer;
+        RenderingPositionX = x;
+        RenderingPositionY = y;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = (port <0 || port > 65535) ? 9999 : port;
+    }
+
+    public int getServerPort() {
+        return serverPort;
+    }
+
+    public void setServerPort(int serverPort) {
+        this.serverPort = (serverPort <0 || serverPort > 65535) ? 9999 : serverPort;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
 
     public void savaFile(){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -66,11 +100,7 @@ public class ModConfig {
     public ModConfig() {
     }
 
-    public ModConfig(boolean autoStartWebSocketServer, int x, int y) {
-        AutoStartWebSocketServer = autoStartWebSocketServer;
-        RenderingPositionX = x;
-        RenderingPositionY = y;
-    }
+
 
     public boolean getAutoStartWebSocketServer() {
         return AutoStartWebSocketServer;

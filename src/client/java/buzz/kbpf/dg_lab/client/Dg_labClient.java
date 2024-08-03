@@ -35,17 +35,18 @@ import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.*;
 
 public class Dg_labClient implements ClientModInitializer {
 
-    private static final webSocketServer webSocketServer = new webSocketServer(new InetSocketAddress(9999));
+    private static webSocketServer webSocketServer = null;
     private static StrengthConfig StrengthConfig = new StrengthConfig();
-    private static ModConfig modConfig = new ModConfig();
+    private static ModConfig modConfig = ModConfig.loadJson();
     private static KeyBinding keyBinding;
     private final Screen ConfigScreen = new ConfigScreen();
 
     @Override
     public void onInitializeClient() {
 
+        webSocketServer = new webSocketServer(new InetSocketAddress(modConfig.getServerPort()));
+
         StrengthConfig = buzz.kbpf.dg_lab.client.entity.StrengthConfig.loadJson();
-        modConfig = ModConfig.loadJson();
         HudRenderCallback.EVENT.register(this::onHudRender);
 
         keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
