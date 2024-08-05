@@ -172,25 +172,25 @@ public class ConfigScreen extends Screen {
 
         DownValue = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 - 215, 70, 10, 15).tooltip(Tooltip.of(Text.literal("每次强度下降的时候下降的数值"))).build();
 
-        ADeathStrength = new SliderWidget(width / 2 - 205, 95, 100, 15, Text.literal("A死亡增加强度" + strengthConfig.getADeathStrength()),  (double) strengthConfig.getADeathStrength() / 70) {
+        ADeathStrength = new SliderWidget(width / 2 - 205, 95, 100, 15, Text.literal("A死亡增加强度" + strengthConfig.getADeathStrength()),  (double) strengthConfig.getADeathStrength() / 200) {
             @Override
             protected void updateMessage() {}
 
             @Override
             protected void applyValue() {
-                int tmp = (int) (this.value * 70);
+                int tmp = (int) (this.value * 200);
                 strengthConfig.setADeathStrength(tmp);
                 this.setMessage(Text.literal("A死亡增加强度" + tmp));
             }
         };
 
-        BDeathStrength = new SliderWidget(width / 2 - 105, 95, 100, 15, Text.literal("B死亡增加强度" + strengthConfig.getBDeathStrength()),  (double) strengthConfig.getBDeathStrength() / 70) {
+        BDeathStrength = new SliderWidget(width / 2 - 105, 95, 100, 15, Text.literal("B死亡增加强度" + strengthConfig.getBDeathStrength()),  (double) strengthConfig.getBDeathStrength() / 200) {
             @Override
             protected void updateMessage() {}
 
             @Override
             protected void applyValue() {
-                int tmp = (int) (this.value * 70);
+                int tmp = (int) (this.value * 200);
                 strengthConfig.setBDeathStrength(tmp);
                 this.setMessage(Text.literal("B死亡增加强度" + tmp));
             }
