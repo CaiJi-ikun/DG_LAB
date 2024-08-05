@@ -1,7 +1,5 @@
-A fabric minecraft mod for DG_LAB.
-The author is not proficient in programming, and the vast majority of the code relies on chatgpt.(Chattpt is really user-friendly, especially the newly released 4omini)
+这是一个为DG_LAB终端制作的fabric mod。当玩家在游戏内受到伤害/死亡时，发送反馈给终端。
+虽然在服务端无效，但是只有客户端安装也能在多人游戏中使用。
 
-
-一个为DG_LAB终端做的fabric minecraft mod。
-作者对编程并不熟练，绝大部分的代码依靠chatgpt。(chatgpt真的很好用，特别是新出的4omini)
-
+This is a fabric mod designed for DG_LAB terminals. When a player is injured/killed in the game, send feedback to the terminal.
+Although it is not effective on the server side, it can also be used in multiplayer games only when installed on the client side.
