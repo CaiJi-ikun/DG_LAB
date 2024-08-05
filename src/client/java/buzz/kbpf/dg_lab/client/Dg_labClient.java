@@ -1,5 +1,6 @@
 package buzz.kbpf.dg_lab.client;
 
+import buzz.kbpf.dg_lab.client.FrequencyTool.FrequencyTool;
 import buzz.kbpf.dg_lab.client.entity.DGStrength;
 import buzz.kbpf.dg_lab.client.entity.ModConfig;
 import buzz.kbpf.dg_lab.client.entity.StrengthConfig;
@@ -10,6 +11,8 @@ import com.google.gson.Gson;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import jdk.jfr.Frequency;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -170,6 +173,12 @@ public class Dg_labClient implements ClientModInitializer {
                                 )
                         )
                 )
+                        .then(literal("test")
+                                .then(argument(("test"), StringArgumentType.string()).executes(context -> {
+                                    context.getSource().sendFeedback(Text.literal(FrequencyTool.toFrequency(StringArgumentType.getString(context, "test"))));
+                                    return 1;
+                                })))
+
 //                .then(literal("text").executes(context -> {
 //                    context.getSource().sendFeedback(Text.literal(ConfigScreen));
 //                    return 1;
