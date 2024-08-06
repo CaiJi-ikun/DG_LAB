@@ -2,9 +2,11 @@ package buzz.kbpf.dg_lab.client;
 
 import buzz.kbpf.dg_lab.client.FrequencyTool.FrequencyTool;
 import buzz.kbpf.dg_lab.client.entity.DGStrength;
+import buzz.kbpf.dg_lab.client.entity.DGWaveform;
 import buzz.kbpf.dg_lab.client.entity.ModConfig;
 import buzz.kbpf.dg_lab.client.entity.StrengthConfig;
 import buzz.kbpf.dg_lab.client.screen.ConfigScreen;
+import buzz.kbpf.dg_lab.client.screen.WebSocketConfigScreen;
 import buzz.kbpf.dg_lab.client.webSocketServer.webSocketServer;
 import buzz.kbpf.dg_lab.client.createQR.ToolQR;
 import com.google.gson.Gson;
@@ -27,7 +29,7 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
-
+import net.minecraft.client.MinecraftClient;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -174,10 +176,18 @@ public class Dg_labClient implements ClientModInitializer {
                         )
                 )
                         .then(literal("test")
-                                .then(argument(("test"), StringArgumentType.string()).executes(context -> {
+                                .then(argument(("text"), StringArgumentType.string()).executes(context -> {
                                     context.getSource().sendFeedback(Text.literal(FrequencyTool.toFrequency(StringArgumentType.getString(context, "test"))));
                                     return 1;
-                                })))
+                                }))
+                                .then(literal("send").then(argument(("text"), StringArgumentType.string()).executes(context -> {
+                                    DGWaveform dgWaveform = new DGWaveform();
+                                    dgWaveform.setText(StringArgumentType.getString(context, "text"));
+                                    dgWaveform.TextToWaveform();
+                                    context.getSource().sendFeedback(Text.literal(String.valueOf((dgWaveform.getLength() * 0.025))));
+                                    webSocketServer.sendDGWaveForm(dgWaveform.getWaveform());
+                                    return 1;
+                                }))))
 
 //                .then(literal("text").executes(context -> {
 //                    context.getSource().sendFeedback(Text.literal(ConfigScreen));
@@ -200,6 +210,8 @@ public class Dg_labClient implements ClientModInitializer {
 
     public static ModConfig getModConfig(){return modConfig;}
 
+
+
     private void onHudRender(DrawContext drawContext, RenderTickCounter tickDelta) {
         MinecraftClient client = MinecraftClient.getInstance();
 
@@ -216,12 +228,20 @@ public class Dg_labClient implements ClientModInitializer {
 //            drawTexture(drawContext, x, y, 0, 0, 16, 16);
 
             // 创建并渲染 OrderedText
-            Text strengthText = Text.literal("A:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
-            OrderedText orderedText = strengthText.asOrderedText();
-            drawContext.drawTextWithShadow(client.textRenderer, orderedText, x, y, 0xFFFFFF);
-            Text strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
-            OrderedText orderedText1 = strengthText1.asOrderedText();
-            drawContext.drawTextWithShadow(client.textRenderer, orderedText1, x, y + 8, 0xFFFFFF);
+
+            if(webSocketServer.getConnected()) {
+                Text strengthText = Text.literal("A:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
+                OrderedText orderedText = strengthText.asOrderedText();
+                Text strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
+                OrderedText orderedText1 = strengthText1.asOrderedText();
+                drawContext.drawTextWithShadow(client.textRenderer, orderedText, x, y, 0xFFFFFF);
+                drawContext.drawTextWithShadow(client.textRenderer, orderedText1, x, y + 9, 0xFFFFFF);
+            }
+            else {
+                Text strengthText = Text.literal("未连接");
+                OrderedText orderedText = strengthText.asOrderedText();
+                drawContext.drawTextWithShadow(client.textRenderer, orderedText, x, y, 0xFF0000);
+            }
         }
     }
 

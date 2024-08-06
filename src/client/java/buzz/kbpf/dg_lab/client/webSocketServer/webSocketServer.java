@@ -4,10 +4,12 @@ import buzz.kbpf.dg_lab.client.entity.DGFrequency;
 import buzz.kbpf.dg_lab.client.entity.DGStrength;
 import buzz.kbpf.dg_lab.client.entity.clientInfo;
 import com.google.gson.Gson;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
-
+import net.minecraft.client.MinecraftClient;
 import java.net.InetSocketAddress;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -115,8 +117,15 @@ public class webSocketServer extends WebSocketServer {
                     count++;
                 }
             }
+            int Number = Integer.parseInt(number.toString());
+            if (Number == 405) {
+                if (MinecraftClient.getInstance().player != null)
+
+                    MinecraftClient.getInstance().player.sendMessage(Text.literal("发送的消息长度超过1950").setStyle(Style.EMPTY.withColor(0xFF0000)));
+            }
+
             // 设置最终的BMaxStrength值
-            dgStrength.setBMaxStrength(Integer.parseInt(number.toString()));
+            else dgStrength.setBMaxStrength(Number);
         }
     }
 
@@ -273,6 +282,14 @@ public class webSocketServer extends WebSocketServer {
     }
 
 
+    public void sendDGWaveForm(String message){
+        if(isConnected){
+            CleanFrequency(1);
+            clientInfo.setType("msg");
+            clientInfo.setMessage("pulse-A:[" + message + "]");
+            client.send(new Gson().toJson(clientInfo, buzz.kbpf.dg_lab.client.entity.clientInfo.class));
+        }
+    }
 
 
 

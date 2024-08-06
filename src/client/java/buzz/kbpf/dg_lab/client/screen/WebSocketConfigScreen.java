@@ -33,20 +33,20 @@ public class WebSocketConfigScreen extends Screen {
     public ButtonWidget serverPort1;
 
     @Override
-    public void close(){
-            Screen configScreen = new ConfigScreen();
-            client.setScreen(configScreen);
+    public void close() {
+        Screen configScreen = new ConfigScreen();
+        client.setScreen(configScreen);
 
     }
 
     @Override
-    protected void init(){
+    protected void init() {
         modConfig = Dg_labClient.getModConfig();
         autoStartWebSocketServer = ButtonWidget.builder(Text.literal("自动启动连接服务器:已" + ((modConfig.getAutoStartWebSocketServer()) ? "开启" : "关闭")), button -> {
-            if(modConfig.getAutoStartWebSocketServer()){
+            if (modConfig.getAutoStartWebSocketServer()) {
                 modConfig.setAutoStartWebSocketServer(false);
                 autoStartWebSocketServer.setMessage(Text.literal("自动启动连接服务器:已关闭"));
-            }else {
+            } else {
                 modConfig.setAutoStartWebSocketServer(true);
                 autoStartWebSocketServer.setMessage(Text.literal("自动启动连接服务器:已开启"));
 
@@ -62,21 +62,24 @@ public class WebSocketConfigScreen extends Screen {
         host.setText(modConfig.getHost());
         host.setPlaceholder(Text.literal("this").setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
         host.setChangedListener(this::hostText);
-        host1 = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 + 25, 45, 10, 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的地址\n非必要无需修改\n设置为this自动选择当前局域网地址"))).build();
+        host1 = ButtonWidget.builder(Text.literal("?"), button -> {
+        }).dimensions(width / 2 + 25, 45, 10, 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的地址\n非必要无需修改\n设置为this自动选择当前局域网地址"))).build();
 
         port = new TextFieldWidget(this.textRenderer, width / 2 + 35, 70, 170, 15, Text.literal("Enter text..."));
         port.setText(String.valueOf(modConfig.getPort()));
         port.setPlaceholder(Text.literal("9999").setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
         port.setChangedListener(this::portText);
         port.setMaxLength(5);
-        port1 = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 + 25, 70, 10, 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的端口,非服务器端口\n非必要无需修改"))).build();
+        port1 = ButtonWidget.builder(Text.literal("?"), button -> {
+        }).dimensions(width / 2 + 25, 70, 10, 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的端口,非服务器端口\n非必要无需修改"))).build();
 
         serverPort = new TextFieldWidget(this.textRenderer, width / 2 + 35, 95, 170, 15, Text.literal("Enter text..."));
         serverPort.setText(String.valueOf(modConfig.getPort()));
         serverPort.setPlaceholder(Text.literal("9999").setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
         serverPort.setChangedListener(this::serverPortText);
         serverPort.setMaxLength(5);
-        serverPort1 = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 + 25, 95, 10, 15).tooltip(Tooltip.of(Text.literal("服务器对外开放的端口\n非必要无需修改\n修改后请保存重启客户端生效"))).build();
+        serverPort1 = ButtonWidget.builder(Text.literal("?"), button -> {
+        }).dimensions(width / 2 + 25, 95, 10, 15).tooltip(Tooltip.of(Text.literal("服务器对外开放的端口\n非必要无需修改\n修改后请保存重启客户端生效"))).build();
 
 
         addDrawableChild(createQR);
@@ -90,10 +93,11 @@ public class WebSocketConfigScreen extends Screen {
     }
 
 
-    public void hostText(String Text){
+    public void hostText(String Text) {
         modConfig.setHost(Text);
     }
-    public void portText(String port){
+
+    public void portText(String port) {
         int number;
         try {
             number = Integer.parseInt(port);
@@ -106,7 +110,8 @@ public class WebSocketConfigScreen extends Screen {
 
 
     }
-    public void serverPortText(String serverPort){
+
+    public void serverPortText(String serverPort) {
         int number;
         try {
             number = Integer.parseInt(serverPort);
