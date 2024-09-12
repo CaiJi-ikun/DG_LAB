@@ -14,6 +14,8 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.text.Text;
 
 import javax.imageio.ImageIO;
 
@@ -24,13 +26,15 @@ public class ToolQR {
 
     public static void CreateQR() {
         ModConfig modConfig = Dg_labClient.getModConfig();
-        try {
-            String ipAddress = "";
+        String ipAddress = modConfig.getAddress();
+        if(ipAddress.equals("error")) {
+            MinecraftClient client = MinecraftClient.getInstance();
+            if (client.player != null) {
+                client.player.sendMessage(Text.literal("没有指定的ip地址").withColor(0xFF5555), false);
+            }
+        }
+        else {
             int port = modConfig.getPort();
-            if(modConfig.getHost().equals("this")) {
-                InetAddress localhost = InetAddress.getLocalHost();
-                ipAddress = localhost.getHostAddress();
-            }else ipAddress = modConfig.getHost();
             StringBuilder url = new StringBuilder("https://www.dungeon-lab.com/app-download.php#DGLAB-SOCKET#ws://").append(ipAddress).append(':').append(port).append("/1234-123456789-12345-12345-01");
             String filePath = "QR.png";
             try {
@@ -51,15 +55,13 @@ public class ToolQR {
                 ImageIO.write(image, "png", qrCodeFile);
 
 
-                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", "",  "\"" + qrCodeFile.getAbsolutePath() + "\"");
+                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "start", "", "\"" + qrCodeFile.getAbsolutePath() + "\"");
                 pb.start();
 
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-        } catch (UnknownHostException e) {
         }
 
 

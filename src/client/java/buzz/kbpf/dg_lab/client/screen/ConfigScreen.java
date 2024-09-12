@@ -41,6 +41,7 @@ public class ConfigScreen extends Screen {
     protected void init() {
         Screen WebSocketConfigScreen = new WebSocketConfigScreen();
         Screen strengthConfigScreen = new StrengthConfigScreen();
+        Screen waveformConfigScreen = new WaveformConfigScreen();
 
         StrengthConfig strengthConfig = Dg_labClient.getStrengthConfig();
         ModConfig modConfig = Dg_labClient.getModConfig();
@@ -101,6 +102,10 @@ public class ConfigScreen extends Screen {
             client.setScreen(strengthConfigScreen);
         }).dimensions(width / 2 - 205, 45, 200, 15).tooltip(Tooltip.of(Text.literal("点击修改强度设置"))).build();
 
+        WaveFormConfig = ButtonWidget.builder(Text.literal("波形设置"), button -> {
+            client.setScreen(waveformConfigScreen);
+        }).dimensions(width / 2 + 5, 45, 200, 15).tooltip((Tooltip.of(Text.literal("制作中")))).build();
+
         createQR = ButtonWidget.builder(Text.literal("创建连接二维码并打开"), button -> {
             ToolQR.CreateQR();
         }).dimensions(width / 2 - 205, 120, 200, 15).tooltip(Tooltip.of(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir")))).build();
@@ -111,6 +116,7 @@ public class ConfigScreen extends Screen {
         addDrawableChild(saveFile);
         addDrawableChild(webSocketConfig);
         addDrawableChild(StrengthConfig);
+        addDrawableChild(WaveFormConfig);
         addDrawableChild(createQR);
         addDrawableChild(RenderingPositionX);
         addDrawableChild(RenderingPositionY);

@@ -4,6 +4,7 @@ package buzz.kbpf.dg_lab.client.screen;
 import buzz.kbpf.dg_lab.client.Dg_labClient;
 import buzz.kbpf.dg_lab.client.createQR.ToolQR;
 import buzz.kbpf.dg_lab.client.entity.ModConfig;
+import buzz.kbpf.dg_lab.client.entity.NetworkAdapter;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
@@ -14,6 +15,11 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @Environment(EnvType.CLIENT)
 public class WebSocketConfigScreen extends Screen {
@@ -29,8 +35,11 @@ public class WebSocketConfigScreen extends Screen {
     public TextFieldWidget port;
     public TextFieldWidget serverPort;
     public ButtonWidget host1;
+    public ButtonWidget host2;
     public ButtonWidget port1;
     public ButtonWidget serverPort1;
+    private NetworkAdapter network = new NetworkAdapter();
+    private LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap<>(network.getNetworkMap());
 
     @Override
     public void close() {
@@ -58,14 +67,17 @@ public class WebSocketConfigScreen extends Screen {
             ToolQR.CreateQR();
         }).dimensions(width / 2 + 5, 20, 200, 15).tooltip(Tooltip.of(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir")))).build();
 
-        host = new TextFieldWidget(this.textRenderer, width / 2 + 35, 45, 170, 15, Text.literal("Enter text..."));
-        host.setText(modConfig.getHost());
+        host = new TextFieldWidget(this.textRenderer, width / 2 + 35, 45, 170, 15, Text.literal("Enter address..."));
+        host.setText(modConfig.getAddress());
         host.setPlaceholder(Text.literal("this").setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
         host.setChangedListener(this::hostText);
         host1 = ButtonWidget.builder(Text.literal("?"), button -> {
-        }).dimensions(width / 2 + 25, 45, 10, 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的地址\n非必要无需修改\n设置为this自动选择当前局域网地址"))).build();
+        }).dimensions(width / 2 + 25, 45, 10, 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的地址\n非必要无需修改"))).build();
+        host2 = ButtonWidget.builder(Text.literal("<|>"), button -> {
+            toggleNetworkAdapter();
+        }).dimensions(width / 2 + 5, 45, 20, 15).tooltip(Tooltip.of(Text.literal("切换网卡"))).build();
 
-        port = new TextFieldWidget(this.textRenderer, width / 2 + 35, 70, 170, 15, Text.literal("Enter text..."));
+        port = new TextFieldWidget(this.textRenderer, width / 2 + 35, 70, 170, 15, Text.literal("Enter port..."));
         port.setText(String.valueOf(modConfig.getPort()));
         port.setPlaceholder(Text.literal("9999").setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
         port.setChangedListener(this::portText);
@@ -73,7 +85,7 @@ public class WebSocketConfigScreen extends Screen {
         port1 = ButtonWidget.builder(Text.literal("?"), button -> {
         }).dimensions(width / 2 + 25, 70, 10, 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的端口,非服务器端口\n非必要无需修改"))).build();
 
-        serverPort = new TextFieldWidget(this.textRenderer, width / 2 + 35, 95, 170, 15, Text.literal("Enter text..."));
+        serverPort = new TextFieldWidget(this.textRenderer, width / 2 + 35, 95, 170, 15, Text.literal("Enter port..."));
         serverPort.setText(String.valueOf(modConfig.getPort()));
         serverPort.setPlaceholder(Text.literal("9999").setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
         serverPort.setChangedListener(this::serverPortText);
@@ -86,6 +98,7 @@ public class WebSocketConfigScreen extends Screen {
         addDrawableChild(autoStartWebSocketServer);
         addDrawableChild(host);
         addDrawable(host1);
+        addDrawableChild(host2);
         addDrawableChild(port);
         addDrawable(port1);
         addDrawableChild(serverPort);
@@ -93,11 +106,45 @@ public class WebSocketConfigScreen extends Screen {
     }
 
 
-    public void hostText(String Text) {
-        modConfig.setHost(Text);
+    private Timer timer = new Timer(); // 定义一个计时器
+
+    private void hostText(String Text) {
+
+        // 重置计时器
+        if (timer != null) {
+            timer.cancel();
+        }
+
+        // 启动一个新的计时器，延迟更新
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                // 停止输入一段时间后的操作
+                modConfig.setAddress(Text);
+            }
+        }, 1000); // 延迟时间为 1000ms
+
     }
 
-    public void portText(String port) {
+    private void toggleNetworkAdapter(){
+        boolean isKeyFound = false;
+        for (Map.Entry<String, String> entry : linkedHashMap.entrySet()){
+            if(entry.getKey().equals(modConfig.getNetwork())) isKeyFound = true;
+            else if(isKeyFound){
+                modConfig.setAddress(entry.getValue());
+                modConfig.setNetwork(entry.getKey());
+                host.setText(entry.getValue());
+                return;
+            }
+        }
+        Map.Entry<String, String> firstEntry = linkedHashMap.entrySet().iterator().next();
+        modConfig.setAddress(firstEntry.getValue());
+        modConfig.setNetwork(firstEntry.getKey());
+        host.setText(firstEntry.getValue());
+    }
+
+    private void portText(String port) {
         int number;
         try {
             number = Integer.parseInt(port);
@@ -111,7 +158,10 @@ public class WebSocketConfigScreen extends Screen {
 
     }
 
-    public void serverPortText(String serverPort) {
+
+
+
+    private void serverPortText(String serverPort) {
         int number;
         try {
             number = Integer.parseInt(serverPort);
@@ -129,8 +179,12 @@ public class WebSocketConfigScreen extends Screen {
 
 
         context.drawTextWithShadow(textRenderer, Text.literal("二维码连接的地址"), width / 2 - 190, 48, 0xffffff);
+        context.drawTextWithShadow(textRenderer, Text.literal(modConfig.getNetwork()), width / 2 - 190, 58, 0xaaaaaa);
         context.drawTextWithShadow(textRenderer, Text.literal("二维码连接的端口"), width / 2 - 190, 73, 0xffffff);
         context.drawTextWithShadow(textRenderer, Text.literal("服务器开放的端口"), width / 2 - 190, 98, 0xffffff);
+
+
+
     }
 
 }
