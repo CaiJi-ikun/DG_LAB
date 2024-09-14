@@ -4,6 +4,7 @@ import buzz.kbpf.dg_lab.client.Dg_labClient;
 import buzz.kbpf.dg_lab.client.createQR.ToolQR;
 import buzz.kbpf.dg_lab.client.entity.ModConfig;
 import buzz.kbpf.dg_lab.client.entity.StrengthConfig;
+import buzz.kbpf.dg_lab.client.screen.WaveformScreen.WaveformConfigScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

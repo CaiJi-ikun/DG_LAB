@@ -69,7 +69,7 @@ public class WebSocketConfigScreen extends Screen {
 
         host = new TextFieldWidget(this.textRenderer, width / 2 + 35, 45, 170, 15, Text.literal("Enter address..."));
         host.setText(modConfig.getAddress());
-        host.setPlaceholder(Text.literal("this").setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+        host.setPlaceholder(Text.literal("this").withColor(0xaaaaaa));
         host.setChangedListener(this::hostText);
         host1 = ButtonWidget.builder(Text.literal("?"), button -> {
         }).dimensions(width / 2 + 25, 45, 10, 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的地址\n非必要无需修改"))).build();
@@ -79,7 +79,7 @@ public class WebSocketConfigScreen extends Screen {
 
         port = new TextFieldWidget(this.textRenderer, width / 2 + 35, 70, 170, 15, Text.literal("Enter port..."));
         port.setText(String.valueOf(modConfig.getPort()));
-        port.setPlaceholder(Text.literal("9999").setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+        port.setPlaceholder(Text.literal("9999").withColor(0xaaaaaa));
         port.setChangedListener(this::portText);
         port.setMaxLength(5);
         port1 = ButtonWidget.builder(Text.literal("?"), button -> {
@@ -87,7 +87,7 @@ public class WebSocketConfigScreen extends Screen {
 
         serverPort = new TextFieldWidget(this.textRenderer, width / 2 + 35, 95, 170, 15, Text.literal("Enter port..."));
         serverPort.setText(String.valueOf(modConfig.getPort()));
-        serverPort.setPlaceholder(Text.literal("9999").setStyle(Style.EMPTY.withColor(Formatting.GRAY)));
+        serverPort.setPlaceholder(Text.literal("9999").withColor(0xaaaaaa));
         serverPort.setChangedListener(this::serverPortText);
         serverPort.setMaxLength(5);
         serverPort1 = ButtonWidget.builder(Text.literal("?"), button -> {
@@ -179,9 +179,10 @@ public class WebSocketConfigScreen extends Screen {
 
 
         context.drawTextWithShadow(textRenderer, Text.literal("二维码连接的地址"), width / 2 - 190, 48, 0xffffff);
-        context.drawTextWithShadow(textRenderer, Text.literal(modConfig.getNetwork()), width / 2 - 190, 58, 0xaaaaaa);
+        context.drawText(textRenderer, Text.literal(modConfig.getNetwork()), width / 2 - 190, 58, 0xaaaaaa, false);
         context.drawTextWithShadow(textRenderer, Text.literal("二维码连接的端口"), width / 2 - 190, 73, 0xffffff);
         context.drawTextWithShadow(textRenderer, Text.literal("服务器开放的端口"), width / 2 - 190, 98, 0xffffff);
+
 
 
 

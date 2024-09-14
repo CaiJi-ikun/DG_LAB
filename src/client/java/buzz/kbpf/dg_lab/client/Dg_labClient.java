@@ -2,11 +2,10 @@ package buzz.kbpf.dg_lab.client;
 
 import buzz.kbpf.dg_lab.client.FrequencyTool.FrequencyTool;
 import buzz.kbpf.dg_lab.client.entity.DGStrength;
-import buzz.kbpf.dg_lab.client.entity.DGWaveform;
+import buzz.kbpf.dg_lab.client.entity.DGWaveformTool;
 import buzz.kbpf.dg_lab.client.entity.ModConfig;
 import buzz.kbpf.dg_lab.client.entity.StrengthConfig;
 import buzz.kbpf.dg_lab.client.screen.ConfigScreen;
-import buzz.kbpf.dg_lab.client.screen.WebSocketConfigScreen;
 import buzz.kbpf.dg_lab.client.webSocketServer.webSocketServer;
 import buzz.kbpf.dg_lab.client.createQR.ToolQR;
 import com.google.gson.Gson;
@@ -14,7 +13,6 @@ import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
-import jdk.jfr.Frequency;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -29,7 +27,6 @@ import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
-import net.minecraft.client.MinecraftClient;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -181,11 +178,8 @@ public class Dg_labClient implements ClientModInitializer {
                                     return 1;
                                 }))
                                 .then(literal("send").then(argument(("text"), StringArgumentType.string()).executes(context -> {
-                                    DGWaveform dgWaveform = new DGWaveform();
-                                    dgWaveform.setText(StringArgumentType.getString(context, "text"));
-                                    dgWaveform.TextToWaveform();
-                                    context.getSource().sendFeedback(Text.literal(String.valueOf((dgWaveform.getLength() * 0.025))));
-                                    webSocketServer.sendDGWaveForm(dgWaveform.getWaveform());
+
+                                    webSocketServer.sendDGWaveForm(DGWaveformTool.TextToWaveform(StringArgumentType.getString(context, "text")));
                                     return 1;
                                 }))))
 
