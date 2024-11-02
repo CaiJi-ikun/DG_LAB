@@ -4,12 +4,12 @@
   "package": "buzz.kbpf.dg_lab.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "ClientPlayerEntityAccessor",
-    "ClientPlayerEntityMixin"
+    "online.kbpf.dg_lab.mixin.ClientPlayerEntityAccessor",
+    "online.kbpf.dg_lab.mixin.ClientPlayerEntityMixin"
   ],
   "mixins": [
-    "LivingEntityAccessor",
-    "tick"
+    "online.kbpf.dg_lab.mixin.LivingEntityAccessor",
+    "online.kbpf.dg_lab.mixin.tick"
   ],
   "injectors": {
     "defaultRequire": 1

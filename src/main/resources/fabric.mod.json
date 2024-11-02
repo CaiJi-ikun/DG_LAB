@@ -11,10 +11,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "buzz.kbpf.dg_lab.client.Dg_labClient"
+      "online.kbpf.dg_lab.client.Dg_labClient"
     ],
     "main": [
-      "buzz.kbpf.dg_lab.Dg_lab"
+      "online.kbpf.dg_lab.Dg_lab"
     ]
   },
   "mixins": [
