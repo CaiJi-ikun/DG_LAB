@@ -1,15 +1,15 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "buzz.kbpf.dg_lab.mixin",
+  "package": "online.kbpf.dg_lab.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "online.kbpf.dg_lab.mixin.ClientPlayerEntityAccessor",
-    "online.kbpf.dg_lab.mixin.ClientPlayerEntityMixin"
+    "ClientPlayerEntityAccessor",
+    "ClientPlayerEntityMixin"
   ],
   "mixins": [
-    "online.kbpf.dg_lab.mixin.LivingEntityAccessor",
-    "online.kbpf.dg_lab.mixin.tick"
+    "LivingEntityAccessor",
+    "tick"
   ],
   "injectors": {
     "defaultRequire": 1
