@@ -30,16 +30,16 @@ public class StrengthConfig {
     }
 
     public static StrengthConfig loadJson() {
+        //json文件转数据
         Gson gson = new Gson();
         File file = new File("config/dg-lab/StrengthConfig.json");
+
         if (!file.exists()) {
+            //如果文件是空的
             return new StrengthConfig(3, 3, 5, 5, 1, 1, 50, 50); // 默认的对象，可以根据需求初始化
         }
         try (Reader reader = new FileReader("config/dg-lab/StrengthConfig.json")) {
             return gson.fromJson(reader, StrengthConfig.class);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            // Handle FileNotFoundException
         } catch (JsonSyntaxException | IOException e) {
             e.printStackTrace();
             // Handle other JSON related exceptions

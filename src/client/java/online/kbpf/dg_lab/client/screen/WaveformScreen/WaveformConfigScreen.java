@@ -1,14 +1,17 @@
 package online.kbpf.dg_lab.client.screen.WaveformScreen;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import online.kbpf.dg_lab.client.screen.ConfigScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
+@Environment(EnvType.CLIENT)
 public class WaveformConfigScreen extends Screen {
 
-
+//波形配置界面
     public WaveformListWidget waveformListWidget;
 
     public WaveformConfigScreen() {
@@ -19,55 +22,40 @@ public class WaveformConfigScreen extends Screen {
     @Override
     public void close() {
         Screen configScreen = new ConfigScreen();
-        client.setScreen(configScreen);
+        if (client != null) {
+            client.setScreen(configScreen);
+        }
+        //上一级界
     }
 
     @Override
     protected void init() {
+        //注册列表项目
         MinecraftClient client = MinecraftClient.getInstance();
         System.out.println(width + " " + height);
-        waveformListWidget = new WaveformListWidget(client, width, height - 40, 40, 20);
-        WaveformListWidget.Entry a = new WaveformListWidget.Entry(client.textRenderer, Text.literal("a"), () -> {
-            System.out.println("a");
-        });
-        WaveformListWidget.Entry b = new WaveformListWidget.Entry(client.textRenderer, Text.literal("b"), () -> {
-            System.out.println("b");
-        });
-        WaveformListWidget.Entry c = new WaveformListWidget.Entry(client.textRenderer, Text.literal("c"), () -> {
-            System.out.println("c");
-        });
-        WaveformListWidget.Entry d = new WaveformListWidget.Entry(client.textRenderer, Text.literal("d"), () -> {
-            System.out.println("d");
-        });
-        WaveformListWidget.Entry e = new WaveformListWidget.Entry(client.textRenderer, Text.literal("e"), () -> {
-            System.out.println("e");
-        });
-        WaveformListWidget.Entry f = new WaveformListWidget.Entry(client.textRenderer, Text.literal("f"), () -> {
-            System.out.println("f");
-        });
-        WaveformListWidget.Entry g = new WaveformListWidget.Entry(client.textRenderer, Text.literal("g"), () -> {
-            System.out.println("g");
-        });
-        WaveformListWidget.Entry h = new WaveformListWidget.Entry(client.textRenderer, Text.literal("h"), () -> {
-            System.out.println("h");
-        });
+        waveformListWidget = new WaveformListWidget(client, width, height - 40, 40, 25);
+        //用这个滚动列表注意左右边界 添加条目比较少的时候不显示左右边界 但是左右边界的地方无法交互
+        WaveformListWidget.Entry a = new WaveformListWidget.Entry(client.textRenderer, Text.literal("a"), "a");
+        WaveformListWidget.Entry b = new WaveformListWidget.Entry(client.textRenderer, Text.literal("b"), "b");
+        WaveformListWidget.Entry c = new WaveformListWidget.Entry(client.textRenderer, Text.literal("c"), "c");
+        WaveformListWidget.Entry d = new WaveformListWidget.Entry(client.textRenderer, Text.literal("d"), "d");
 
 
+        //添加列表项目
         waveformListWidget.addWaveformEntry(a);
         waveformListWidget.addWaveformEntry(b);
         waveformListWidget.addWaveformEntry(c);
         waveformListWidget.addWaveformEntry(d);
-        waveformListWidget.addWaveformEntry(e);
-        waveformListWidget.addWaveformEntry(f);
-        waveformListWidget.addWaveformEntry(g);
-        waveformListWidget.addWaveformEntry(h);
         addDrawableChild(waveformListWidget);
     }
 
-    @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        super.render(context, mouseX, mouseY, delta);
-    }
+}
+
+//    @Override
+//    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+//        //渲染
+//        super.render(context, mouseX, mouseY, delta);
+//    }
 
 
 //    @Override
@@ -75,4 +63,4 @@ public class WaveformConfigScreen extends Screen {
 //        if (super.mouseClicked(mouseX, mouseY, button)) return true;
 //        return waveformListWidget.mouseClicked(mouseX, mouseY, button);
 //    }
-}
+

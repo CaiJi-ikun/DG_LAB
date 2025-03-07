@@ -32,6 +32,8 @@ public class DGFrequency {
         B = b;
     }
 
+
+
     public String getHexString(int A1or2B) {
         StringBuilder hexStringBuilder = new StringBuilder();
         for (int i : N) {
@@ -51,6 +53,9 @@ public class DGFrequency {
         return hexStringBuilder.toString();
     }
 
+
+
+    //获取受伤的时候的波形
     public String getDamageFrequency() {
         StringBuilder frequency = new StringBuilder();
         for (int i = 0; i <= 15; i++) {
@@ -64,6 +69,9 @@ public class DGFrequency {
         return frequency.toString();
     }
 
+
+
+    //获取回血的时候的波形
     public String getHealingFrequency() {
         StringBuilder frequency = new StringBuilder();
         for (int i = 0; i <= 15; i++) {
