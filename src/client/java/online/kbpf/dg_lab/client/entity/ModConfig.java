@@ -16,7 +16,7 @@ public class ModConfig {
     private int RenderingPositionY = 20;
     private int port = 9999, serverPort = port;
     private String address, network;
-    private boolean address2 = false, network2 = false;
+    private boolean address2 = false, network2 = false, renderingMax = false;
 
 
 
@@ -25,6 +25,7 @@ public class ModConfig {
         RenderingPositionX = x;
         RenderingPositionY = y;
         autoGetNetworkAddress();
+        renderingMax = false;
 
     }
 
@@ -73,6 +74,13 @@ public class ModConfig {
         else return "unknown";
     }
 
+    public boolean isRenderingMax() {
+        return renderingMax;
+    }
+
+    public void setRenderingMax(boolean renderingMax) {
+        this.renderingMax = renderingMax;
+    }
 
     public void setNetwork(String network) {
         this.network = network;

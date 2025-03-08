@@ -1,8 +1,10 @@
 package online.kbpf.dg_lab.client;
 
+import online.kbpf.dg_lab.client.Tool.DGWaveformTool;
 import online.kbpf.dg_lab.client.command.Default;
 import online.kbpf.dg_lab.client.entity.ModConfig;
 import online.kbpf.dg_lab.client.entity.StrengthConfig;
+import online.kbpf.dg_lab.client.entity.WaveformConfig;
 import online.kbpf.dg_lab.client.screen.ConfigScreen;
 import online.kbpf.dg_lab.client.webSocketServer.webSocketServer;
 import net.fabricmc.api.ClientModInitializer;
@@ -27,21 +29,28 @@ import java.util.Map;
 
 public class Dg_labClient implements ClientModInitializer {
 
-    private static webSocketServer webSocketServer = null;
-    private static StrengthConfig StrengthConfig = new StrengthConfig();
-    private static final ModConfig modConfig = ModConfig.loadJson();
+    public static webSocketServer webSocketServer = null;
+    public static StrengthConfig StrengthConfig = new StrengthConfig();
+    public static final ModConfig modConfig = ModConfig.loadJson();
     private static KeyBinding keyBinding;
     private final Screen ConfigScreen = new ConfigScreen();
-    public static Map<String, String> waveformDataMap = new HashMap<>();
+    public static Map<String, String> waveformDataMap = WaveformConfig.LoadWaveform();
+    public static Map<String, Integer> waveformDuration = new HashMap<>();
 
 
 
     @Override
     public void onInitializeClient() {
 
+
+
+        //注册连接的服务器
         webSocketServer = new webSocketServer(new InetSocketAddress(modConfig.getServerPort()));
 
         StrengthConfig = online.kbpf.dg_lab.client.entity.StrengthConfig.loadJson();
+
+        DGWaveformTool.updateDuration();
+
         HudRenderCallback.EVENT.register(this::onHudRender);
 
         keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -84,16 +93,24 @@ public class Dg_labClient implements ClientModInitializer {
             int x = modConfig.getRenderingPositionX();
             int y = modConfig.getRenderingPositionY();
 
-            // 渲染图标
-//            client.getTextureManager().bindTexture(STRENGTH_ICON);
-//            drawTexture(drawContext, x, y, 0, 0, 16, 16);
 
             // 创建并渲染 OrderedText
 
             if(webSocketServer.getConnected()) {
-                Text strengthText = Text.literal("A:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
+                Text strengthText;
+                Text strengthText1;
+                if(modConfig.isRenderingMax()) {
+                    strengthText = Text.literal("A:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
+
+                    strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getBStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
+
+                }
+                else {
+                    strengthText = Text.literal("A:" + webSocketServer.getStrength().getAStrength());
+
+                    strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getBStrength());
+                }
                 OrderedText orderedText = strengthText.asOrderedText();
-                Text strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
                 OrderedText orderedText1 = strengthText1.asOrderedText();
                 drawContext.drawTextWithShadow(client.textRenderer, orderedText, x, y, 0xFFFFFF);
                 drawContext.drawTextWithShadow(client.textRenderer, orderedText1, x, y + 9, 0xFFFFFF);

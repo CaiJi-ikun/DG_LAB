@@ -1,6 +1,13 @@
 package online.kbpf.dg_lab.client.Tool;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static online.kbpf.dg_lab.client.Dg_labClient.waveformDuration;
+import static online.kbpf.dg_lab.client.Dg_labClient.waveformDataMap;
 
 public class DGWaveformTool {
     // 定义私有字段，用来存储时间、文本、频率数组、长度和波形字符串
@@ -18,18 +25,18 @@ public class DGWaveformTool {
         StringBuilder number = new StringBuilder(); // 用于存储当前解析的数字
         {
             waveformPairs waveformPairs1 = new waveformPairs(); // 创建一个新的waveformPairs对象
-            for (char ch : Text.toCharArray()) { // 遍历文本中的每个字符
-                if (Character.isDigit(ch)) { // 如果字符是数字
-                    number.append(ch); // 将数字追加到StringBuilder中
-                } else if (ch == ',') { // 如果遇到逗号，表示时间部分结束
+            for (char ch : Text.toCharArray()) {                // 遍历文本中的每个字符
+                if (Character.isDigit(ch)) {                    // 如果字符是数字
+                    number.append(ch);                          // 将数字追加到StringBuilder中
+                } else if (ch == ',') {                         // 如果遇到逗号，表示时间部分结束
                     waveformPairs1.Time = Integer.parseInt(number.toString()); // 将数字转换为时间
-                    number = new StringBuilder(); // 重置StringBuilder以解析下一个数字
-                    length += waveformPairs1.Time + 1; // 更新波形总长度
-                } else if (ch == ';') { // 如果遇到分号，表示强度部分结束
+                    number = new StringBuilder();               // 重置StringBuilder以解析下一个数字
+                    length += waveformPairs1.Time + 1;          // 更新波形总长度
+                } else if (ch == ';') {                         // 如果遇到分号，表示强度部分结束
                     waveformPairs1.Strength = Integer.parseInt(number.toString()); // 设置强度
-                    waveformPairs.add(waveformPairs1); // 添加当前配对到列表
-                    waveformPairs1 = new waveformPairs(); // 创建新的配对对象
-                    number = new StringBuilder(); // 重置StringBuilder
+                    waveformPairs.add(waveformPairs1);          // 添加当前配对到列表
+                    waveformPairs1 = new waveformPairs();       // 创建新的配对对象
+                    number = new StringBuilder();               // 重置StringBuilder
                 }
             }
         }
@@ -67,12 +74,130 @@ public class DGWaveformTool {
         return frequency.toString(); // 设置生成的波形字符串
     }
 
+//    public static int GetDuration(String waveform){
+//
+//        boolean Data = false;
+//
+//        int length = waveform.length();
+//        if(length == 0 || waveform.charAt(0) != '\"') return 0;
+//        StringBuilder number = new StringBuilder();
+//        int count = 0;
+//        int duration = 0;
+//        for (int i = 0; i < length; i++){
+//
+//            char ch = waveform.charAt(i);
+//            if(ch == '\"') {
+//                if((count > 16 || count == 0) && Data) return 0;
+//                Data = !Data;
+//
+//            }
+//
+//            else if(isHexCharacter(ch)) {
+//                if(Data) {
+//                    number.append(ch);
+//                    count++;
+//                    duration++;
+//                    if (count % 2 == 0){
+//                        if(Integer.parseInt(number.toString(), 16) > 100) return 0;
+//                        number = new StringBuilder();
+//
+//                    }
+//                }
+//                else return 0;
+//            }
+//
+//
+//            if(!Data) count = 0;
+//
+//
+//
+//        }
+//
+//
+//        return duration / 16 * 100;
+//    }
+
+    public static void updateDuration(){
+        for(String name : waveformDataMap.keySet()){
+            if(waveformDuration.containsKey(name)) waveformDuration.replace(name, checkAndCountValidSubstrings(waveformDataMap.get(name)));
+            else waveformDuration.put(name, checkAndCountValidSubstrings(waveformDataMap.get(name)));
+        }
+    }
 
 
 
+    public static int checkAndCountValidSubstrings(String input) {
+        // 按逗号分割大字符串
+        String[] substrings = input.split(",");
+        int validCount = 0;
+
+
+        // 遍历每个小字符串
+        for (String substring : substrings) {
+            if (!validateSubstring(substring)) { // 如果有一个小字符串不满足条件
+                return 0; // 直接返回 0
+            }
+            validCount++; // 如果满足条件，计数加 1
+        }
+        if(validCount == StringUtils.countMatches(input, ',') + 1)
+            return validCount; // 返回满足条件的小字符串数量
+        return 0;
+    }
+
+
+    public static boolean validateSubstring(String substring) {
+
+
+        // 定义正则表达式，匹配双引号内的 16 个字符
+        String regex = "^\"[0-9a-fA-F]{16}\"$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(substring);
+
+        if (!matcher.matches()) {
+            return false; // 如果格式不匹配，直接返回 false
+        }
+
+        // 提取双引号内的内容
+        String content = substring.substring(1, substring.length() - 1);
+
+        // 每两个字符组成一个 16 进制数，并检查是否小于等于 100
+        for (int i = 0; i < content.length(); i += 2) {
+            String hexPair = content.substring(i, i + 2); // 提取两个字符
+            int decimalValue = Integer.parseInt(hexPair, 16); // 转换为 10 进制
+            if (decimalValue > 100) {
+                return false; // 如果大于 100，返回 false
+            }
+        }
+
+        return true; // 所有条件都满足
+    }
+
+
+
+
+
+
+
+
+
+
+
+    // 定义waveformPairs类，用于存储时间和强度的配对信息
+    private static class waveformPairs {
+        int Time, Strength; // 时间和强度
+    }
+
+    //判断是否是数字(包括ABCDEF
+    public static boolean isHexCharacter(char ch) {
+        return String.valueOf(ch).matches("[0-9a-fA-F]");
+    }
 }
 
-// 定义waveformPairs类，用于存储时间和强度的配对信息
-class waveformPairs {
-    int Time, Strength; // 时间和强度
-}
+
+
+
+
+
+
+
+

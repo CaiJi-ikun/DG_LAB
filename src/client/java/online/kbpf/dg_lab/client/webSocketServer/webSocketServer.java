@@ -14,6 +14,9 @@ import java.net.InetSocketAddress;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static online.kbpf.dg_lab.client.Dg_labClient.waveformDataMap;
+
+
 public class webSocketServer extends WebSocketServer {
 
     // 指示服务器是否正在运行
@@ -32,7 +35,7 @@ public class webSocketServer extends WebSocketServer {
     private DGStrength dgStrength = new DGStrength();
 
     //存储频率相关数据的DGFrequency对象
-    private DGFrequency dgFrequency = new DGFrequency();
+
 
     /**
      * webSocketServer类的构造函数。
@@ -203,22 +206,19 @@ public class webSocketServer extends WebSocketServer {
         }
     }
 
-    //设置频率
-    public void setDgFrequency(DGFrequency dgFrequency){
-        this.dgFrequency = dgFrequency;
-    }
+
 
 
     /**
      * 根据指定类型将DG频率数据发送给客户端。
      *
-     * @param Custom1orDamage2orHealth3 要发送的数据类型：
+     * @param Damage2orHealth3 要发送的数据类型：
      *                                    1 表示自定义频率数据，
      *                                    2 表示伤害频率数据，
      *                                    3 表示治疗频率数据。
      * @param cleanPrevious 如果为true，则在发送新消息之前清除之前的消息。
      */
-    public void sendDgFrequency(int Custom1orDamage2orHealth3, boolean cleanPrevious, int A1orB2) {
+    public void sendDgWaveform(int Damage2orHealth3, boolean cleanPrevious, int A1orB2) {
 
         if (isConnected) {
             // 如果需要清除之前的数据
@@ -228,53 +228,27 @@ public class webSocketServer extends WebSocketServer {
             clientInfo.setType("msg"); // 将消息类型设置为"msg"
 
             // 检查要发送的数据类型
-            if (Custom1orDamage2orHealth3 == 2) {
-                // 发送伤害频率数据
-                String tmp = dgFrequency.getDamageFrequency();
+            if (Damage2orHealth3 == 2) {
+                // 发送伤害波形
                 if (A1orB2 == 1) {
                     // 发送到A通道
-                    clientInfo.setMessage("pulse-A:[" + tmp + "]");
+                    clientInfo.setMessage("pulse-A:[" + waveformDataMap.get("ADamage") + "]");
                     client.send(new Gson().toJson(clientInfo, online.kbpf.dg_lab.client.entity.clientInfo.class));
 
                 } else if (A1orB2 == 2) {
                     // 发送到B通道
-                    clientInfo.setMessage("pulse-B:[" + tmp + "]");
+                    clientInfo.setMessage("pulse-B:[" + waveformDataMap.get("BDamage") + "]");
                     client.send(new Gson().toJson(clientInfo, online.kbpf.dg_lab.client.entity.clientInfo.class));
                 }
-            } else if (Custom1orDamage2orHealth3 == 3) {
-                // 发送治疗频率数据
-                String tmp = dgFrequency.getHealingFrequency();
+            } else if (Damage2orHealth3 == 3) {
+                // 发送治疗波形
                 if (A1orB2 == 1) {
                     // 发送到A通道
-                    clientInfo.setMessage("pulse-A:[" + tmp + "]");
+                    clientInfo.setMessage("pulse-A:[" + waveformDataMap.get("AHealing") + "]");
                     client.send(new Gson().toJson(clientInfo, online.kbpf.dg_lab.client.entity.clientInfo.class));
                 } else if (A1orB2 == 2) {
                     // 发送到B通道
-                    clientInfo.setMessage("pulse-B:[" + tmp + "]");
-                    client.send(new Gson().toJson(clientInfo, online.kbpf.dg_lab.client.entity.clientInfo.class));
-                }
-            } else if (Custom1orDamage2orHealth3 == 1) {
-                // 发送自定义频率数据
-                StringBuilder message = new StringBuilder();
-                String Frequency = dgFrequency.getHexString(1);
-                // 为指定通道创建一个包含10次自定义频率数据的消息
-                if (A1orB2 == 1) {
-                    for (int i = 1; i <= 10; i++) {
-                        message.append('\"');
-                        message.append(Frequency);
-                        if (i != 10) message.append("\",");
-                        else message.append('\"');
-                    }
-                    clientInfo.setMessage("pulse-A:[" + message + "]");
-                    client.send(new Gson().toJson(clientInfo, online.kbpf.dg_lab.client.entity.clientInfo.class));
-                } else if (A1orB2 == 2) {
-                    for (int i = 1; i <= 10; i++) {
-                        message.append('\"');
-                        message.append(Frequency);
-                        if (i != 10) message.append("\",");
-                        else message.append('\"');
-                    }
-                    clientInfo.setMessage("pulse-B:[" + message + "]");
+                    clientInfo.setMessage("pulse-B:[" + waveformDataMap.get("BHealing") + "]");
                     client.send(new Gson().toJson(clientInfo, online.kbpf.dg_lab.client.entity.clientInfo.class));
                 }
             }
@@ -282,11 +256,19 @@ public class webSocketServer extends WebSocketServer {
     }
 
 
-    public void sendDGWaveForm(String message){
+    public void sendDGWaveForm(String message, int A1orB2){
+        System.out.println(1);
         if(isConnected){
-            CleanFrequency(1);
+            System.out.println(2);
             clientInfo.setType("msg");
-            clientInfo.setMessage("pulse-A:[" + message + "]");
+            if(A1orB2 == 1) {
+                CleanFrequency(1);
+                clientInfo.setMessage("pulse-A:[" + message + "]");
+            }
+            else {
+                CleanFrequency(2);
+                clientInfo.setMessage("pulse-B:[" + message + "]");
+            }
             client.send(new Gson().toJson(clientInfo, online.kbpf.dg_lab.client.entity.clientInfo.class));
         }
     }

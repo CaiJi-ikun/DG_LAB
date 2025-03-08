@@ -31,13 +31,12 @@ public class WaveformConfigScreen extends Screen {
     protected void init() {
         //注册列表项目
         MinecraftClient client = MinecraftClient.getInstance();
-        System.out.println(width + " " + height);
         waveformListWidget = new WaveformListWidget(client, width, height - 40, 40, 25);
         //用这个滚动列表注意左右边界 添加条目比较少的时候不显示左右边界 但是左右边界的地方无法交互
-        WaveformListWidget.Entry a = new WaveformListWidget.Entry(client.textRenderer, Text.literal("a"), "a");
-        WaveformListWidget.Entry b = new WaveformListWidget.Entry(client.textRenderer, Text.literal("b"), "b");
-        WaveformListWidget.Entry c = new WaveformListWidget.Entry(client.textRenderer, Text.literal("c"), "c");
-        WaveformListWidget.Entry d = new WaveformListWidget.Entry(client.textRenderer, Text.literal("d"), "d");
+        WaveformListWidget.Entry a = new WaveformListWidget.Entry(client.textRenderer, Text.literal("ADamage"), "ADamage");
+        WaveformListWidget.Entry b = new WaveformListWidget.Entry(client.textRenderer, Text.literal("AHealing"), "AHealing");
+        WaveformListWidget.Entry c = new WaveformListWidget.Entry(client.textRenderer, Text.literal("BDamage"), "BDamage");
+        WaveformListWidget.Entry d = new WaveformListWidget.Entry(client.textRenderer, Text.literal("BHealing"), "BHealing");
 
 
         //添加列表项目

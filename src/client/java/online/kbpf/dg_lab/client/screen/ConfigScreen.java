@@ -3,6 +3,7 @@ package online.kbpf.dg_lab.client.screen;
 import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.createQR.ToolQR;
 import online.kbpf.dg_lab.client.entity.ModConfig;
+import online.kbpf.dg_lab.client.entity.WaveformConfig;
 import online.kbpf.dg_lab.client.screen.StrengthScreen.StrengthConfigScreen;
 import online.kbpf.dg_lab.client.screen.WaveformScreen.WaveformConfigScreen;
 import net.fabricmc.api.EnvType;
@@ -13,6 +14,8 @@ import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.text.Text;
+
+import static online.kbpf.dg_lab.client.Dg_labClient.waveformDataMap;
 
 @Environment(EnvType.CLIENT)
 public class ConfigScreen extends Screen {
@@ -94,8 +97,12 @@ public class ConfigScreen extends Screen {
         saveFile = ButtonWidget.builder(Text.literal("保存配置到文件"), button -> {
                     strengthConfig.savaFile();
                     modConfig.savaFile();
+                    WaveformConfig.saveWaveform(waveformDataMap);
                 })
                 .dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 20, (int) (width * 0.4), 15).tooltip(Tooltip.of(Text.literal("所有更改是临时更改\n点击此按钮保存到文件"))).build();
+
+
+
         webSocketConfig = ButtonWidget.builder(Text.literal("连接设置"), button -> {
                     client.setScreen(WebSocketConfigScreen);
                 })

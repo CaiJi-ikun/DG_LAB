@@ -141,14 +141,11 @@ public class Default {
                                 }))
                                 .then(literal("send").then(argument(("text"), StringArgumentType.string()).executes(context -> {
 
-                                    webSocketServer.sendDGWaveForm(DGWaveformTool.TextToWaveform(StringArgumentType.getString(context, "text")));
+                                    webSocketServer.sendDGWaveForm(DGWaveformTool.TextToWaveform(StringArgumentType.getString(context, "text")), 1);
                                     return 1;
                                 }))))
 
-//                .then(literal("text").executes(context -> {
-//                    context.getSource().sendFeedback(Text.literal(ConfigScreen));
-//                    return 1;
-//                }))
+
         ));
     }
 }

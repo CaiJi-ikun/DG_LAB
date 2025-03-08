@@ -3,7 +3,7 @@ package online.kbpf.dg_lab.client.entity;
 public class DGFrequency {
     private int[] A = {100, 100, 100, 100}, B = {100, 100, 100, 100}, N = {10, 10, 10, 10};
 
-    private final int[] damage = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 0, 0, 0};
+    private final int[] damage = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 0, 0, 0}; //16个强度数据 一个数据表示25ms
 
 
     private final int[] healing = {25, 33, 40, 47, 54, 61, 68, 75, 75, 67, 60, 53, 46, 39, 32, 25};
@@ -34,17 +34,17 @@ public class DGFrequency {
 
 
 
-    public String getHexString(int A1or2B) {
+    public String getHexString(int A1orB2) {
         StringBuilder hexStringBuilder = new StringBuilder();
         for (int i : N) {
             hexStringBuilder.append(String.format("%02X", i));
         }
-        if (A1or2B == 1) {
+        if (A1orB2 == 1) {
             for (int i : A) {
                 hexStringBuilder.append(String.format("%02X", i));
             }
         }
-        if (A1or2B == 2) {
+        if (A1orB2 == 2) {
             for (int i : B) {
                 hexStringBuilder.append(String.format("%02X", i));
             }
@@ -66,6 +66,7 @@ public class DGFrequency {
             frequency.append(String.format("%02X", damage[i]));
         }
         frequency.append('\"');
+        System.out.println(frequency);
         return frequency.toString();
     }
 
@@ -82,6 +83,7 @@ public class DGFrequency {
             frequency.append(String.format("%02X", healing[i]));
         }
         frequency.append('\"');
+        System.out.println(frequency);
         return frequency.toString();
     }
 

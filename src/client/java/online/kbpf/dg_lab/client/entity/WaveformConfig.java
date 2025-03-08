@@ -4,13 +4,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.Map;
 
 public class WaveformConfig {
 
     private WaveformConfig(){}
 
-    public static Map<String, String> LoadWave() {
+    public static Map<String, String> LoadWaveform() {
         Gson gson = new Gson();
         File file = new File("config/dg-lab/WaveformData.json");
         //读取文件
@@ -23,12 +24,17 @@ public class WaveformConfig {
                 throw new RuntimeException(e);
             }
         }
-        return null;
+        Map<String, String> waveform = new HashMap<>();
+        waveform.put("ADamage", "\"0A0A0A0A64646464\",\"0A0A0A0A64646464\",\"0A0A0A0A64646464\",\"0A0A0A0A64000000\"");
+        waveform.put("BDamage", "\"0A0A0A0A64646464\",\"0A0A0A0A64646464\",\"0A0A0A0A64646464\",\"0A0A0A0A64000000\"");
+        waveform.put("AHealing", "\"0A0A0A0A1921282F\",\"0A0A0A0A363D444B\",\"0A0A0A0A4B433C35\",\"0A0A0A0A2E272019\"");
+        waveform.put("BHealing", "\"0A0A0A0A1921282F\",\"0A0A0A0A363D444B\",\"0A0A0A0A4B433C35\",\"0A0A0A0A2E272019\"");
+        return waveform;
     }
 
 
     // 保存 Waveform 配置数据到文件
-    public static void saveWave(Map<String, String> waveformData) {
+    public static void saveWaveform(Map<String, String> waveformData) {
         Gson gson = new Gson();
         File file = new File("config/dg-lab/WaveformData.json");
 
