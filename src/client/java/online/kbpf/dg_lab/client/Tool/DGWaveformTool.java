@@ -1,13 +1,13 @@
 package online.kbpf.dg_lab.client.Tool;
 
+import online.kbpf.dg_lab.client.entity.Waveform.Waveform;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static online.kbpf.dg_lab.client.Dg_labClient.waveformDuration;
-import static online.kbpf.dg_lab.client.Dg_labClient.waveformDataMap;
+import static online.kbpf.dg_lab.client.Dg_labClient.waveformMap;
 
 public class DGWaveformTool {
     // 定义私有字段，用来存储时间、文本、频率数组、长度和波形字符串
@@ -118,9 +118,10 @@ public class DGWaveformTool {
 //    }
 
     public static void updateDuration(){
-        for(String name : waveformDataMap.keySet()){
-            if(waveformDuration.containsKey(name)) waveformDuration.replace(name, checkAndCountValidSubstrings(waveformDataMap.get(name)));
-            else waveformDuration.put(name, checkAndCountValidSubstrings(waveformDataMap.get(name)));
+        if(!waveformMap.isEmpty()) {
+            for (Waveform waveform : waveformMap.values()) {
+                waveform.updateDuration();
+            }
         }
     }
 

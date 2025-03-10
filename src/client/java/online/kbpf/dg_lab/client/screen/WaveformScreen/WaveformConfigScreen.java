@@ -11,7 +11,7 @@ import net.minecraft.text.Text;
 public class WaveformConfigScreen extends Screen {
 
 //波形配置界面
-    public WaveformListWidget waveformListWidget;
+    private WaveformListWidget waveformListWidget;
 
     public WaveformConfigScreen() {
 
@@ -24,7 +24,7 @@ public class WaveformConfigScreen extends Screen {
         if (client != null) {
             client.setScreen(configScreen);
         }
-        //上一级界
+        //上一级界面
     }
 
     @Override

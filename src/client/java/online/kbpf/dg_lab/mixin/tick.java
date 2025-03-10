@@ -74,7 +74,7 @@ public abstract class tick {
             if (!hasDetectedADelay) {
                 webSocketServer.sendDgWaveform(2, true, 1);
                 hasDetectedADelay = true;
-            } else if (tickCounter - lastRunTickA >= waveformDuration.get("ADamage") * 2) {
+            } else if (tickCounter - lastRunTickA >= waveformMap.get("ADamage").getDuration() * 2) {
                 webSocketServer.sendDgWaveform(2, false, 1);
                 lastRunTickA = tickCounter;
             }
@@ -84,7 +84,7 @@ public abstract class tick {
                 if (!hasDetectedADelayZeroAndStrength) {
                     webSocketServer.sendDgWaveform(3, true, 1);
                     hasDetectedADelayZeroAndStrength = true;
-                } else if (tickCounter - lastRunTickA >= waveformDuration.get("AHealing") * 2) {
+                } else if (tickCounter - lastRunTickA >= waveformMap.get("AHealing").getDuration() * 2) {
                     webSocketServer.sendDgWaveform(3, false, 1);
                     lastRunTickA = tickCounter;
                 }
@@ -102,7 +102,7 @@ public abstract class tick {
             if (!hasDetectedBDelay) {
                 webSocketServer.sendDgWaveform(2, true, 2);
                 hasDetectedBDelay = true;
-            } else if (tickCounter - lastRunTickB >= waveformDuration.get("BDamage") * 2) {
+            } else if (tickCounter - lastRunTickB >= waveformMap.get("BDamage").getDuration() * 2) {
                 webSocketServer.sendDgWaveform(2, false, 2);
                 lastRunTickB = tickCounter;
             }
@@ -112,7 +112,7 @@ public abstract class tick {
                 if (!hasDetectedBDelayZeroAndStrength) {
                     webSocketServer.sendDgWaveform(3, true, 2);
                     hasDetectedBDelayZeroAndStrength = true;
-                } else if (tickCounter - lastRunTickB >= waveformDuration.get("BHealing") * 2) {
+                } else if (tickCounter - lastRunTickB >= waveformMap.get("BHealing").getDuration() * 2) {
                     webSocketServer.sendDgWaveform(3, false, 2);
                     lastRunTickB = tickCounter;
                 }

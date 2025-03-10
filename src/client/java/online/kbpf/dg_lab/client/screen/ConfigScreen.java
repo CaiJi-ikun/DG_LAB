@@ -2,9 +2,10 @@ package online.kbpf.dg_lab.client.screen;
 
 import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.createQR.ToolQR;
-import online.kbpf.dg_lab.client.entity.ModConfig;
-import online.kbpf.dg_lab.client.entity.WaveformConfig;
+import online.kbpf.dg_lab.client.Config.ModConfig;
+import online.kbpf.dg_lab.client.Config.WaveformConfig;
 import online.kbpf.dg_lab.client.screen.StrengthScreen.StrengthConfigScreen;
+import online.kbpf.dg_lab.client.screen.WaveformScreen.Custom.CustomScreen;
 import online.kbpf.dg_lab.client.screen.WaveformScreen.WaveformConfigScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -15,7 +16,8 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.text.Text;
 
-import static online.kbpf.dg_lab.client.Dg_labClient.waveformDataMap;
+
+import static online.kbpf.dg_lab.client.Dg_labClient.waveformMap;
 
 @Environment(EnvType.CLIENT)
 public class ConfigScreen extends Screen {
@@ -25,12 +27,18 @@ public class ConfigScreen extends Screen {
     public ButtonWidget createQR;
     public ButtonWidget StrengthConfig;
     public ButtonWidget WaveFormConfig;
+    public ButtonWidget CustomConfig;
 
 
     public SliderWidget RenderingPositionX;
     public SliderWidget RenderingPositionY;
 
 
+
+
+
+
+//    Screen customScreen = new CustomScreen();
 
     public ConfigScreen() {
         // 此参数为屏幕的标题，进入屏幕中，复述功能会复述。
@@ -43,16 +51,18 @@ public class ConfigScreen extends Screen {
 
     @Override
     protected void init() {
-        Screen WebSocketConfigScreen = new WebSocketConfigScreen();
-        Screen strengthConfigScreen = new StrengthConfigScreen();
-        Screen waveformConfigScreen = new WaveformConfigScreen();
 
-        online.kbpf.dg_lab.client.entity.StrengthConfig strengthConfig = Dg_labClient.getStrengthConfig();
+
+        online.kbpf.dg_lab.client.Config.StrengthConfig strengthConfig = Dg_labClient.getStrengthConfig();
         ModConfig modConfig = Dg_labClient.getModConfig();
         MinecraftClient client = MinecraftClient.getInstance();
 
 
         int width1 = client.getWindow().getScaledWidth(), height1 = client.getWindow().getScaledHeight();
+
+        CustomConfig = ButtonWidget.builder(Text.literal("test"), button -> {
+//            client.setScreen(customScreen);
+        }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140, (int) (width * 0.4), 15).build();
 
 
 
@@ -97,22 +107,25 @@ public class ConfigScreen extends Screen {
         saveFile = ButtonWidget.builder(Text.literal("保存配置到文件"), button -> {
                     strengthConfig.savaFile();
                     modConfig.savaFile();
-                    WaveformConfig.saveWaveform(waveformDataMap);
+                    WaveformConfig.saveWaveform(waveformMap);
                 })
                 .dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 20, (int) (width * 0.4), 15).tooltip(Tooltip.of(Text.literal("所有更改是临时更改\n点击此按钮保存到文件"))).build();
 
 
 
         webSocketConfig = ButtonWidget.builder(Text.literal("连接设置"), button -> {
+                    Screen WebSocketConfigScreen = new WebSocketConfigScreen();
                     client.setScreen(WebSocketConfigScreen);
                 })
                 .dimensions(width / 2 + 5, 20, (int) (width * 0.4), 15).tooltip(Tooltip.of(Text.literal("点击修改连接设置\n非必要无需修改"))).build();
 
         StrengthConfig = ButtonWidget.builder(Text.literal("强度设置"), button -> {
+            Screen strengthConfigScreen = new StrengthConfigScreen();
             client.setScreen(strengthConfigScreen);
         }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 45, (int) (width * 0.4), 15).tooltip(Tooltip.of(Text.literal("点击修改强度设置"))).build();
 
         WaveFormConfig = ButtonWidget.builder(Text.literal("波形设置"), button -> {
+            Screen waveformConfigScreen = new WaveformConfigScreen();
             client.setScreen(waveformConfigScreen);
         }).dimensions(width / 2 + 5, 45, (int) (width * 0.4), 15).tooltip((Tooltip.of(Text.literal("制作中")))).build();
 
@@ -130,11 +143,10 @@ public class ConfigScreen extends Screen {
         addDrawableChild(createQR);
         addDrawableChild(RenderingPositionX);
         addDrawableChild(RenderingPositionY);
+        addDrawableChild(CustomConfig);
     }
 
-    public void test(String text) {
-        System.out.println(text);
-    }
+
 
 
 }

@@ -3,7 +3,7 @@ package online.kbpf.dg_lab.mixin;
 
 import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.entity.DGStrength;
-import online.kbpf.dg_lab.client.entity.StrengthConfig;
+import online.kbpf.dg_lab.client.Config.StrengthConfig;
 import online.kbpf.dg_lab.client.webSocketServer.webSocketServer;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.AbstractClientPlayerEntity;

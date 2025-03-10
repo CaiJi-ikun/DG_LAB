@@ -3,7 +3,7 @@ package online.kbpf.dg_lab.client.screen;
 
 import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.createQR.ToolQR;
-import online.kbpf.dg_lab.client.entity.ModConfig;
+import online.kbpf.dg_lab.client.Config.ModConfig;
 import online.kbpf.dg_lab.client.entity.NetworkAdapter;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

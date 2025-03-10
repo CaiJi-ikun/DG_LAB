@@ -14,7 +14,8 @@ import java.net.InetSocketAddress;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static online.kbpf.dg_lab.client.Dg_labClient.waveformDataMap;
+
+import static online.kbpf.dg_lab.client.Dg_labClient.waveformMap;
 
 
 public class webSocketServer extends WebSocketServer {
@@ -232,23 +233,23 @@ public class webSocketServer extends WebSocketServer {
                 // 发送伤害波形
                 if (A1orB2 == 1) {
                     // 发送到A通道
-                    clientInfo.setMessage("pulse-A:[" + waveformDataMap.get("ADamage") + "]");
+                    clientInfo.setMessage("pulse-A:[" + waveformMap.get("ADamage").getWaveform() + "]");
                     client.send(new Gson().toJson(clientInfo, online.kbpf.dg_lab.client.entity.clientInfo.class));
 
                 } else if (A1orB2 == 2) {
                     // 发送到B通道
-                    clientInfo.setMessage("pulse-B:[" + waveformDataMap.get("BDamage") + "]");
+                    clientInfo.setMessage("pulse-B:[" + waveformMap.get("BDamage").getWaveform() + "]");
                     client.send(new Gson().toJson(clientInfo, online.kbpf.dg_lab.client.entity.clientInfo.class));
                 }
             } else if (Damage2orHealth3 == 3) {
                 // 发送治疗波形
                 if (A1orB2 == 1) {
                     // 发送到A通道
-                    clientInfo.setMessage("pulse-A:[" + waveformDataMap.get("AHealing") + "]");
+                    clientInfo.setMessage("pulse-A:[" + waveformMap.get("AHealing").getWaveform() + "]");
                     client.send(new Gson().toJson(clientInfo, online.kbpf.dg_lab.client.entity.clientInfo.class));
                 } else if (A1orB2 == 2) {
                     // 发送到B通道
-                    clientInfo.setMessage("pulse-B:[" + waveformDataMap.get("BHealing") + "]");
+                    clientInfo.setMessage("pulse-B:[" + waveformMap.get("BHealing").getWaveform() + "]");
                     client.send(new Gson().toJson(clientInfo, online.kbpf.dg_lab.client.entity.clientInfo.class));
                 }
             }

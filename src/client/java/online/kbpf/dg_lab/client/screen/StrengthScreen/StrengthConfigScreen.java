@@ -1,8 +1,8 @@
 package online.kbpf.dg_lab.client.screen.StrengthScreen;
 
 import online.kbpf.dg_lab.client.Dg_labClient;
-import online.kbpf.dg_lab.client.entity.ModConfig;
-import online.kbpf.dg_lab.client.entity.StrengthConfig;
+import online.kbpf.dg_lab.client.Config.ModConfig;
+import online.kbpf.dg_lab.client.Config.StrengthConfig;
 import online.kbpf.dg_lab.client.screen.ConfigScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -17,11 +17,9 @@ import net.minecraft.text.Text;
 public class StrengthConfigScreen extends Screen {
 
 
-    private SliderWidget ADamageStrength;
-    private SliderWidget BDamageStrength;
+    private SliderWidget ADamageStrength, BDamageStrength;
     private ButtonWidget DamageStrength;
-    private SliderWidget ADelayTime;
-    private SliderWidget BDelayTime;
+    private SliderWidget ADelayTime, BDelayTime;
     private ButtonWidget DelayTime;
     private SliderWidget ADownTime;
     private SliderWidget BDownTime;

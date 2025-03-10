@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import online.kbpf.dg_lab.client.Dg_labClient;
-import online.kbpf.dg_lab.client.entity.ModConfig;
+import online.kbpf.dg_lab.client.Config.ModConfig;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;

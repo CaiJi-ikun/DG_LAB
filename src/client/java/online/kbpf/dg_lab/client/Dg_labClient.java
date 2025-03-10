@@ -2,9 +2,10 @@ package online.kbpf.dg_lab.client;
 
 import online.kbpf.dg_lab.client.Tool.DGWaveformTool;
 import online.kbpf.dg_lab.client.command.Default;
-import online.kbpf.dg_lab.client.entity.ModConfig;
-import online.kbpf.dg_lab.client.entity.StrengthConfig;
-import online.kbpf.dg_lab.client.entity.WaveformConfig;
+import online.kbpf.dg_lab.client.Config.ModConfig;
+import online.kbpf.dg_lab.client.Config.StrengthConfig;
+import online.kbpf.dg_lab.client.Config.WaveformConfig;
+import online.kbpf.dg_lab.client.entity.Waveform.Waveform;
 import online.kbpf.dg_lab.client.screen.ConfigScreen;
 import online.kbpf.dg_lab.client.webSocketServer.webSocketServer;
 import net.fabricmc.api.ClientModInitializer;
@@ -32,10 +33,11 @@ public class Dg_labClient implements ClientModInitializer {
     public static webSocketServer webSocketServer = null;
     public static StrengthConfig StrengthConfig = new StrengthConfig();
     public static final ModConfig modConfig = ModConfig.loadJson();
+    public static Map<String, Waveform> waveformMap = WaveformConfig.LoadWaveform();
+
     private static KeyBinding keyBinding;
     private final Screen ConfigScreen = new ConfigScreen();
-    public static Map<String, String> waveformDataMap = WaveformConfig.LoadWaveform();
-    public static Map<String, Integer> waveformDuration = new HashMap<>();
+
 
 
 
@@ -47,7 +49,7 @@ public class Dg_labClient implements ClientModInitializer {
         //注册连接的服务器
         webSocketServer = new webSocketServer(new InetSocketAddress(modConfig.getServerPort()));
 
-        StrengthConfig = online.kbpf.dg_lab.client.entity.StrengthConfig.loadJson();
+        StrengthConfig = online.kbpf.dg_lab.client.Config.StrengthConfig.loadJson();
 
         DGWaveformTool.updateDuration();
 
