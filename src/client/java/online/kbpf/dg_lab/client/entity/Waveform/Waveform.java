@@ -9,9 +9,10 @@ import java.util.List;
 
 public class Waveform {
 
-    private String waveform;
+    private String waveform, name = "empty";
     private int duration = 0;
     private List<ControlBar> list = new ArrayList<>();
+
 
     public Waveform() {
         List<ControlBar> list = new ArrayList<>();
@@ -22,6 +23,8 @@ public class Waveform {
 
     public Waveform(List<ControlBar> list) {
         this.list = list;
+        this.GraphToData();
+        updateDuration();
     }
 
     public Waveform(String waveform) {
@@ -36,6 +39,13 @@ public class Waveform {
     }
 
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public void setWaveform(String waveform) {
         this.waveform = waveform;

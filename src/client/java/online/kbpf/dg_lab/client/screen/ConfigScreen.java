@@ -143,7 +143,7 @@ public class ConfigScreen extends Screen {
         addDrawableChild(createQR);
         addDrawableChild(RenderingPositionX);
         addDrawableChild(RenderingPositionY);
-        addDrawableChild(CustomConfig);
+//        addDrawableChild(CustomConfig);
     }
 
 
