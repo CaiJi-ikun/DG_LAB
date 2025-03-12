@@ -1,4 +1,2 @@
 run/
-build/
-.idea
-out/
+build/libs/
