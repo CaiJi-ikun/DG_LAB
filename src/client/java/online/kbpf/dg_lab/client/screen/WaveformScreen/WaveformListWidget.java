@@ -109,12 +109,12 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
         //确保点击/交互被正确传递
         @Override
         public List<? extends Selectable> selectableChildren() {
-            return List.of(waveformDataText, copyButton, pasteButton, testButton, customButton);
+            return List.of(waveformDataText, testButton, customButton);
         }
 
         @Override
         public List<? extends Element> children() {
-            return List.of(waveformDataText, copyButton, pasteButton, testButton, customButton);
+            return List.of(waveformDataText, testButton, customButton);
         }
 
 
@@ -124,24 +124,24 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
             //文本框位置宽高
 
 
-            waveformDataText.setDimensionsAndPosition(x + (int) (entryWidth * 0.4), 20, x + (int) (entryWidth * 0.4), y);
+            waveformDataText.setDimensionsAndPosition(x + (int) (entryWidth * 0.3), 20, x + (int) (entryWidth * 0.4), y);
             waveformDataText.render(context, mouseX, mouseY, tickDelta);
 
             customButton.setDimensionsAndPosition(15, 20, waveformDataText.getX() + waveformDataText.getWidth(), y);
             customButton.render(context, mouseX, mouseY, tickDelta);
 
-            copyButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
-            copyButton.render(context, mouseX, mouseY, tickDelta);
+//            copyButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
+//            copyButton.render(context, mouseX, mouseY, tickDelta);
+//
+//
+//            pasteButton.setDimensionsAndPosition(15, 20, copyButton.getX() + 15, y);
+//            pasteButton.render(context, mouseX, mouseY, tickDelta);
 
-
-            pasteButton.setDimensionsAndPosition(15, 20, copyButton.getX() + 15, y);
-            pasteButton.render(context, mouseX, mouseY, tickDelta);
-
-            testButton.setDimensionsAndPosition(15, 20, pasteButton.getX() + 15, y);
+            testButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
             testButton.render(context, mouseX, mouseY, tickDelta);
 
 
-            context.drawTextWithShadow(textRenderer, this.text, x + (int) (entryWidth * 0.2), y + 5, 0xffffff);
+            context.drawTextWithShadow(textRenderer, this.text, x + (int) (entryWidth * 0.15), y + 5, 0xffffff);
 
             int duration = DGWaveformTool.checkAndCountValidSubstrings(waveformDataText.getText());
             if(duration == 0)

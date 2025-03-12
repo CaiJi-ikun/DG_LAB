@@ -23,7 +23,6 @@ import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
 import java.net.InetSocketAddress;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -31,12 +30,12 @@ import java.util.Map;
 public class Dg_labClient implements ClientModInitializer {
 
     public static webSocketServer webSocketServer = null;
-    public static StrengthConfig StrengthConfig = new StrengthConfig();
+    public static StrengthConfig strengthConfig = new StrengthConfig();
     public static final ModConfig modConfig = ModConfig.loadJson();
     public static Map<String, Waveform> waveformMap = WaveformConfig.LoadWaveform();
 
     private static KeyBinding keyBinding;
-    private final Screen ConfigScreen = new ConfigScreen();
+    private final Screen configScreen = new ConfigScreen();
 
 
 
@@ -49,7 +48,7 @@ public class Dg_labClient implements ClientModInitializer {
         //注册连接的服务器
         webSocketServer = new webSocketServer(new InetSocketAddress(modConfig.getServerPort()));
 
-        StrengthConfig = online.kbpf.dg_lab.client.Config.StrengthConfig.loadJson();
+        strengthConfig = online.kbpf.dg_lab.client.Config.StrengthConfig.loadJson();
 
         DGWaveformTool.updateDuration();
 
@@ -65,11 +64,11 @@ public class Dg_labClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (keyBinding.wasPressed()) {
 
-                client.setScreen(ConfigScreen);
+                client.setScreen(configScreen);
             }
         });
         //指令定义
-        Default.register(modConfig, StrengthConfig, webSocketServer);
+        Default.register(modConfig, strengthConfig, webSocketServer);
 
         if(modConfig.getAutoStartWebSocketServer()) webSocketServer.start();
     }
@@ -78,7 +77,7 @@ public class Dg_labClient implements ClientModInitializer {
 
     public static webSocketServer getServer() {return webSocketServer;}
 
-    public static StrengthConfig getStrengthConfig() {return StrengthConfig;}
+    public static StrengthConfig getStrengthConfig() {return strengthConfig;}
 
     public static ModConfig getModConfig(){return modConfig;}
 

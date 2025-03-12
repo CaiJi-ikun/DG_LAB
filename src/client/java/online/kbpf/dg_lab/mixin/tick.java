@@ -58,13 +58,13 @@ public abstract class tick {
         webSocketServer.setDelayTime(ADelayTime, BDelayTime); // 设置更新后的等待时间
 
         int AStrength = dgStrength.getAStrength(), BStrength = dgStrength.getBStrength(); // 获取A和B的强度
-        if (tickCounter % StrengthConfig.getADownTime() == 0 && ADelayTime <= 0 && AStrength > 0) {
+        if (tickCounter % strengthConfig.getADownTime() == 0 && ADelayTime <= 0 && AStrength > 0) {
             // 如果计数器是ADownTime的倍数，且ADelayTime小于等于0且AStrength大于0，则发送A的强度值
-            webSocketServer.sendStrengthToClient(StrengthConfig.getADownValue(), 0, 1);
+            webSocketServer.sendStrengthToClient(strengthConfig.getADownValue(), 0, 1);
         }
-        if (tickCounter % StrengthConfig.getBDownTime() == 0 && BDelayTime <= 0 && BStrength > 0) {
+        if (tickCounter % strengthConfig.getBDownTime() == 0 && BDelayTime <= 0 && BStrength > 0) {
             // 如果计数器是BDownTime的倍数，且BDelayTime小于等于0且BStrength大于0，则发送B的强度值
-            webSocketServer.sendStrengthToClient(StrengthConfig.getBDownValue(), 0, 2);
+            webSocketServer.sendStrengthToClient(strengthConfig.getBDownValue(), 0, 2);
         }
 
         // 检查A的延迟时间和强度

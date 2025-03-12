@@ -5,7 +5,6 @@ import online.kbpf.dg_lab.client.createQR.ToolQR;
 import online.kbpf.dg_lab.client.Config.ModConfig;
 import online.kbpf.dg_lab.client.Config.WaveformConfig;
 import online.kbpf.dg_lab.client.screen.StrengthScreen.StrengthConfigScreen;
-import online.kbpf.dg_lab.client.screen.WaveformScreen.Custom.CustomScreen;
 import online.kbpf.dg_lab.client.screen.WaveformScreen.WaveformConfigScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -18,6 +17,9 @@ import net.minecraft.text.Text;
 
 
 import static online.kbpf.dg_lab.client.Dg_labClient.waveformMap;
+import static online.kbpf.dg_lab.client.Dg_labClient.strengthConfig;
+import static online.kbpf.dg_lab.client.Dg_labClient.modConfig;
+
 
 @Environment(EnvType.CLIENT)
 public class ConfigScreen extends Screen {
@@ -28,6 +30,7 @@ public class ConfigScreen extends Screen {
     public ButtonWidget StrengthConfig;
     public ButtonWidget WaveFormConfig;
     public ButtonWidget CustomConfig;
+    public ButtonWidget MaxStrength;
 
 
     public SliderWidget RenderingPositionX;
@@ -53,8 +56,8 @@ public class ConfigScreen extends Screen {
     protected void init() {
 
 
-        online.kbpf.dg_lab.client.Config.StrengthConfig strengthConfig = Dg_labClient.getStrengthConfig();
-        ModConfig modConfig = Dg_labClient.getModConfig();
+//        online.kbpf.dg_lab.client.Config.StrengthConfig StrengthConfig = Dg_labClient.getStrengthConfig();
+//        ModConfig modConfig = Dg_labClient.getModConfig();
         MinecraftClient client = MinecraftClient.getInstance();
 
 
@@ -66,7 +69,11 @@ public class ConfigScreen extends Screen {
 
 
 
-        RenderingPositionX = new SliderWidget(width / 2 + 5, 120, (int) (width * 0.2), 15, Text.literal((modConfig.getRenderingPositionX() >= width1 || modConfig.getRenderingPositionY() >= height1) ? "已关闭强度显示" : ("强度显示位置X:" + modConfig.getRenderingPositionX())), (double) modConfig.getRenderingPositionX() / width1) {
+
+
+
+
+        RenderingPositionX = new SliderWidget(width / 2 + 5, 120, (int) (width * 0.2) - 6, 15, Text.literal((modConfig.getRenderingPositionX() >= width1 || modConfig.getRenderingPositionY() >= height1) ? "已关闭强度显示" : ("显示位置X:" + modConfig.getRenderingPositionX())), (double) modConfig.getRenderingPositionX() / width1) {
             @Override
             protected void updateMessage() {
             }
@@ -79,13 +86,13 @@ public class ConfigScreen extends Screen {
                     this.setMessage(Text.literal("已关闭强度显示"));
                     RenderingPositionY.setMessage(Text.literal("已关闭强度显示"));
                 } else {
-                    this.setMessage(Text.literal("强度显示位置X:" + tmp));
-                    RenderingPositionY.setMessage(Text.literal("强度显示位置Y:" + modConfig.getRenderingPositionY()));
+                    this.setMessage(Text.literal("显示位置X:" + tmp));
+                    RenderingPositionY.setMessage(Text.literal("显示位置Y:" + modConfig.getRenderingPositionY()));
                 }
             }
         };
 
-        RenderingPositionY = new SliderWidget((int) ((double) width / 2 + (width * 0.2) + 5), 120, (int) (width * 0.2), 15, Text.literal((modConfig.getRenderingPositionX() >= width1 || modConfig.getRenderingPositionY() >= height1) ? "已关闭强度显示" : ("强度显示位置Y:" + modConfig.getRenderingPositionY())), (double) modConfig.getRenderingPositionY() / height1) {
+        RenderingPositionY = new SliderWidget(RenderingPositionX.getX() + RenderingPositionX.getWidth(), 120, (int) (width * 0.2) - 6, 15, Text.literal((modConfig.getRenderingPositionX() >= width1 || modConfig.getRenderingPositionY() >= height1) ? "已关闭强度显示" : ("显示位置Y:" + modConfig.getRenderingPositionY())), (double) modConfig.getRenderingPositionY() / height1) {
             @Override
             protected void updateMessage() {
             }
@@ -98,11 +105,16 @@ public class ConfigScreen extends Screen {
                     this.setMessage(Text.literal("已关闭强度显示"));
                     RenderingPositionX.setMessage(Text.literal("已关闭强度显示"));
                 } else {
-                    this.setMessage(Text.literal("强度显示位置Y:" + tmp));
-                    RenderingPositionX.setMessage(Text.literal("强度显示位置X:" + modConfig.getRenderingPositionX()));
+                    this.setMessage(Text.literal("显示位置Y:" + tmp));
+                    RenderingPositionX.setMessage(Text.literal("显示位置X:" + modConfig.getRenderingPositionX()));
                 }
             }
         };
+
+        MaxStrength = ButtonWidget.builder(Text.literal((modConfig.isRenderingMax()) ? "开" : "关"), button -> {
+            modConfig.setRenderingMax(!modConfig.isRenderingMax());
+            MaxStrength.setMessage(Text.literal((modConfig.isRenderingMax()) ? "开" : "关"));
+        }).dimensions(RenderingPositionY.getX() + RenderingPositionX.getWidth(), 120, 12, 15).tooltip(Tooltip.of(Text.literal("是否开启最大强度显示"))).build();
 
         saveFile = ButtonWidget.builder(Text.literal("保存配置到文件"), button -> {
                     strengthConfig.savaFile();
@@ -127,7 +139,7 @@ public class ConfigScreen extends Screen {
         WaveFormConfig = ButtonWidget.builder(Text.literal("波形设置"), button -> {
             Screen waveformConfigScreen = new WaveformConfigScreen();
             client.setScreen(waveformConfigScreen);
-        }).dimensions(width / 2 + 5, 45, (int) (width * 0.4), 15).tooltip((Tooltip.of(Text.literal("制作中")))).build();
+        }).dimensions(width / 2 + 5, 45, (int) (width * 0.4), 15).tooltip((Tooltip.of(Text.literal(":P")))).build();
 
         createQR = ButtonWidget.builder(Text.literal("创建连接二维码并打开"), button -> {
             ToolQR.CreateQR();
@@ -143,6 +155,7 @@ public class ConfigScreen extends Screen {
         addDrawableChild(createQR);
         addDrawableChild(RenderingPositionX);
         addDrawableChild(RenderingPositionY);
+        addDrawableChild(MaxStrength);
 //        addDrawableChild(CustomConfig);
     }
 
