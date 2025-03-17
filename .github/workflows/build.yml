@@ -37,5 +37,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: sodium-artifacts-${{ steps.ref.outputs.branch }}
+          name: dglab-artifacts-${{ steps.ref.outputs.branch }}
           path: build/libs/*.jar
