@@ -1,2 +1,5 @@
 run/
-build/libs/
+build/
+.idea/
+out/
+.gradle/
