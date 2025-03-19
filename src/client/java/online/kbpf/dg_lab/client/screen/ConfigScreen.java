@@ -1,8 +1,7 @@
 package online.kbpf.dg_lab.client.screen;
 
-import online.kbpf.dg_lab.client.Dg_labClient;
+
 import online.kbpf.dg_lab.client.createQR.ToolQR;
-import online.kbpf.dg_lab.client.Config.ModConfig;
 import online.kbpf.dg_lab.client.Config.WaveformConfig;
 import online.kbpf.dg_lab.client.screen.StrengthScreen.StrengthConfigScreen;
 import online.kbpf.dg_lab.client.screen.WaveformScreen.WaveformConfigScreen;
@@ -12,7 +11,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.text.Text;
 
 

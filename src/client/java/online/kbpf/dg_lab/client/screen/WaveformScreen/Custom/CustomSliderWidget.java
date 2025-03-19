@@ -14,10 +14,8 @@ import static online.kbpf.dg_lab.client.screen.WaveformScreen.Custom.CustomScree
 public abstract class CustomSliderWidget extends SliderWidget {
 
     private boolean sliderFocused;
-    private static final Identifier TEXTURE = Identifier.ofVanilla("widget/slider");
-    private static final Identifier HIGHLIGHTED_TEXTURE = Identifier.ofVanilla("widget/slider_highlighted");
-    private static final Identifier HANDLE_TEXTURE = Identifier.ofVanilla("widget/slider_handle");
-    private static final Identifier HANDLE_HIGHLIGHTED_TEXTURE = Identifier.ofVanilla("widget/slider_handle_highlighted");
+    private static final Identifier TEXTURE = new Identifier("textures/gui/slider.png");
+
 
     public CustomSliderWidget(int x, int y, int width, int height, Text text, double value) {
         super(x, y, width, height, text, value);
@@ -30,15 +28,18 @@ public abstract class CustomSliderWidget extends SliderWidget {
     }
 
     @Override
-    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
 
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
         context.setShaderColor(1.0F, 1.0F, 1.0F, this.alpha);
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
-        context.drawGuiTexture(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
-        context.drawGuiTexture(this.getHandleTexture(), this.getX() + (int)(this.value * (double)(this.width - 8)), this.getY(), 8, this.getHeight());
+//        context.drawNineSlicedTexture(this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+//        context.drawNineSlicedTexture(this.getHandleTexture(), this.getX() + (int)(this.value * (double)(this.width - 8)), this.getY(), 8, this.getHeight());
+        context.drawNineSlicedTexture(TEXTURE, this.getX(), this.getY(), this.getWidth(), this.getHeight(), 20, 4, 200, 20, 0, this.getYImage());
+        context.drawNineSlicedTexture(TEXTURE, this.getX() + (int)(this.value * (double)(this.width - 8)), this.getY(), 8, this.getHeight(), 20, 4, 200, 20, 0, this.getTextureV());
+
         context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         int i = this.active ? 16777215 : 10526880;
 //        this.drawScrollableText(context, minecraftClient.textRenderer, 2, i | MathHelper.ceil(this.alpha * 255.0F) << 24);
@@ -48,14 +49,15 @@ public abstract class CustomSliderWidget extends SliderWidget {
     }
 
 
-    private Identifier getTexture() {
-        return this.isFocused() && !this.sliderFocused ? HIGHLIGHTED_TEXTURE : TEXTURE;
+    private int getYImage() {
+        int i = this.isFocused() && !this.sliderFocused ? 1 : 0;
+        return i * 20;
     }
 
-    private Identifier getHandleTexture() {
-        return !this.hovered && !this.sliderFocused ? HANDLE_TEXTURE : HANDLE_HIGHLIGHTED_TEXTURE;
+    private int getTextureV() {
+        int i = !this.hovered && !this.sliderFocused ? 2 : 3;
+        return i * 20;
     }
-
 
 
 

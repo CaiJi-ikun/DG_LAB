@@ -83,11 +83,11 @@ public class Dg_labClient implements ClientModInitializer {
 
 
     //屏幕强度显示
-    private void onHudRender(DrawContext drawContext, RenderTickCounter tickDelta) {
+    private void onHudRender(DrawContext drawContext, float tickDelta) {
         MinecraftClient client = MinecraftClient.getInstance();
 
         if (client.player != null && client.world != null && (modConfig.getRenderingPositionX() < client.getWindow().getScaledWidth() || modConfig.getRenderingPositionY() < client.getWindow().getScaledHeight())) {
-            // 假设强度数值是一个整数
+
 //            int strengthValue = getStrengthValue(client.player);
 
             // 计算图标和文本的位置

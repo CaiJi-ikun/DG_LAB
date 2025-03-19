@@ -6,7 +6,6 @@ import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
-import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
 import online.kbpf.dg_lab.client.entity.Waveform.ControlBar;
@@ -22,24 +21,24 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
 
 
 
-    public CustomListWidget(MinecraftClient minecraftClient, int width, int height, int y, int itemHeight) {
-        super(minecraftClient, width, height, y, itemHeight);
+    public CustomListWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight) {
+        super(minecraftClient, width, height, top, bottom, itemHeight);
         this.width = width;
     }
 
     //修改左右宽度
     @Override
     public int getRowLeft() {
-        return this.getX(); // 从屏幕最左侧开始
+        return this.left; // 从屏幕最左侧开始
     }
     @Override
     public int getRowWidth() {
         return this.width; // 宽度设置为屏幕宽度
     }
-    @Override
-    protected int getScrollbarX() {
-        return this.getRight() - 6; // 滚动条紧贴右侧
-    }
+//    @Override
+//    protected int getScrollbarX() {
+//        return this.getRight() - 6; // 滚动条紧贴右侧
+//    }
 
 
 
@@ -79,23 +78,23 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
             this.controlBar = list.get(this.index);
 
 
-            S_enable = ButtonWidget.builder(Text.of((list.get(this.index).isS_on_off())? manual : automatic), button -> {
+            S_enable = ButtonWidget.builder((list.get(this.index).isS_on_off())? manual : automatic, button -> {
                 this.controlBar.setS_on_off(!this.controlBar.isS_on_off());
-                S_enable.setMessage(Text.of((this.controlBar.isS_on_off()) ? manual : automatic));
+                S_enable.setMessage((this.controlBar.isS_on_off()) ? manual : automatic);
                 list.set(this.index, this.controlBar);
                 if(!controlBar.isS_on_off())
                     updateStrength(getBackStrengthOff(Entry.this.index), getNextStrengthOff(Entry.this.index));
-            }).build();
+            }).size(22, 8).build();
 
-            F_enable = ButtonWidget.builder(Text.of((list.get(this.index).isF_on_off())? manual : automatic), button -> {
+            F_enable = ButtonWidget.builder((list.get(this.index).isF_on_off())? manual : automatic, button -> {
                 this.controlBar.setF_on_off(!this.controlBar.isF_on_off());
-                F_enable.setMessage(Text.of((this.controlBar.isF_on_off()) ? manual : automatic));
+                F_enable.setMessage((this.controlBar.isF_on_off()) ? manual : automatic);
                 list.set(this.index, this.controlBar);
                 if(!controlBar.isF_on_off())
                     updateFrequency(getBackFrequencyOff(Entry.this.index), getNextFrequencyOff(Entry.this.index));
-            }).build();
+            }).size(22, 8).build();
 
-            strength = new CustomSliderWidget(0, 0, 100 ,15, Text.literal(String.valueOf(list.get(this.index).getStrength())), list.get(this.index).getStrength() * 0.01) {
+            strength = new CustomSliderWidget(0, 0, 100 ,8, Text.literal(String.valueOf(list.get(this.index).getStrength())), list.get(this.index).getStrength() * 0.01) {
 
                 @Override
                 protected void updateMessage() {
@@ -109,7 +108,7 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
                 protected void applyValue() {}
             };
 
-            frequency = new CustomSliderWidget(0, 0, 100, 15, Text.literal(String.valueOf(list.get(this.index).getFrequency())), list.get(this.index).getFrequency() * 0.01) {
+            frequency = new CustomSliderWidget(0, 0, 100, 8, Text.literal(String.valueOf(list.get(this.index).getFrequency())), list.get(this.index).getFrequency() * 0.01) {
 
                 @Override
                 protected void updateMessage() {
@@ -235,10 +234,22 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
 
         @Override
         public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            F_enable.setDimensionsAndPosition(22, 8, (int) (entryWidth * 0.015), y);
-            frequency.setDimensionsAndPosition((int) (entryWidth * 0.2), 8, F_enable.getX() + 22, y);
-            S_enable.setDimensionsAndPosition(22, 8, frequency.getX() + frequency.getWidth() + 20, y);
-            strength.setDimensionsAndPosition((int) (entryWidth * 0.6), 8, S_enable.getX() + 22, y);
+
+
+//            F_enable.setDimensionsAndPosition(22, 8, (int) (entryWidth * 0.015), y);
+            F_enable.setPosition((int) (entryWidth * 0.015), y);
+
+//            frequency.setDimensionsAndPosition((int) (entryWidth * 0.2), 8, F_enable.getX() + 22, y);
+            frequency.setPosition(F_enable.getX() + 22, y);
+            frequency.setWidth((int) (entryWidth * 0.2));
+
+//            S_enable.setDimensionsAndPosition(22, 8, frequency.getX() + frequency.getWidth() + 20, y);
+            S_enable.setPosition(frequency.getX() + frequency.getWidth() + 20, y);
+
+//            strength.setDimensionsAndPosition((int) (entryWidth * 0.6), 8, S_enable.getX() + 22, y);
+            strength.setPosition(S_enable.getX() + 22, y);
+            strength.setWidth((int) (entryWidth * 0.6));
+
             if(list.get(this.index) != null) {
                 strength.setValue(list.get(this.index).getStrength());
                 frequency.setValue(list.get(this.index).getFrequency());

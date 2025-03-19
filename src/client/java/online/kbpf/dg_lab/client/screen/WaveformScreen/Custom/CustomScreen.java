@@ -58,7 +58,7 @@ public class CustomScreen extends Screen {
     @Override
     protected void init() {
         MinecraftClient client = MinecraftClient.getInstance();
-        customListWidget = new CustomListWidget(client, width, height - 40, 20, 8);
+        customListWidget = new CustomListWidget(client, width, height - 40, 20, height - 40,  8);
 
 
         add = ButtonWidget.builder(Text.literal((list.size() >= 348) ? "---MAX---" : "+"), button -> {

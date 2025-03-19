@@ -11,6 +11,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
+import net.minecraft.text.TextColor;
 import online.kbpf.dg_lab.client.Tool.DGWaveformTool;
 import online.kbpf.dg_lab.client.entity.Waveform.Waveform;
 import online.kbpf.dg_lab.client.screen.WaveformScreen.Custom.CustomScreen;
@@ -27,8 +28,8 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
     private final int width;
 
 
-    public WaveformListWidget(MinecraftClient minecraftClient, int width, int height, int y, int itemHeight) {
-        super(minecraftClient, width, height, y, itemHeight);
+    public WaveformListWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight) {
+        super(minecraftClient, width, height, top, bottom, itemHeight);
         this.width = width;
     }
 
@@ -36,16 +37,16 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
     //修改左右宽度
     @Override
     public int getRowLeft() {
-        return this.getX(); // 从屏幕最左侧开始
+        return this.left; // 从屏幕最左侧开始
     }
     @Override
     public int getRowWidth() {
         return this.width; // 宽度设置为屏幕宽度
     }
-    @Override
-    protected int getScrollbarX() {
-        return this.getRight() - 6; // 滚动条紧贴右侧
-    }
+//    @Override
+//    protected int getScrollbarX() {
+//        return this.getRight() - 6; // 滚动条紧贴右侧
+//    }
 
 
     public void addWaveformEntry(Entry entry) {
@@ -68,14 +69,14 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
             if(waveformMap.containsKey(key)) waveform = waveformMap.get(key);
 
 
-            waveformDataText = new TextFieldWidget(textRenderer, 100, 15, Text.literal(""));
+            waveformDataText = new TextFieldWidget(textRenderer,0, 0, 100, 16, Text.literal(""));
             waveformDataText.setMaxLength(100000);
 
             waveformDataText.setText(waveform.getWaveform());
 
 
 
-            waveformDataText.setPlaceholder(Text.literal("输入波形代码").withColor(0xaaaaaa));
+            waveformDataText.setPlaceholder(Text.literal("输入波形代码").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
 
             waveformDataText.setChangedListener(inputText -> {
                 waveform.setWaveform(inputText);
@@ -124,10 +125,14 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
             //文本框位置宽高
 
 
-            waveformDataText.setDimensionsAndPosition(x + (int) (entryWidth * 0.3), 20, x + (int) (entryWidth * 0.4), y);
+//            waveformDataText.setDimensionsAndPosition(x + (int) (entryWidth * 0.3), 20, x + (int) (entryWidth * 0.4), y);
+            waveformDataText.setPosition(x + (int) (entryWidth * 0.4), y + 2);
+            waveformDataText.setWidth(x + (int) (entryWidth * 0.3));
             waveformDataText.render(context, mouseX, mouseY, tickDelta);
 
-            customButton.setDimensionsAndPosition(15, 20, waveformDataText.getX() + waveformDataText.getWidth(), y);
+//            customButton.setDimensionsAndPosition(15, 20, waveformDataText.getX() + waveformDataText.getWidth(), y);
+            customButton.setPosition(waveformDataText.getX() + waveformDataText.getWidth() + 2, y);
+            customButton.setWidth(15);
             customButton.render(context, mouseX, mouseY, tickDelta);
 
 //            copyButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
@@ -137,7 +142,9 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
 //            pasteButton.setDimensionsAndPosition(15, 20, copyButton.getX() + 15, y);
 //            pasteButton.render(context, mouseX, mouseY, tickDelta);
 
-            testButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
+//            testButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
+            testButton.setPosition(customButton.getX() + 15, y);
+            testButton.setWidth(15);
             testButton.render(context, mouseX, mouseY, tickDelta);
 
 

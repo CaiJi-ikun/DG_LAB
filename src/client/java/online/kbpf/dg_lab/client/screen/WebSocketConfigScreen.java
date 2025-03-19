@@ -1,6 +1,7 @@
 package online.kbpf.dg_lab.client.screen;
 
 
+import net.minecraft.text.TextColor;
 import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.createQR.ToolQR;
 import online.kbpf.dg_lab.client.Config.ModConfig;
@@ -67,7 +68,7 @@ public class WebSocketConfigScreen extends Screen {
 
         host = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 45, (int) (width * 0.25), 15, Text.literal("Enter address..."));
         host.setText(modConfig.getAddress());
-        host.setPlaceholder(Text.literal("this").withColor(0xaaaaaa));
+        host.setPlaceholder(Text.literal("this").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
         host.setChangedListener(this::hostText);
         host1 = ButtonWidget.builder(Text.literal("?"), button -> {
         }).dimensions((int) (width * 0.63), 45, (int) (width * 0.03), 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的地址\n非必要无需修改"))).build();
@@ -77,7 +78,7 @@ public class WebSocketConfigScreen extends Screen {
 
         port = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 70, (int) (width * 0.25), 15, Text.literal("Enter port..."));
         port.setText(String.valueOf(modConfig.getPort()));
-        port.setPlaceholder(Text.literal("9999").withColor(0xaaaaaa));
+        port.setPlaceholder(Text.literal("9999").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
         port.setChangedListener(this::portText);
         port.setMaxLength(5);
         port1 = ButtonWidget.builder(Text.literal("?"), button -> {
@@ -85,7 +86,7 @@ public class WebSocketConfigScreen extends Screen {
 
         serverPort = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 95, (int) (width * 0.25), 15, Text.literal("Enter port..."));
         serverPort.setText(String.valueOf(modConfig.getPort()));
-        serverPort.setPlaceholder(Text.literal("9999").withColor(0xaaaaaa));
+        serverPort.setPlaceholder(Text.literal("9999").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
         serverPort.setChangedListener(this::serverPortText);
         serverPort.setMaxLength(5);
         serverPort1 = ButtonWidget.builder(Text.literal("?"), button -> {
