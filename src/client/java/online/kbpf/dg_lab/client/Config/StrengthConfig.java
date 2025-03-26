@@ -8,8 +8,10 @@ import java.io.*;
 
 public class StrengthConfig {
 
-    private int ADownTime, BDownTime, ADownValue, BDownValue, ADelayTime, BDelayTime, ADeathStrength, BDeathStrength, ADeathDelay, BDeathDelay;
+    private int ADownTime, BDownTime, ADownValue, BDownValue, ADelayTime, BDelayTime, ADeathStrength, BDeathStrength, ADeathDelay, BDeathDelay, AMin = 40, BMin = 40;
     private float ADamageStrength, BDamageStrength;
+
+
 
 
     public void savaFile(){
@@ -36,7 +38,7 @@ public class StrengthConfig {
 
         if (!file.exists()) {
             //如果文件是空的
-            return new StrengthConfig(3, 3, 5, 5, 1, 1, 50, 50); // 默认的对象，可以根据需求初始化
+            return new StrengthConfig(3, 3, 5, 5, 1, 1, 50, 50, 40, 40); // 默认的对象，可以根据需求初始化
         }
         try (Reader reader = new FileReader("config/dg-lab/StrengthConfig.json")) {
             return gson.fromJson(reader, StrengthConfig.class);
@@ -54,7 +56,7 @@ public class StrengthConfig {
     public StrengthConfig() {
     }
 
-    public StrengthConfig(int ADamageStrength, int BDamageStrength, int ADownTime, int BDownTime, int ADownValue, int BDownValue, int ADelayTime, int BDelayTime) {
+    public StrengthConfig(int ADamageStrength, int BDamageStrength, int ADownTime, int BDownTime, int ADownValue, int BDownValue, int ADelayTime, int BDelayTime, int AMin, int BMin) {
         this.ADamageStrength = ADamageStrength;
         this.BDamageStrength = BDamageStrength;
         this.ADownTime = ADownTime;
@@ -67,6 +69,24 @@ public class StrengthConfig {
         this.BDeathStrength = 50;
         this.ADeathDelay = ADelayTime;
         this.BDeathDelay = BDelayTime;
+        this.AMin = AMin;
+        this.BMin = BMin;
+    }
+
+    public int getAMin() {
+        return AMin;
+    }
+
+    public void setAMin(int AMin) {
+        this.AMin = AMin;
+    }
+
+    public int getBMin() {
+        return BMin;
+    }
+
+    public void setBMin(int BMin) {
+        this.BMin = BMin;
     }
 
     public int getADeathStrength() {

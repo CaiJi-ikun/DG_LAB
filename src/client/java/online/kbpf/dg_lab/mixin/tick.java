@@ -1,7 +1,9 @@
 package online.kbpf.dg_lab.mixin;
 
+import net.minecraft.client.network.ClientPlayerEntity;
 import online.kbpf.dg_lab.client.entity.DGStrength;
 import net.minecraft.client.MinecraftClient;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -18,6 +20,7 @@ public abstract class tick {
     @Shadow
     public abstract void tick();
 
+    @Shadow @Nullable public ClientPlayerEntity player;
     @Unique
     private int tickCounter = 0; // 计数器，用于跟踪游戏刻
     @Unique
@@ -58,13 +61,24 @@ public abstract class tick {
         webSocketServer.setDelayTime(ADelayTime, BDelayTime); // 设置更新后的等待时间
 
         int AStrength = dgStrength.getAStrength(), BStrength = dgStrength.getBStrength(); // 获取A和B的强度
-        if (tickCounter % strengthConfig.getADownTime() == 0 && ADelayTime <= 0 && AStrength > 0) {
-            // 如果计数器是ADownTime的倍数，且ADelayTime小于等于0且AStrength大于0，则发送A的强度值
-            webSocketServer.sendStrengthToClient(strengthConfig.getADownValue(), 0, 1);
+        int AMin = 0, BMin = 0;
+        if(player != null){
+            AMin = (int) (strengthConfig.getAMin() * ((player.getMaxHealth() - player.getHealth()) / player.getMaxHealth()));
+            BMin = (int) (strengthConfig.getBMin() * ((player.getMaxHealth() - player.getHealth()) / player.getMaxHealth()));
         }
-        if (tickCounter % strengthConfig.getBDownTime() == 0 && BDelayTime <= 0 && BStrength > 0) {
+        if (tickCounter % strengthConfig.getADownTime() == 0 && ADelayTime <= 0 && AStrength > AMin){
+            // 如果计数器是ADownTime的倍数，且ADelayTime小于等于0且AStrength大于0，则发送A的强度值
+            if(webSocketServer.getStrength().getAStrength() - strengthConfig.getADownValue() < AMin)
+                webSocketServer.sendStrengthToClient(AMin, 2, 1);
+            else
+                webSocketServer.sendStrengthToClient(strengthConfig.getADownValue(), 0, 1);
+        }
+        if (tickCounter % strengthConfig.getBDownTime() == 0 && BDelayTime <= 0 && BStrength > BMin) {
             // 如果计数器是BDownTime的倍数，且BDelayTime小于等于0且BStrength大于0，则发送B的强度值
-            webSocketServer.sendStrengthToClient(strengthConfig.getBDownValue(), 0, 2);
+            if(webSocketServer.getStrength().getBStrength() - strengthConfig.getBDownValue() < BMin)
+                webSocketServer.sendStrengthToClient(BMin, 2, 2);
+            else
+                webSocketServer.sendStrengthToClient(strengthConfig.getBDownValue(), 0, 2);
         }
 
         // 检查A的延迟时间和强度
