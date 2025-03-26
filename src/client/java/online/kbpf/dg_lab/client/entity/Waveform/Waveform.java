@@ -7,11 +7,13 @@ import online.kbpf.dg_lab.client.Tool.DGWaveformTool;
 import java.util.ArrayList;
 import java.util.List;
 
+import static online.kbpf.dg_lab.client.Tool.DGWaveformTool.checkAndCountValidSubstrings;
+
 public class Waveform {
 
-    private String waveform, name = "empty";
-    private int duration = 0;
-    private List<ControlBar> list = new ArrayList<>();
+    private String waveform, name = "empty";                        //存储波形字符串和当前波形名字
+    private int duration = 0;                                       //波形时间长度
+    private List<ControlBar> list = new ArrayList<>();              //ui编辑的数据
 
 
     public Waveform() {
@@ -65,7 +67,7 @@ public class Waveform {
     }
 
     public boolean updateDuration() {
-        duration = DGWaveformTool.checkAndCountValidSubstrings(waveform);
+        duration = checkAndCountValidSubstrings(waveform);
         return duration <= 0;
     }
 
@@ -73,11 +75,30 @@ public class Waveform {
         return list;
     }
 
-    public void dataToGraph(){
+    public Waveform DataToGraph(){
+        //字符串转ui
+        if(checkAndCountValidSubstrings(this.waveform) > 0) {//检测字符串合法
+            list = new ArrayList<>();
+            String[] waveform = this.waveform.split(",");//按照逗号分割
 
+            for (String str : waveform) {
+                String string = str.substring(1, str.length() - 1);
+
+                String[] bytes = new String[8]; // 共8个字节
+                for (int i = 0; i < 8; i++) {
+                    bytes[i] = string.substring(i * 2, (i * 2) + 2);
+                }
+
+                for (int i = 0; i < 4; i++) {
+                    list.add(new ControlBar(Integer.parseInt(bytes[i + 4], 16), (Integer.parseInt(bytes[i], 16)), true, true));
+                }
+            }
+        }
+        return this;
     }
 
     public void GraphToData(){
+        //ui转字符串
         StringBuilder waveform = new StringBuilder(), strength = new StringBuilder(), frequency = new StringBuilder();
         for(int i = 0; i < list.size(); i++){
             frequency.append(String.format("%02x", list.get(i).getFrequency()));
@@ -96,5 +117,6 @@ public class Waveform {
         this.waveform = waveform.toString();
         updateDuration();
     }
+
 
 }
