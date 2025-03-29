@@ -34,6 +34,7 @@ public class CustomScreen extends Screen {
             list = waveformMap.get(waveformKey).getList();
         }
         this.waveformKey = waveformKey;
+
     }
 
 
@@ -64,6 +65,7 @@ public class CustomScreen extends Screen {
         add = ButtonWidget.builder(Text.literal((list.size() >= 348) ? "---MAX---" : "+"), button -> {
 
 
+
             if(list.size() < 348) {
                 add.setMessage(Text.of("+"));
                 for (int i = 1; i <= 4; i++) {
@@ -75,12 +77,15 @@ public class CustomScreen extends Screen {
 
         }).dimensions((int) (width * 0.1), height - 17, (int) (width * 0.7), 15).build();
 
+
+
         delete = ButtonWidget.builder(Text.literal("-"), button -> {
 
             if(list.size() > 7) {
                 for (int i = 1; i <= 4; i++) {
                     customListWidget.removeLast();
-                    list.removeLast();
+                    list.remove(list.size()-1);
+
                 }
             }
             add.setMessage(Text.literal((list.size() >= 348) ? "---MAX---" : "+"));
