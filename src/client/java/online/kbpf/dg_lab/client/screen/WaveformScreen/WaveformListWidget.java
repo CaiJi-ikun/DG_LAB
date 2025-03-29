@@ -2,18 +2,19 @@ package online.kbpf.dg_lab.client.screen.WaveformScreen;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
+//import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.tooltip.Tooltip;
-import net.minecraft.client.gui.widget.ButtonWidget;
+//import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ElementListWidget;
-import net.minecraft.client.gui.widget.TextFieldWidget;
+//import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TextColor;
 import online.kbpf.dg_lab.client.Tool.DGWaveformTool;
 import online.kbpf.dg_lab.client.entity.Waveform.Waveform;
+import online.kbpf.dg_lab.client.screen.ButtonWidget;
+import online.kbpf.dg_lab.client.screen.TextFieldWidget;
 import online.kbpf.dg_lab.client.screen.WaveformScreen.Custom.CustomScreen;
 
 
@@ -76,7 +77,7 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
 
 
 
-            waveformDataText.setPlaceholder(Text.literal("输入波形代码").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
+//            waveformDataText.setPlaceholder(Text.literal("输入波形代码").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
 
             waveformDataText.setChangedListener(inputText -> {
                 waveform.setWaveform(inputText);
@@ -85,20 +86,20 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
             customButton = new ButtonWidget.Builder(Text.literal("✏"), button -> {
                 Screen customScreen = new CustomScreen(key);
                 client.setScreen(customScreen);
-            }).tooltip(Tooltip.of(Text.literal("点击修改波形"))).build();
+            }).tooltip(Text.literal("点击修改波形")).build();
 
             copyButton = new ButtonWidget.Builder(Text.literal("\uD83D\uDCC4"), button -> {
                 MinecraftClient.getInstance().keyboard.setClipboard(waveformDataText.getText());
-            }).tooltip(Tooltip.of(Text.literal("点击复制波形代码"))).build();
+            }).tooltip(Text.literal("点击复制波形代码")).build();
 
             pasteButton = new ButtonWidget.Builder(Text.literal("\uD83D\uDCCB"), button -> {
                 String clipboardText = MinecraftClient.getInstance().keyboard.getClipboard();
                 waveformDataText.setText(clipboardText);
-            }).tooltip(Tooltip.of(Text.literal("点击粘贴波形代码"))).build();
+            }).tooltip(Text.literal("点击粘贴波形代码")).build();
 
             testButton = new ButtonWidget.Builder(Text.literal("\uD83D\uDCE8"), button -> {
                 webSocketServer.sendDGWaveForm(waveformDataText.getText(), 1);
-            }).tooltip(Tooltip.of(Text.literal("发送到终端1通道"))).build();
+            }).tooltip(Text.literal("发送到终端1通道")).build();
 
 
             this.textRenderer = textRenderer;
@@ -120,20 +121,21 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
 
 
         @Override
-        public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+        public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta){
             //渲染相关
             //文本框位置宽高
 
 
 //            waveformDataText.setDimensionsAndPosition(x + (int) (entryWidth * 0.3), 20, x + (int) (entryWidth * 0.4), y);
             waveformDataText.setPosition(x + (int) (entryWidth * 0.4), y + 2);
+//            waveformDataText.setX();
             waveformDataText.setWidth(x + (int) (entryWidth * 0.3));
-            waveformDataText.render(context, mouseX, mouseY, tickDelta);
+            waveformDataText.render(matrices, mouseX, mouseY, tickDelta);
 
 //            customButton.setDimensionsAndPosition(15, 20, waveformDataText.getX() + waveformDataText.getWidth(), y);
             customButton.setPosition(waveformDataText.getX() + waveformDataText.getWidth() + 2, y);
             customButton.setWidth(15);
-            customButton.render(context, mouseX, mouseY, tickDelta);
+            customButton.render(matrices, mouseX, mouseY, tickDelta);
 
 //            copyButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
 //            copyButton.render(context, mouseX, mouseY, tickDelta);
@@ -145,17 +147,18 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
 //            testButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
             testButton.setPosition(customButton.getX() + 15, y);
             testButton.setWidth(15);
-            testButton.render(context, mouseX, mouseY, tickDelta);
+            testButton.render(matrices, mouseX, mouseY, tickDelta);
 
 
-            context.drawTextWithShadow(textRenderer, this.text, x + (int) (entryWidth * 0.15), y + 5, 0xffffff);
+            drawTextWithShadow(matrices, textRenderer, this.text, x + (int) (entryWidth * 0.15), y + 5, 0xffffff);
 
             int duration = DGWaveformTool.checkAndCountValidSubstrings(waveformDataText.getText());
             if(duration == 0)
-                context.drawTextWithShadow(textRenderer, "ERROR", testButton.getX() + 20, y + 5, 0xFF0000);
-            else context.drawTextWithShadow(textRenderer, (duration * 100) + "ms", testButton.getX() + 15, y + 5, 0xFFFFFF);
+                drawTextWithShadow(matrices, textRenderer, Text.literal("ERROR"), testButton.getX() + 20, y + 5, 0xFF0000);
+            else drawTextWithShadow(matrices, textRenderer, Text.literal((duration * 100) + "ms"), testButton.getX() + 15, y + 5, 0xFFFFFF);
 
         }
+
 
 
     }

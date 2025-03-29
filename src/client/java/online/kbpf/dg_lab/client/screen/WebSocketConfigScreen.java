@@ -1,17 +1,16 @@
 package online.kbpf.dg_lab.client.screen;
 
 
-import net.minecraft.text.TextColor;
+import net.minecraft.client.util.math.MatrixStack;
 import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.createQR.ToolQR;
 import online.kbpf.dg_lab.client.Config.ModConfig;
 import online.kbpf.dg_lab.client.entity.NetworkAdapter;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.DrawContext;
+//import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.tooltip.Tooltip;
-import net.minecraft.client.gui.widget.ButtonWidget;
+//import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.text.Text;
 
@@ -28,15 +27,15 @@ public class WebSocketConfigScreen extends Screen {
     }
 
     public ModConfig modConfig = Dg_labClient.getModConfig();
-    public ButtonWidget autoStartWebSocketServer;
-    public ButtonWidget createQR;
+    public net.minecraft.client.gui.widget.ButtonWidget autoStartWebSocketServer;
+    public net.minecraft.client.gui.widget.ButtonWidget createQR;
     public TextFieldWidget host;
     public TextFieldWidget port;
     public TextFieldWidget serverPort;
-    public ButtonWidget host1;
-    public ButtonWidget host2;
-    public ButtonWidget port1;
-    public ButtonWidget serverPort1;
+    public net.minecraft.client.gui.widget.ButtonWidget host1;
+    public net.minecraft.client.gui.widget.ButtonWidget host2;
+    public net.minecraft.client.gui.widget.ButtonWidget port1;
+    public net.minecraft.client.gui.widget.ButtonWidget serverPort1;
     private NetworkAdapter network = new NetworkAdapter();
     private LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap<>(network.getNetworkMap());
 
@@ -60,37 +59,37 @@ public class WebSocketConfigScreen extends Screen {
 
             }
 
-        }).dimensions(width / 2 - (int) (width * 0.41), 20, (int) (width * 0.4), 15).tooltip(Tooltip.of(Text.literal("要在客户端启动时自动启动连接服务器\n如果关闭需要使用指令手动启动\n非必要无需关闭"))).build();
+        }).dimensions(width / 2 - (int) (width * 0.41), 20, (int) (width * 0.4), 15).tooltip(Text.literal("要在客户端启动时自动启动连接服务器\n如果关闭需要使用指令手动启动\n非必要无需关闭")).build();
 
         createQR = ButtonWidget.builder(Text.literal("创建连接二维码并打开"), button -> {
             ToolQR.CreateQR();
-        }).dimensions(width / 2 + 5, 20, (int) (width * 0.4), 15).tooltip(Tooltip.of(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir")))).build();
+        }).dimensions(width / 2 + 5, 20, (int) (width * 0.4), 15).tooltip(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir"))).build();
 
         host = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 45, (int) (width * 0.25), 15, Text.literal("Enter address..."));
         host.setText(modConfig.getAddress());
-        host.setPlaceholder(Text.literal("this").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
+//        host.setPlaceholder(Text.literal("this").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
         host.setChangedListener(this::hostText);
         host1 = ButtonWidget.builder(Text.literal("?"), button -> {
-        }).dimensions((int) (width * 0.63), 45, (int) (width * 0.03), 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的地址\n非必要无需修改"))).build();
+        }).dimensions((int) (width * 0.63), 45, (int) (width * 0.03), 15).tooltip(Text.literal("扫描二维码连接的地址\n非必要无需修改")).build();
         host2 = ButtonWidget.builder(Text.literal("<|>"), button -> {
             toggleNetworkAdapter();
-        }).dimensions((int) (width * 0.59), 45, (int) (width * 0.04), 15).tooltip(Tooltip.of(Text.literal("切换网卡"))).build();
+        }).dimensions((int) (width * 0.59), 45, (int) (width * 0.04), 15).tooltip(Text.literal("切换网卡")).build();
 
         port = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 70, (int) (width * 0.25), 15, Text.literal("Enter port..."));
         port.setText(String.valueOf(modConfig.getPort()));
-        port.setPlaceholder(Text.literal("9999").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
+//        port.setPlaceholder(Text.literal("9999").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
         port.setChangedListener(this::portText);
         port.setMaxLength(5);
         port1 = ButtonWidget.builder(Text.literal("?"), button -> {
-        }).dimensions((int) (width * 0.63), 70, (int) (width * 0.03), 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的端口,非服务器端口\n非必要无需修改"))).build();
+        }).dimensions((int) (width * 0.63), 70, (int) (width * 0.03), 15).tooltip(Text.literal("扫描二维码连接的端口,非服务器端口\n非必要无需修改")).build();
 
         serverPort = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 95, (int) (width * 0.25), 15, Text.literal("Enter port..."));
         serverPort.setText(String.valueOf(modConfig.getPort()));
-        serverPort.setPlaceholder(Text.literal("9999").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
+//        serverPort.setPlaceholder(Text.literal("9999").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
         serverPort.setChangedListener(this::serverPortText);
         serverPort.setMaxLength(5);
         serverPort1 = ButtonWidget.builder(Text.literal("?"), button -> {
-        }).dimensions((int) (width * 0.63), 95, (int) (width * 0.03), 15).tooltip(Tooltip.of(Text.literal("服务器对外开放的端口\n非必要无需修改\n修改后请保存重启客户端生效"))).build();
+        }).dimensions((int) (width * 0.63), 95, (int) (width * 0.03), 15).tooltip(Text.literal("服务器对外开放的端口\n非必要无需修改\n修改后请保存重启客户端生效")).build();
 
 
         addDrawableChild(createQR);
@@ -173,14 +172,14 @@ public class WebSocketConfigScreen extends Screen {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        super.render(context, mouseX, mouseY, delta);
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        super.render(matrices, mouseX, mouseY, delta);
 
 
-        context.drawTextWithShadow(textRenderer, Text.literal("二维码连接的地址"), (int) (width * 0.1), 49, 0xffffff);
-        context.drawText(textRenderer, Text.literal(modConfig.getNetwork()), (int) (width * 0.1), 61, 0xaaaaaa, false);
-        context.drawTextWithShadow(textRenderer, Text.literal("二维码连接的端口"), (int) (width * 0.1), 74, 0xffffff);
-        context.drawTextWithShadow(textRenderer, Text.literal("服务器开放的端口"), (int) (width * 0.1), 99, 0xffffff);
+        drawTextWithShadow(matrices, textRenderer, Text.literal("二维码连接的地址"), (int) (width * 0.1), 49, 0xffffff);
+        drawTextWithShadow(matrices, textRenderer, Text.literal(modConfig.getNetwork()), (int) (width * 0.1), 61, 0xaaaaaa);
+        drawTextWithShadow(matrices, textRenderer, Text.literal("二维码连接的端口"), (int) (width * 0.1), 74, 0xffffff);
+        drawTextWithShadow(matrices, textRenderer, Text.literal("服务器开放的端口"), (int) (width * 0.1), 99, 0xffffff);
 
 
 

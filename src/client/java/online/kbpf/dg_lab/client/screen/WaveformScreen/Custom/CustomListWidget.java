@@ -1,14 +1,16 @@
 package online.kbpf.dg_lab.client.screen.WaveformScreen.Custom;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
+//import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
-import net.minecraft.client.gui.widget.ButtonWidget;
+//import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
 import online.kbpf.dg_lab.client.entity.Waveform.ControlBar;
+import online.kbpf.dg_lab.client.screen.ButtonWidget;
 
 import static online.kbpf.dg_lab.client.screen.WaveformScreen.Custom.CustomScreen.list;
 
@@ -233,7 +235,7 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
         }
 
         @Override
-        public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+        public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
 
 
 //            F_enable.setDimensionsAndPosition(22, 8, (int) (entryWidth * 0.015), y);
@@ -256,10 +258,10 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
             }
 
 
-            F_enable.render(context, mouseX, mouseY, tickDelta);
-            frequency.render(context, mouseX, mouseY, tickDelta);
-            S_enable.render(context, mouseX, mouseY, tickDelta);
-            strength.render(context, mouseX, mouseY, tickDelta);
+            F_enable.render(matrices, mouseX, mouseY, tickDelta);
+            frequency.render(matrices, mouseX, mouseY, tickDelta);
+            S_enable.render(matrices, mouseX, mouseY, tickDelta);
+            strength.render(matrices, mouseX, mouseY, tickDelta);
         }
     }
 

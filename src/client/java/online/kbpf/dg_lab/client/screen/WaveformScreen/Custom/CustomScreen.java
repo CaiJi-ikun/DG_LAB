@@ -6,10 +6,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
+//import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
 import online.kbpf.dg_lab.client.entity.Waveform.ControlBar;
 import online.kbpf.dg_lab.client.entity.Waveform.Waveform;
+import online.kbpf.dg_lab.client.screen.ButtonWidget;
 import online.kbpf.dg_lab.client.screen.WaveformScreen.WaveformConfigScreen;
 
 import static online.kbpf.dg_lab.client.Dg_labClient.waveformMap;
@@ -63,8 +64,6 @@ public class CustomScreen extends Screen {
 
 
         add = ButtonWidget.builder(Text.literal((list.size() >= 348) ? "---MAX---" : "+"), button -> {
-
-
 
             if(list.size() < 348) {
                 add.setMessage(Text.of("+"));

@@ -1,5 +1,6 @@
 package online.kbpf.dg_lab.client;
 
+import net.minecraft.client.util.math.MatrixStack;
 import online.kbpf.dg_lab.client.Tool.DGWaveformTool;
 import online.kbpf.dg_lab.client.command.Default;
 import online.kbpf.dg_lab.client.Config.ModConfig;
@@ -13,18 +14,17 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
+//import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
 import org.lwjgl.glfw.GLFW;
 
 import java.net.InetSocketAddress;
 import java.util.Map;
 
+import static net.minecraft.client.gui.DrawableHelper.drawTextWithShadow;
 
 
 public class Dg_labClient implements ClientModInitializer {
@@ -83,7 +83,7 @@ public class Dg_labClient implements ClientModInitializer {
 
 
     //屏幕强度显示
-    private void onHudRender(DrawContext drawContext, float tickDelta) {
+    private void onHudRender(MatrixStack matrices, float tickDelta) {
         MinecraftClient client = MinecraftClient.getInstance();
 
         if (client.player != null && client.world != null && (modConfig.getRenderingPositionX() < client.getWindow().getScaledWidth() || modConfig.getRenderingPositionY() < client.getWindow().getScaledHeight())) {
@@ -111,15 +111,13 @@ public class Dg_labClient implements ClientModInitializer {
 
                     strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getBStrength());
                 }
-                OrderedText orderedText = strengthText.asOrderedText();
-                OrderedText orderedText1 = strengthText1.asOrderedText();
-                drawContext.drawTextWithShadow(client.textRenderer, orderedText, x, y, 0xFFFFFF);
-                drawContext.drawTextWithShadow(client.textRenderer, orderedText1, x, y + 9, 0xFFFFFF);
+
+                drawTextWithShadow(matrices, client.textRenderer, strengthText, x, y, 0xFFFFFF);
+                drawTextWithShadow(matrices, client.textRenderer, strengthText1, x, y + 9, 0xFFFFFF);
             }
             else {
                 Text strengthText = Text.literal("未连接");
-                OrderedText orderedText = strengthText.asOrderedText();
-                drawContext.drawTextWithShadow(client.textRenderer, orderedText, x, y, 0xFF0000);
+                drawTextWithShadow(matrices, client.textRenderer, strengthText, x, y, 0xFF0000);
             }
         }
     }

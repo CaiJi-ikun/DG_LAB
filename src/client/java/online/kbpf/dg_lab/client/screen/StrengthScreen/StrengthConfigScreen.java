@@ -2,12 +2,13 @@ package online.kbpf.dg_lab.client.screen.StrengthScreen;
 
 import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.Config.StrengthConfig;
+import online.kbpf.dg_lab.client.screen.ButtonWidget;
 import online.kbpf.dg_lab.client.screen.ConfigScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.tooltip.Tooltip;
-import net.minecraft.client.gui.widget.ButtonWidget;
+//import net.minecraft.client.gui.tooltip.Tooltip;
+//import net.minecraft.client.gui.widget.ButtonWidget;
 
 import net.minecraft.text.Text;
 import online.kbpf.dg_lab.client.screen.SliderWidget;
@@ -75,7 +76,7 @@ public class StrengthConfigScreen extends Screen {
             }
         };
 
-        DamageStrength = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 - 215, 20, 10, 15).tooltip(Tooltip.of(Text.literal("每受到半颗心伤害增加的强度\n受伤时增加强度若小于1则增加1\n大于一的强度数值9舍0入\n若为0则不增加"))).build();
+        DamageStrength = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 - 215, 20, 10, 15).tooltip(Text.literal("每受到半颗心伤害增加的强度\n受伤时增加强度若小于1则增加1\n大于一的强度数值9舍0入\n若为0则不增加")).build();
 
         ADelayTime = new SliderWidget(width / 2 + 5, 20, 100, 15, Text.literal("A强度下降等待" + strengthConfig.getADelayTime() * 50 + "ms"), (double) strengthConfig.getADelayTime() / 120) {
             @Override
@@ -103,7 +104,7 @@ public class StrengthConfigScreen extends Screen {
             }
         };
 
-        DelayTime = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 + 205, 20, 10, 15).tooltip(Tooltip.of(Text.literal("受伤等待一段时间后强度开始下降\n再次受伤将会覆盖当前的等待时间\n非叠加,是覆盖"))).build();
+        DelayTime = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 + 205, 20, 10, 15).tooltip(Text.literal("受伤等待一段时间后强度开始下降\n再次受伤将会覆盖当前的等待时间\n非叠加,是覆盖")).build();
 
         ADownTime = new SliderWidget(width / 2 + 5, 45, 100, 15, Text.literal("A强度下降间隔" + strengthConfig.getADownTime() * 50 + "ms"), (double) strengthConfig.getADownTime() / 120) {
             @Override
@@ -133,7 +134,7 @@ public class StrengthConfigScreen extends Screen {
             }
         };
 
-        DownTime = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 + 205, 45, 10, 15).tooltip(Tooltip.of(Text.literal("强度下降的时候每过此时间强度下降一次"))).build();
+        DownTime = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 + 205, 45, 10, 15).tooltip(Text.literal("强度下降的时候每过此时间强度下降一次")).build();
 
         ADownValue = new SliderWidget(width / 2 - 205, 45, 100, 15, Text.literal("A强度下降数值" + strengthConfig.getADownValue()), (double) strengthConfig.getADownValue() / 20) {
             @Override
@@ -161,7 +162,7 @@ public class StrengthConfigScreen extends Screen {
             }
         };
 
-        DownValue = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 - 215, 45, 10, 15).tooltip(Tooltip.of(Text.literal("每次强度下降的时候下降的数值"))).build();
+        DownValue = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 - 215, 45, 10, 15).tooltip(Text.literal("每次强度下降的时候下降的数值")).build();
 
         ADeathStrength = new SliderWidget(width / 2 - 205, 70, 100, 15, Text.literal("A死亡增加强度" + strengthConfig.getADeathStrength()), (double) strengthConfig.getADeathStrength() / 200) {
             @Override
@@ -189,7 +190,7 @@ public class StrengthConfigScreen extends Screen {
             }
         };
 
-        DeathStrength = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 - 215, 70, 10, 15).tooltip(Tooltip.of(Text.literal("死亡时增加的强度\n计算完受伤强度后叠加\n和受伤强度同时作用\n死亡时将会发送\n死亡时收到的伤害x每伤害强度+死亡增加强度"))).build();
+        DeathStrength = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 - 215, 70, 10, 15).tooltip(Text.literal("死亡时增加的强度\n计算完受伤强度后叠加\n和受伤强度同时作用\n死亡时将会发送\n死亡时收到的伤害x每伤害强度+死亡增加强度")).build();
 
         ADeathDelay = new SliderWidget(width / 2 + 5, 70, 100, 15, Text.literal("A死亡时强度下降等待" + strengthConfig.getADeathDelay() * 50 + "ms"), (double) strengthConfig.getADeathDelay() / 120) {
             @Override
@@ -217,7 +218,7 @@ public class StrengthConfigScreen extends Screen {
             }
         };
 
-        DeathDelay = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 + 205, 70, 10, 15).tooltip(Tooltip.of(Text.literal("同强度下降等待\n此值在死亡时生效\n非叠加,是覆盖"))).build();
+        DeathDelay = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 + 205, 70, 10, 15).tooltip(Text.literal("同强度下降等待\n此值在死亡时生效\n非叠加,是覆盖")).build();
 
         AMin = new SliderWidget(width / 2 - 205, 95, 100, 15, Text.literal("A最低强度" + strengthConfig.getAMin()), (double) strengthConfig.getAMin() / 200) {
             @Override
@@ -247,7 +248,7 @@ public class StrengthConfigScreen extends Screen {
             }
         };
 
-        Min = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 - 215, 95, 10, 15).tooltip(Tooltip.of(Text.literal("通道最低强度\n强度下降时将不会低于此值\n此值实际受血量比例影响\n例如损失10%血量最低强度就为此值x10%\n损失50%血量最低强度就为此值x50%"))).build();
+        Min = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 - 215, 95, 10, 15).tooltip(Text.literal("通道最低强度\n强度下降时将不会低于此值\n此值实际受血量比例影响\n例如损失10%血量最低强度就为此值x10%\n损失50%血量最低强度就为此值x50%")).build();
 
 
 

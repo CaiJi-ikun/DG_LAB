@@ -1,6 +1,7 @@
 package online.kbpf.dg_lab.mixin;
 
 
+import net.minecraft.network.encryption.PlayerPublicKey;
 import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.entity.DGStrength;
 import online.kbpf.dg_lab.client.Config.StrengthConfig;
@@ -9,6 +10,7 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,9 +25,10 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     @Unique
     float Dg_labHealth = 0.0f;
 
-    public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
-        super(world, profile);
+    public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile, @Nullable PlayerPublicKey publicKey) {
+        super(world, profile, publicKey);
     }
+
 
     @Inject(method = "updateHealth", at = @At("TAIL"))
     private void afterSetHealth(float health, CallbackInfo ci) {
