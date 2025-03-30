@@ -20,13 +20,13 @@ import static online.kbpf.dg_lab.client.Dg_labClient.modConfig;
 @Environment(EnvType.CLIENT)
 public class ConfigScreen extends Screen {
 
-    public net.minecraft.client.gui.widget.ButtonWidget saveFile;
-    public net.minecraft.client.gui.widget.ButtonWidget webSocketConfig;
-    public net.minecraft.client.gui.widget.ButtonWidget createQR;
-    public net.minecraft.client.gui.widget.ButtonWidget StrengthConfig;
-    public net.minecraft.client.gui.widget.ButtonWidget WaveFormConfig;
-    public net.minecraft.client.gui.widget.ButtonWidget CustomConfig;
-    public net.minecraft.client.gui.widget.ButtonWidget MaxStrength;
+    public ButtonWidget saveFile;
+    public ButtonWidget webSocketConfig;
+    public ButtonWidget createQR;
+    public ButtonWidget StrengthConfig;
+    public ButtonWidget WaveFormConfig;
+    public ButtonWidget CustomConfig;
+    public ButtonWidget MaxStrength;
 
 
     public SliderWidget RenderingPositionX;
