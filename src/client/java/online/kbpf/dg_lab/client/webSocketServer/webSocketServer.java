@@ -258,9 +258,7 @@ public class webSocketServer extends WebSocketServer {
 
 
     public void sendDGWaveForm(String message, int A1orB2){
-        System.out.println(1);
         if(isConnected){
-            System.out.println(2);
             clientInfo.setType("msg");
             if(A1orB2 == 1) {
                 CleanFrequency(1);

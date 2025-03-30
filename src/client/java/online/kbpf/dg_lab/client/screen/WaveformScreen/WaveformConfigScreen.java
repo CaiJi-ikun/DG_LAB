@@ -7,6 +7,8 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
+import static online.kbpf.dg_lab.client.screen.ConfigScreen.*;
+
 @Environment(EnvType.CLIENT)
 public class WaveformConfigScreen extends Screen {
 
@@ -31,7 +33,7 @@ public class WaveformConfigScreen extends Screen {
     protected void init() {
         //注册列表项目
         MinecraftClient client = MinecraftClient.getInstance();
-        waveformListWidget = new WaveformListWidget(client, width, height - 40, 40, height - 40, 25);
+        waveformListWidget = new WaveformListWidget(client, width, height - 40, 40, height - 40, ButtonHeight + ButtonDistance);
         //用这个滚动列表注意左右边界 添加条目比较少的时候不显示左右边界 但是左右边界的地方无法交互
         WaveformListWidget.Entry a = new WaveformListWidget.Entry(client.textRenderer, Text.literal("A通道受伤波形"), "ADamage");
         WaveformListWidget.Entry b = new WaveformListWidget.Entry(client.textRenderer, Text.literal("A通道恢复波形"), "AHealing");

@@ -20,6 +20,7 @@ import online.kbpf.dg_lab.client.screen.WaveformScreen.Custom.CustomScreen;
 
 import java.util.List;
 
+import static online.kbpf.dg_lab.client.screen.ConfigScreen.*;
 import static online.kbpf.dg_lab.client.Dg_labClient.waveformMap;
 import static online.kbpf.dg_lab.client.Dg_labClient.webSocketServer;
 
@@ -70,7 +71,7 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
             if(waveformMap.containsKey(key)) waveform = waveformMap.get(key);
 
 
-            waveformDataText = new TextFieldWidget(textRenderer,0, 0, 100, 16, Text.literal(""));
+            waveformDataText = new TextFieldWidget(textRenderer,0, 0, 100, ButtonHeight - 4, Text.literal(""));
             waveformDataText.setMaxLength(100000);
 
             waveformDataText.setText(waveform.getWaveform());
@@ -128,7 +129,6 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
 
 //            waveformDataText.setDimensionsAndPosition(x + (int) (entryWidth * 0.3), 20, x + (int) (entryWidth * 0.4), y);
             waveformDataText.setPosition(x + (int) (entryWidth * 0.4), y + 2);
-//            waveformDataText.setX();
             waveformDataText.setWidth(x + (int) (entryWidth * 0.3));
             waveformDataText.render(matrices, mouseX, mouseY, tickDelta);
 
