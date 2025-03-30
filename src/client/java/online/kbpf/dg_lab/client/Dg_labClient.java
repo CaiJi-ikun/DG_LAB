@@ -2,7 +2,7 @@ package online.kbpf.dg_lab.client;
 
 import net.minecraft.client.util.math.MatrixStack;
 import online.kbpf.dg_lab.client.Tool.DGWaveformTool;
-import online.kbpf.dg_lab.client.command.Default;
+//import online.kbpf.dg_lab.client.command.Default;
 import online.kbpf.dg_lab.client.Config.ModConfig;
 import online.kbpf.dg_lab.client.Config.StrengthConfig;
 import online.kbpf.dg_lab.client.Config.WaveformConfig;
@@ -67,8 +67,9 @@ public class Dg_labClient implements ClientModInitializer {
                 client.setScreen(configScreen);
             }
         });
+
         //指令定义
-        Default.register(modConfig, strengthConfig, webSocketServer);
+//        Default.register(modConfig, strengthConfig, webSocketServer);
 
         if(modConfig.getAutoStartWebSocketServer()) webSocketServer.start();
     }
@@ -101,22 +102,22 @@ public class Dg_labClient implements ClientModInitializer {
                 Text strengthText;
                 Text strengthText1;
                 if(modConfig.isRenderingMax()) {
-                    strengthText = Text.literal("A:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
+                    strengthText = Text.of("A:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
 
-                    strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getBStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
+                    strengthText1 = Text.of("B:" + webSocketServer.getStrength().getBStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
 
                 }
                 else {
-                    strengthText = Text.literal("A:" + webSocketServer.getStrength().getAStrength());
+                    strengthText = Text.of("A:" + webSocketServer.getStrength().getAStrength());
 
-                    strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getBStrength());
+                    strengthText1 = Text.of("B:" + webSocketServer.getStrength().getBStrength());
                 }
 
                 drawTextWithShadow(matrices, client.textRenderer, strengthText, x, y, 0xFFFFFF);
                 drawTextWithShadow(matrices, client.textRenderer, strengthText1, x, y + 9, 0xFFFFFF);
             }
             else {
-                Text strengthText = Text.literal("未连接");
+                Text strengthText = Text.of("未连接");
                 drawTextWithShadow(matrices, client.textRenderer, strengthText, x, y, 0xFF0000);
             }
         }

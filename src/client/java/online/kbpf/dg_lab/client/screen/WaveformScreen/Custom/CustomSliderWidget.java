@@ -18,7 +18,7 @@ public abstract class CustomSliderWidget extends SliderWidget {
 
     public void setValue(int value){
 
-        this.setMessage(Text.literal(String.valueOf(value)));
+        this.setMessage(Text.of(String.valueOf(value)));
         this.value = (double) value / 100;
     }
 

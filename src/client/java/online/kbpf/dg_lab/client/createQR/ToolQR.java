@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.TextColor;
 import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.Config.ModConfig;
@@ -29,7 +30,7 @@ public class ToolQR {
         if(ipAddress.equals("error")) {
             MinecraftClient client = MinecraftClient.getInstance();
             if (client.player != null) {
-                client.player.sendMessage(Text.literal("没有指定的ip地址").styled(style -> style.withColor(TextColor.fromRgb(0xFF5555))), false);
+                client.player.sendMessage(new LiteralText("没有指定的ip地址").styled(style -> style.withColor(TextColor.fromRgb(0xFF5555))), false);
             }
         }
         else {

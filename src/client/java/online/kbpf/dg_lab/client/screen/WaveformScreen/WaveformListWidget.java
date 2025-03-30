@@ -71,36 +71,36 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
             if(waveformMap.containsKey(key)) waveform = waveformMap.get(key);
 
 
-            waveformDataText = new TextFieldWidget(textRenderer,0, 0, 100, ButtonHeight - 4, Text.literal(""));
+            waveformDataText = new TextFieldWidget(textRenderer,0, 0, 100, ButtonHeight - 4, Text.of(""));
             waveformDataText.setMaxLength(100000);
 
             waveformDataText.setText(waveform.getWaveform());
 
 
 
-//            waveformDataText.setPlaceholder(Text.literal("输入波形代码").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
+//            waveformDataText.setPlaceholder(Text.of("输入波形代码").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
 
             waveformDataText.setChangedListener(inputText -> {
                 waveform.setWaveform(inputText);
             });
 
-            customButton = new ButtonWidget.Builder(Text.literal("✏"), button -> {
+            customButton = new ButtonWidget.Builder(Text.of("✏"), button -> {
                 Screen customScreen = new CustomScreen(key);
                 client.setScreen(customScreen);
-            }).tooltip(Text.literal("点击修改波形")).build();
+            }).tooltip(Text.of("点击修改波形")).build();
 
-            copyButton = new ButtonWidget.Builder(Text.literal("\uD83D\uDCC4"), button -> {
+            copyButton = new ButtonWidget.Builder(Text.of("\uD83D\uDCC4"), button -> {
                 MinecraftClient.getInstance().keyboard.setClipboard(waveformDataText.getText());
-            }).tooltip(Text.literal("点击复制波形代码")).build();
+            }).tooltip(Text.of("点击复制波形代码")).build();
 
-            pasteButton = new ButtonWidget.Builder(Text.literal("\uD83D\uDCCB"), button -> {
+            pasteButton = new ButtonWidget.Builder(Text.of("\uD83D\uDCCB"), button -> {
                 String clipboardText = MinecraftClient.getInstance().keyboard.getClipboard();
                 waveformDataText.setText(clipboardText);
-            }).tooltip(Text.literal("点击粘贴波形代码")).build();
+            }).tooltip(Text.of("点击粘贴波形代码")).build();
 
-            testButton = new ButtonWidget.Builder(Text.literal("\uD83D\uDCE8"), button -> {
+            testButton = new ButtonWidget.Builder(Text.of("\uD83D\uDCE8"), button -> {
                 webSocketServer.sendDGWaveForm(waveformDataText.getText(), 1);
-            }).tooltip(Text.literal("发送到终端1通道")).build();
+            }).tooltip(Text.of("发送到终端1通道")).build();
 
 
             this.textRenderer = textRenderer;
@@ -154,8 +154,8 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
 
             int duration = DGWaveformTool.checkAndCountValidSubstrings(waveformDataText.getText());
             if(duration == 0)
-                drawTextWithShadow(matrices, textRenderer, Text.literal("ERROR"), testButton.getX() + 20, y + 5, 0xFF0000);
-            else drawTextWithShadow(matrices, textRenderer, Text.literal((duration * 100) + "ms"), testButton.getX() + 15, y + 5, 0xFFFFFF);
+                drawTextWithShadow(matrices, textRenderer, Text.of("ERROR"), testButton.getX() + 20, y + 5, 0xFF0000);
+            else drawTextWithShadow(matrices, textRenderer, Text.of((duration * 100) + "ms"), testButton.getX() + 15, y + 5, 0xFFFFFF);
 
         }
 

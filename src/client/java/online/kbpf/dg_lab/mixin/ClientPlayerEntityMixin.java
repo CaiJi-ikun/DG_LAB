@@ -1,7 +1,7 @@
 package online.kbpf.dg_lab.mixin;
 
 
-import net.minecraft.network.encryption.PlayerPublicKey;
+//import net.minecraft.network.encryption.PlayerPublicKey;
 import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.entity.DGStrength;
 import online.kbpf.dg_lab.client.Config.StrengthConfig;
@@ -25,8 +25,8 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     @Unique
     float Dg_labHealth = 0.0f;
 
-    public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile, @Nullable PlayerPublicKey publicKey) {
-        super(world, profile, publicKey);
+    public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
+        super(world, profile);
     }
 
 

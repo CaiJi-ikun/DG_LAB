@@ -7,8 +7,11 @@ import net.minecraft.client.gui.Selectable;
 //import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
+import net.minecraft.util.Formatting;
 import online.kbpf.dg_lab.client.entity.Waveform.ControlBar;
 import online.kbpf.dg_lab.client.screen.ButtonWidget;
 
@@ -65,8 +68,9 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
 
     public static class Entry extends ElementListWidget.Entry<Entry> {
 
-        final Text manual = Text.literal("手动").styled(style -> style.withBold(true).withUnderline(true)), automatic = Text.literal("平均").styled(style -> style.withColor(TextColor.fromRgb(0xAAAAAA)).withBold(true));
+        final Text manual = new LiteralText("手动").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFFFFF)).withBold(true).withUnderline(true));
 
+        final Text automatic = new LiteralText("平均").setStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xAAAAAA)));
 
 
         ButtonWidget S_enable, F_enable;
@@ -96,7 +100,7 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
                     updateFrequency(getBackFrequencyOff(Entry.this.index), getNextFrequencyOff(Entry.this.index));
             }).size(22, 8).build();
 
-            strength = new CustomSliderWidget(0, 0, 100 ,8, Text.literal(String.valueOf(list.get(this.index).getStrength())), list.get(this.index).getStrength() * 0.01) {
+            strength = new CustomSliderWidget(0, 0, 100 ,8, Text.of(String.valueOf(list.get(this.index).getStrength())), list.get(this.index).getStrength() * 0.01) {
 
                 @Override
                 protected void updateMessage() {
@@ -110,7 +114,7 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
                 protected void applyValue() {}
             };
 
-            frequency = new CustomSliderWidget(0, 0, 100, 8, Text.literal(String.valueOf(list.get(this.index).getFrequency())), list.get(this.index).getFrequency() * 0.01) {
+            frequency = new CustomSliderWidget(0, 0, 100, 8, Text.of(String.valueOf(list.get(this.index).getFrequency())), list.get(this.index).getFrequency() * 0.01) {
 
                 @Override
                 protected void updateMessage() {

@@ -30,7 +30,7 @@ public class CustomScreen extends Screen {
 
     public CustomScreen(String waveformKey) {
 
-        super(Text.literal("自定义波形界面"));
+        super(Text.of("自定义波形界面"));
         if(waveformMap.containsKey(waveformKey)) {
             list = waveformMap.get(waveformKey).getList();
         }
@@ -63,7 +63,7 @@ public class CustomScreen extends Screen {
         customListWidget = new CustomListWidget(client, width, height - 40, 20, height - 40,  8);
 
 
-        add = ButtonWidget.builder(Text.literal((list.size() >= 348) ? "---MAX---" : "+"), button -> {
+        add = ButtonWidget.builder(Text.of((list.size() >= 348) ? "---MAX---" : "+"), button -> {
 
             if(list.size() < 348) {
                 add.setMessage(Text.of("+"));
@@ -72,13 +72,13 @@ public class CustomScreen extends Screen {
                     customListWidget.addCustomEntry(new CustomListWidget.Entry(list.size() - 1));
                 }
             }
-            add.setMessage(Text.literal((list.size() >= 348) ? "---MAX---" : "+"));
+            add.setMessage(Text.of((list.size() >= 348) ? "---MAX---" : "+"));
 
         }).dimensions((int) (width * 0.1), height - 17, (int) (width * 0.7), 15).build();
 
 
 
-        delete = ButtonWidget.builder(Text.literal("-"), button -> {
+        delete = ButtonWidget.builder(Text.of("-"), button -> {
 
             if(list.size() > 7) {
                 for (int i = 1; i <= 4; i++) {
@@ -87,7 +87,7 @@ public class CustomScreen extends Screen {
 
                 }
             }
-            add.setMessage(Text.literal((list.size() >= 348) ? "---MAX---" : "+"));
+            add.setMessage(Text.of((list.size() >= 348) ? "---MAX---" : "+"));
         }).dimensions((int) (width * 0.8), height - 17, (int) (width * 0.1), 15).build();
 
         for (int i = 0; i <list.size(); i++){

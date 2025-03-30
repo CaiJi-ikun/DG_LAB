@@ -1,5 +1,6 @@
 package online.kbpf.dg_lab.client.webSocketServer;
 
+import net.minecraft.text.LiteralText;
 import online.kbpf.dg_lab.client.entity.DGFrequency;
 import online.kbpf.dg_lab.client.entity.DGStrength;
 import online.kbpf.dg_lab.client.entity.clientInfo;
@@ -125,7 +126,7 @@ public class webSocketServer extends WebSocketServer {
             if (Number == 405) {
                 if (MinecraftClient.getInstance().player != null)
 
-                    MinecraftClient.getInstance().player.sendMessage(Text.literal("发送的消息长度超过1950").setStyle(Style.EMPTY.withColor(0xFF0000)));
+                    MinecraftClient.getInstance().player.sendMessage(new LiteralText("发送的消息长度超过1950").setStyle(Style.EMPTY.withColor(0xFF0000)), false);
             }
 
             // 设置最终的BMaxStrength值
