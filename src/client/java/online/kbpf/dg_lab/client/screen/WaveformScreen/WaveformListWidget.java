@@ -70,7 +70,7 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
             if(waveformMap.containsKey(key)) waveform = waveformMap.get(key);
 
 
-            waveformDataText = new TextFieldWidget(textRenderer,0, 0, 100, ButtonHeight, Text.literal(""));
+            waveformDataText = new TextFieldWidget(textRenderer,0, 0, 100, ButtonHeight - 4, Text.literal(""));
             waveformDataText.setMaxLength(100000);
 
             waveformDataText.setText(waveform.getWaveform());
@@ -86,7 +86,7 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
             customButton = new ButtonWidget.Builder(Text.literal("✏"), button -> {
                 Screen customScreen = new CustomScreen(key);
                 client.setScreen(customScreen);
-            }).tooltip(Tooltip.of(Text.literal("点击修改波形"))).build();
+            }).tooltip(Tooltip.of(Text.literal("点击修改波形"))).size(15, ButtonHeight).build();
 
             copyButton = new ButtonWidget.Builder(Text.literal("\uD83D\uDCC4"), button -> {
                 MinecraftClient.getInstance().keyboard.setClipboard(waveformDataText.getText());
@@ -99,7 +99,7 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
 
             testButton = new ButtonWidget.Builder(Text.literal("\uD83D\uDCE8"), button -> {
                 webSocketServer.sendDGWaveForm(waveformDataText.getText(), 1);
-            }).tooltip(Tooltip.of(Text.literal("发送到终端1通道"))).build();
+            }).tooltip(Tooltip.of(Text.literal("发送到终端1通道"))).size(15, ButtonHeight).build();
 
 
             this.textRenderer = textRenderer;
@@ -133,7 +133,6 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
 
 //            customButton.setDimensionsAndPosition(15, 20, waveformDataText.getX() + waveformDataText.getWidth(), y);
             customButton.setPosition(waveformDataText.getX() + waveformDataText.getWidth() + 2, y);
-            customButton.setWidth(15);
             customButton.render(context, mouseX, mouseY, tickDelta);
 
 //            copyButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
@@ -145,7 +144,6 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
 
 //            testButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
             testButton.setPosition(customButton.getX() + 15, y);
-            testButton.setWidth(15);
             testButton.render(context, mouseX, mouseY, tickDelta);
 
 
