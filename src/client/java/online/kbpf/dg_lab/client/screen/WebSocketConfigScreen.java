@@ -20,6 +20,9 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static online.kbpf.dg_lab.client.screen.ConfigScreen.*;
+
+
 @Environment(EnvType.CLIENT)
 public class WebSocketConfigScreen extends Screen {
 
@@ -60,37 +63,37 @@ public class WebSocketConfigScreen extends Screen {
 
             }
 
-        }).dimensions(width / 2 - (int) (width * 0.41), 20, (int) (width * 0.4), 15).tooltip(Tooltip.of(Text.literal("要在客户端启动时自动启动连接服务器\n如果关闭需要使用指令手动启动\n非必要无需关闭"))).build();
+        }).dimensions(width / 2 - (int) (width * 0.41), 20, (int) (width * 0.4), ButtonHeight).tooltip(Tooltip.of(Text.literal("要在客户端启动时自动启动连接服务器\n如果关闭需要使用指令手动启动\n非必要无需关闭"))).build();
 
         createQR = ButtonWidget.builder(Text.literal("创建连接二维码并打开"), button -> {
             ToolQR.CreateQR();
-        }).dimensions(width / 2 + 5, 20, (int) (width * 0.4), 15).tooltip(Tooltip.of(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir")))).build();
+        }).dimensions(width / 2 + 5, 20, (int) (width * 0.4), ButtonHeight).tooltip(Tooltip.of(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir")))).build();
 
-        host = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 45, (int) (width * 0.25), 15, Text.literal("Enter address..."));
+        host = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 20 + ButtonHeight + ButtonDistance, (int) (width * 0.25), ButtonHeight, Text.literal("Enter address..."));
         host.setText(modConfig.getAddress());
         host.setPlaceholder(Text.literal("this").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
         host.setChangedListener(this::hostText);
         host1 = ButtonWidget.builder(Text.literal("?"), button -> {
-        }).dimensions((int) (width * 0.63), 45, (int) (width * 0.03), 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的地址\n非必要无需修改"))).build();
+        }).dimensions((int) (width * 0.63), 20 + ButtonHeight + ButtonDistance, (int) (width * 0.03), ButtonHeight).tooltip(Tooltip.of(Text.literal("扫描二维码连接的地址\n非必要无需修改"))).build();
         host2 = ButtonWidget.builder(Text.literal("<|>"), button -> {
             toggleNetworkAdapter();
-        }).dimensions((int) (width * 0.59), 45, (int) (width * 0.04), 15).tooltip(Tooltip.of(Text.literal("切换网卡"))).build();
+        }).dimensions((int) (width * 0.59), 20 + ButtonHeight + ButtonDistance, (int) (width * 0.04), ButtonHeight).tooltip(Tooltip.of(Text.literal("切换网卡"))).build();
 
-        port = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 70, (int) (width * 0.25), 15, Text.literal("Enter port..."));
+        port = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 2 * (ButtonHeight + ButtonDistance) + 20, (int) (width * 0.25), ButtonHeight, Text.literal("Enter port..."));
         port.setText(String.valueOf(modConfig.getPort()));
         port.setPlaceholder(Text.literal("9999").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
         port.setChangedListener(this::portText);
         port.setMaxLength(5);
         port1 = ButtonWidget.builder(Text.literal("?"), button -> {
-        }).dimensions((int) (width * 0.63), 70, (int) (width * 0.03), 15).tooltip(Tooltip.of(Text.literal("扫描二维码连接的端口,非服务器端口\n非必要无需修改"))).build();
+        }).dimensions((int) (width * 0.63), 2 * (ButtonHeight + ButtonDistance) + 20, (int) (width * 0.03), ButtonHeight).tooltip(Tooltip.of(Text.literal("扫描二维码连接的端口,非服务器端口\n非必要无需修改"))).build();
 
-        serverPort = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 95, (int) (width * 0.25), 15, Text.literal("Enter port..."));
+        serverPort = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 3 * (ButtonHeight + ButtonDistance) + 20, (int) (width * 0.25), ButtonHeight, Text.literal("Enter port..."));
         serverPort.setText(String.valueOf(modConfig.getPort()));
         serverPort.setPlaceholder(Text.literal("9999").styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
         serverPort.setChangedListener(this::serverPortText);
         serverPort.setMaxLength(5);
         serverPort1 = ButtonWidget.builder(Text.literal("?"), button -> {
-        }).dimensions((int) (width * 0.63), 95, (int) (width * 0.03), 15).tooltip(Tooltip.of(Text.literal("服务器对外开放的端口\n非必要无需修改\n修改后请保存重启客户端生效"))).build();
+        }).dimensions((int) (width * 0.63), 3 * (ButtonHeight + ButtonDistance) + 20, (int) (width * 0.03), ButtonHeight).tooltip(Tooltip.of(Text.literal("服务器对外开放的端口\n非必要无需修改\n修改后请保存重启客户端生效"))).build();
 
 
         addDrawableChild(createQR);
