@@ -32,6 +32,7 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
     public WaveformListWidget(MinecraftClient minecraftClient, int width, int height, int top, int bottom, int itemHeight) {
         super(minecraftClient, width, height, top, bottom, itemHeight);
         this.width = width;
+        this.left = 0;
     }
 
 
@@ -44,10 +45,11 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
     public int getRowWidth() {
         return this.width; // 宽度设置为屏幕宽度
     }
-//    @Override
-//    protected int getScrollbarX() {
-//        return this.getRight() - 6; // 滚动条紧贴右侧
-//    }
+    @Override
+    protected int getScrollbarPositionX() {
+        return this.right - 6;  // 滚动条紧贴右侧
+    }
+
 
 
     public void addWaveformEntry(Entry entry) {
