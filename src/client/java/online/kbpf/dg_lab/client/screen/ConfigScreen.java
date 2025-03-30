@@ -24,6 +24,8 @@ import static online.kbpf.dg_lab.client.Dg_labClient.modConfig;
 @Environment(EnvType.CLIENT)
 public class ConfigScreen extends Screen {
 
+    public static final int ButtonHeight = 20, ButtonDistance = 5;
+
     public ButtonWidget saveFile;
     public ButtonWidget webSocketConfig;
     public ButtonWidget createQR;
@@ -65,7 +67,7 @@ public class ConfigScreen extends Screen {
 
         CustomConfig = ButtonWidget.builder(Text.literal("test"), button -> {
 //            client.setScreen(customScreen);
-        }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140, (int) (width * 0.4), 15).build();
+        }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140, (int) (width * 0.4), ButtonHeight).build();
 
 
 
@@ -73,7 +75,7 @@ public class ConfigScreen extends Screen {
 
 
 
-        RenderingPositionX = new SliderWidget(width / 2 + 5, 120, (int) (width * 0.2) - 6, 15, Text.literal((modConfig.getRenderingPositionX() >= width1 || modConfig.getRenderingPositionY() >= height1) ? "已关闭强度显示" : ("显示位置X:" + modConfig.getRenderingPositionX())), (double) modConfig.getRenderingPositionX() / width1) {
+        RenderingPositionX = new SliderWidget(width / 2 + 5, 140 - ButtonDistance - ButtonHeight, (int) (width * 0.2) - 6, ButtonHeight, Text.literal((modConfig.getRenderingPositionX() >= width1 || modConfig.getRenderingPositionY() >= height1) ? "已关闭强度显示" : ("显示位置X:" + modConfig.getRenderingPositionX())), (double) modConfig.getRenderingPositionX() / width1) {
             @Override
             protected void updateMessage() {
             }
@@ -92,7 +94,7 @@ public class ConfigScreen extends Screen {
             }
         };
 
-        RenderingPositionY = new SliderWidget(RenderingPositionX.getX() + RenderingPositionX.getWidth(), 120, (int) (width * 0.2) - 6, 15, Text.literal((modConfig.getRenderingPositionX() >= width1 || modConfig.getRenderingPositionY() >= height1) ? "已关闭强度显示" : ("显示位置Y:" + modConfig.getRenderingPositionY())), (double) modConfig.getRenderingPositionY() / height1) {
+        RenderingPositionY = new SliderWidget(RenderingPositionX.getX() + RenderingPositionX.getWidth(), 140 - ButtonDistance - ButtonHeight, (int) (width * 0.2) - 6, ButtonHeight, Text.literal((modConfig.getRenderingPositionX() >= width1 || modConfig.getRenderingPositionY() >= height1) ? "已关闭强度显示" : ("显示位置Y:" + modConfig.getRenderingPositionY())), (double) modConfig.getRenderingPositionY() / height1) {
             @Override
             protected void updateMessage() {
             }
@@ -114,14 +116,14 @@ public class ConfigScreen extends Screen {
         MaxStrength = ButtonWidget.builder(Text.literal((modConfig.isRenderingMax()) ? "开" : "关"), button -> {
             modConfig.setRenderingMax(!modConfig.isRenderingMax());
             MaxStrength.setMessage(Text.literal((modConfig.isRenderingMax()) ? "开" : "关"));
-        }).dimensions(RenderingPositionY.getX() + RenderingPositionX.getWidth(), 120, 12, 15).tooltip(Tooltip.of(Text.literal("是否开启最大强度显示"))).build();
+        }).dimensions(RenderingPositionY.getX() + RenderingPositionX.getWidth(), 140 - ButtonDistance - ButtonHeight, 12, ButtonHeight).tooltip(Tooltip.of(Text.literal("是否开启最大强度显示"))).build();
 
         saveFile = ButtonWidget.builder(Text.literal("保存配置到文件"), button -> {
                     strengthConfig.savaFile();
                     modConfig.savaFile();
                     WaveformConfig.saveWaveform(waveformMap);
                 })
-                .dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 20, (int) (width * 0.4), 15).tooltip(Tooltip.of(Text.literal("所有更改是临时更改\n点击此按钮保存到文件"))).build();
+                .dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 20, (int) (width * 0.4), ButtonHeight).tooltip(Tooltip.of(Text.literal("所有更改是临时更改\n点击此按钮保存到文件"))).build();
 
 
 
@@ -129,21 +131,21 @@ public class ConfigScreen extends Screen {
                     Screen WebSocketConfigScreen = new WebSocketConfigScreen();
                     client.setScreen(WebSocketConfigScreen);
                 })
-                .dimensions(width / 2 + 5, 20, (int) (width * 0.4), 15).tooltip(Tooltip.of(Text.literal("点击修改连接设置\n非必要无需修改"))).build();
+                .dimensions(width / 2 + 5, 20, (int) (width * 0.4), ButtonHeight).tooltip(Tooltip.of(Text.literal("点击修改连接设置\n非必要无需修改"))).build();
 
         StrengthConfig = ButtonWidget.builder(Text.literal("强度设置"), button -> {
             Screen strengthConfigScreen = new StrengthConfigScreen();
             client.setScreen(strengthConfigScreen);
-        }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 45, (int) (width * 0.4), 15).tooltip(Tooltip.of(Text.literal("点击修改强度设置"))).build();
+        }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 20 + ButtonHeight + ButtonDistance, (int) (width * 0.4), ButtonHeight).tooltip(Tooltip.of(Text.literal("点击修改强度设置"))).build();
 
         WaveFormConfig = ButtonWidget.builder(Text.literal("波形设置"), button -> {
             Screen waveformConfigScreen = new WaveformConfigScreen();
             client.setScreen(waveformConfigScreen);
-        }).dimensions(width / 2 + 5, 45, (int) (width * 0.4), 15).tooltip((Tooltip.of(Text.literal(":P")))).build();
+        }).dimensions(width / 2 + 5, 20 + ButtonHeight + ButtonDistance, (int) (width * 0.4), ButtonHeight).tooltip((Tooltip.of(Text.literal(":P")))).build();
 
         createQR = ButtonWidget.builder(Text.literal("创建连接二维码并打开"), button -> {
             ToolQR.CreateQR();
-        }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 120, (int) (width * 0.4), 15).tooltip(Tooltip.of(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir")))).build();
+        }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140 - ButtonDistance - ButtonHeight, (int) (width * 0.4), ButtonHeight).tooltip(Tooltip.of(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir")))).build();
 
 
 

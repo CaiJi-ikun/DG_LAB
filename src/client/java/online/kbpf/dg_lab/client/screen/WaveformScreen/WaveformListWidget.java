@@ -18,6 +18,7 @@ import online.kbpf.dg_lab.client.screen.WaveformScreen.Custom.CustomScreen;
 
 import java.util.List;
 
+import static online.kbpf.dg_lab.client.screen.ConfigScreen.*;
 import static online.kbpf.dg_lab.client.Dg_labClient.waveformMap;
 import static online.kbpf.dg_lab.client.Dg_labClient.webSocketServer;
 
@@ -68,7 +69,7 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
             if(waveformMap.containsKey(key)) waveform = waveformMap.get(key);
 
 
-            waveformDataText = new TextFieldWidget(textRenderer, 100, 15, Text.literal(""));
+            waveformDataText = new TextFieldWidget(textRenderer, 100, ButtonHeight, Text.literal(""));
             waveformDataText.setMaxLength(100000);
 
             waveformDataText.setText(waveform.getWaveform());
@@ -124,10 +125,10 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
             //文本框位置宽高
 
 
-            waveformDataText.setDimensionsAndPosition(x + (int) (entryWidth * 0.3), 20, x + (int) (entryWidth * 0.4), y);
+            waveformDataText.setDimensionsAndPosition(x + (int) (entryWidth * 0.3), ButtonHeight, x + (int) (entryWidth * 0.4), y);
             waveformDataText.render(context, mouseX, mouseY, tickDelta);
 
-            customButton.setDimensionsAndPosition(15, 20, waveformDataText.getX() + waveformDataText.getWidth(), y);
+            customButton.setDimensionsAndPosition(15, ButtonHeight, waveformDataText.getX() + waveformDataText.getWidth(), y);
             customButton.render(context, mouseX, mouseY, tickDelta);
 
 //            copyButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
@@ -137,7 +138,7 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
 //            pasteButton.setDimensionsAndPosition(15, 20, copyButton.getX() + 15, y);
 //            pasteButton.render(context, mouseX, mouseY, tickDelta);
 
-            testButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
+            testButton.setDimensionsAndPosition(15, ButtonHeight, customButton.getX() + 15, y);
             testButton.render(context, mouseX, mouseY, tickDelta);
 
 
