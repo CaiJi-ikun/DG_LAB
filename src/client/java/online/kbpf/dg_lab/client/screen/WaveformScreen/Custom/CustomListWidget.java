@@ -40,6 +40,10 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
     public int getRowWidth() {
         return this.width; // 宽度设置为屏幕宽度
     }
+    @Override
+    public int getScrollbarPositionX() {
+        return this.right - 6;  // 滚动条紧贴右侧
+    }
 //    @Override
 //    protected int getScrollbarX() {
 //        return this.getRight() - 6; // 滚动条紧贴右侧
