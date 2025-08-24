@@ -70,7 +70,7 @@ public class WebSocketConfigScreen extends Screen {
 
         host = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 20 + ButtonHeight + ButtonDistance, (int) (width * 0.25), ButtonHeight, Text.literal("Enter address..."));
         host.setText(modConfig.getAddress());
-        host.setPlaceholder(Text.literal("this").withColor(0xaaaaaa));
+        host.setPlaceholder(Text.literal("this").withColor(0xffaaaaaa));
         host.setChangedListener(this::hostText);
         host1 = ButtonWidget.builder(Text.literal("?"), button -> {
         }).dimensions((int) (width * 0.63), 20 + ButtonHeight + ButtonDistance, (int) (width * 0.03), ButtonHeight).tooltip(Tooltip.of(Text.literal("扫描二维码连接的地址\n非必要无需修改"))).build();
@@ -80,7 +80,7 @@ public class WebSocketConfigScreen extends Screen {
 
         port = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 2 * (ButtonHeight + ButtonDistance) + 20, (int) (width * 0.25), ButtonHeight, Text.literal("Enter port..."));
         port.setText(String.valueOf(modConfig.getPort()));
-        port.setPlaceholder(Text.literal("9999").withColor(0xaaaaaa));
+        port.setPlaceholder(Text.literal("9999").withColor(0xffaaaaaa));
         port.setChangedListener(this::portText);
         port.setMaxLength(5);
         port1 = ButtonWidget.builder(Text.literal("?"), button -> {
@@ -88,7 +88,7 @@ public class WebSocketConfigScreen extends Screen {
 
         serverPort = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 3 * (ButtonHeight + ButtonDistance) + 20, (int) (width * 0.25), ButtonHeight, Text.literal("Enter port..."));
         serverPort.setText(String.valueOf(modConfig.getPort()));
-        serverPort.setPlaceholder(Text.literal("9999").withColor(0xaaaaaa));
+        serverPort.setPlaceholder(Text.literal("9999").withColor(0xffaaaaaa));
         serverPort.setChangedListener(this::serverPortText);
         serverPort.setMaxLength(5);
         serverPort1 = ButtonWidget.builder(Text.literal("?"), button -> {
@@ -179,10 +179,10 @@ public class WebSocketConfigScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
 
 
-        context.drawTextWithShadow(textRenderer, Text.literal("二维码连接的地址"), (int) (width * 0.1), 49, 0xffffff);
-        context.drawText(textRenderer, Text.literal(modConfig.getNetwork()), (int) (width * 0.1), 61, 0xaaaaaa, false);
-        context.drawTextWithShadow(textRenderer, Text.literal("二维码连接的端口"), (int) (width * 0.1), 74, 0xffffff);
-        context.drawTextWithShadow(textRenderer, Text.literal("服务器开放的端口"), (int) (width * 0.1), 99, 0xffffff);
+        context.drawTextWithShadow(textRenderer, Text.literal("二维码连接的地址"), (int) (width * 0.1), 49, 0xffffffff);
+        context.drawText(textRenderer, Text.literal(modConfig.getNetwork()), (int) (width * 0.1), 61, 0xffaaaaaa, false);
+        context.drawTextWithShadow(textRenderer, Text.literal("二维码连接的端口"), (int) (width * 0.1), 74, 0xffffffff);
+        context.drawTextWithShadow(textRenderer, Text.literal("服务器开放的端口"), (int) (width * 0.1), 99, 0xffffffff);
 
 
 

@@ -1,10 +1,12 @@
 package online.kbpf.dg_lab.client.screen.WaveformScreen.Custom;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 import net.minecraft.util.math.MathHelper;
 
 import static online.kbpf.dg_lab.client.screen.WaveformScreen.Custom.CustomScreen.list;
@@ -30,40 +32,9 @@ public abstract class CustomSliderWidget extends SliderWidget {
     public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
 
-        // 使用预定义的 RenderPipeline - 从源码中可以看到有 RenderPipelines.GUI
-        com.mojang.blaze3d.pipeline.RenderPipeline renderPipeline = net.minecraft.client.gl.RenderPipelines.GUI;
-
-        // 滑块背景
-        context.drawTexture(
-                renderPipeline,              // RenderPipeline
-                this.getTexture(),           // Identifier texture
-                this.getX(),                 // int x
-                this.getY(),                 // int y
-                0.0F,                        // float u
-                0.0F,                        // float v
-                this.getWidth(),             // int width
-                this.getHeight(),            // int height
-                this.getWidth(),             // int regionWidth
-                this.getHeight(),            // int regionHeight
-                0                            // int z
-        );
-
-        // 滑块手柄
-        context.drawTexture(
-                renderPipeline,              // RenderPipeline
-                this.getHandleTexture(),     // Identifier texture
-                this.getX() + (int)(this.value * (double)(this.width - 8)), // int x
-                this.getY(),                 // int y
-                0.0F,                        // float u
-                0.0F,                        // float v
-                8,                           // int width
-                this.getHeight(),            // int height
-                8,                           // int regionWidth
-                this.getHeight(),            // int regionHeight
-                0                            // int z
-        );
-
-        int i = this.active ? 16777215 : 10526880;
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, this.getTexture(), this.getX(), this.getY(), this.getWidth(), this.getHeight(), ColorHelper.getWhite(this.alpha));
+        context.drawGuiTexture(RenderPipelines.GUI_TEXTURED, this.getHandleTexture(), this.getX() + (int)(this.value * (double)(this.width - 8)), this.getY(), 8, this.getHeight(), ColorHelper.getWhite(this.alpha));
+        int i = ColorHelper.withAlpha(this.alpha, this.active ? -1 : -6250336);
         context.drawTextWithShadow(
                 minecraftClient.textRenderer,
                 this.getMessage(),

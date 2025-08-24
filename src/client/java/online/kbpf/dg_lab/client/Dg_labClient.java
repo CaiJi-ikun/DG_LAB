@@ -1,11 +1,14 @@
 package online.kbpf.dg_lab.client;
 
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.minecraft.util.Identifier;
 import online.kbpf.dg_lab.client.Tool.DGWaveformTool;
 import online.kbpf.dg_lab.client.command.Default;
 import online.kbpf.dg_lab.client.Config.ModConfig;
 import online.kbpf.dg_lab.client.Config.StrengthConfig;
 import online.kbpf.dg_lab.client.Config.WaveformConfig;
 import online.kbpf.dg_lab.client.entity.Waveform.Waveform;
+import online.kbpf.dg_lab.client.hud.hud;
 import online.kbpf.dg_lab.client.screen.ConfigScreen;
 import online.kbpf.dg_lab.client.webSocketServer.webSocketServer;
 import net.fabricmc.api.ClientModInitializer;
@@ -37,7 +40,7 @@ public class Dg_labClient implements ClientModInitializer {
     private static KeyBinding keyBinding;
     private final Screen configScreen = new ConfigScreen();
 
-
+    private static final Identifier HUD_ID = Identifier.of("dglab", "hud");
 
 
     @Override
@@ -52,7 +55,8 @@ public class Dg_labClient implements ClientModInitializer {
 
         DGWaveformTool.updateDuration();
 
-        HudRenderCallback.EVENT.register(this::onHudRender);
+        hud tntHud = new hud();
+        HudElementRegistry.addLast(HUD_ID, tntHud);
 
         keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "打开配置界面",
@@ -63,7 +67,6 @@ public class Dg_labClient implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (keyBinding.wasPressed()) {
-
                 client.setScreen(configScreen);
             }
         });
@@ -82,55 +85,7 @@ public class Dg_labClient implements ClientModInitializer {
     public static ModConfig getModConfig(){return modConfig;}
 
 
-    //屏幕强度显示
-    private void onHudRender(DrawContext drawContext, RenderTickCounter tickDelta) {
 
-        MinecraftClient client = MinecraftClient.getInstance();
-// 在onHudRender方法开头添加测试渲染
-        drawContext.drawTextWithShadow(
-                client.textRenderer,
-                Text.literal("测试文本"),
-                10, 10,
-                0xFF00FF00 // 绿色
-        );
-        //
-        if (client.player != null && client.world != null && (modConfig.getRenderingPositionX() < client.getWindow().getScaledWidth() || modConfig.getRenderingPositionY() < client.getWindow().getScaledHeight())) {
-            // 假设强度数值是一个整数
-//            int strengthValue = getStrengthValue(client.player);
-
-            // 计算图标和文本的位置
-            int x = modConfig.getRenderingPositionX();
-            int y = modConfig.getRenderingPositionY();
-
-
-            // 创建并渲染 OrderedText
-
-            if(webSocketServer.getConnected()) {
-                Text strengthText;
-                Text strengthText1;
-                if(modConfig.isRenderingMax()) {
-                    strengthText = Text.literal("A:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
-
-                    strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getBStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
-
-                }
-                else {
-                    strengthText = Text.literal("A:" + webSocketServer.getStrength().getAStrength());
-
-                    strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getBStrength());
-                }
-                OrderedText orderedText = strengthText.asOrderedText();
-                OrderedText orderedText1 = strengthText1.asOrderedText();
-                drawContext.drawTextWithShadow(client.textRenderer, orderedText, x, y, 0xFFFFFF);
-                drawContext.drawTextWithShadow(client.textRenderer, orderedText1, x, y + 9, 0xFFFFFF);
-            }
-            else {
-                Text strengthText = Text.literal("未连接");
-                OrderedText orderedText = strengthText.asOrderedText();
-                drawContext.drawTextWithShadow(client.textRenderer, orderedText, x, y, 0xFF0000);
-            }
-        }
-    }
 
 
 }

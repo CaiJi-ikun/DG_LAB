@@ -142,12 +142,12 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
             testButton.render(context, mouseX, mouseY, tickDelta);
 
 
-            context.drawTextWithShadow(textRenderer, this.text, x + (int) (entryWidth * 0.15), y + 5, 0xffffff);
+            context.drawTextWithShadow(textRenderer, this.text, x + (int) (entryWidth * 0.15), y + 5, 0xffffffff);
 
             int duration = DGWaveformTool.checkAndCountValidSubstrings(waveformDataText.getText());
             if(duration == 0)
-                context.drawTextWithShadow(textRenderer, "ERROR", testButton.getX() + 20, y + 5, 0xFF0000);
-            else context.drawTextWithShadow(textRenderer, (duration * 100) + "ms", testButton.getX() + 15, y + 5, 0xFFFFFF);
+                context.drawTextWithShadow(textRenderer, "ERROR", testButton.getX() + 20, y + 5, 0xffFF0000);
+            else context.drawTextWithShadow(textRenderer, (duration * 100) + "ms", testButton.getX() + 15, y + 5, 0xffFFFFFF);
 
         }
 
