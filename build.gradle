@@ -1,5 +1,6 @@
+
 plugins {
-    id 'fabric-loom' version '1.7.2'
+    id 'fabric-loom' version '1.10.1'
     id 'maven-publish'
 }
 
@@ -106,3 +107,19 @@ publishing {
 }
 
 
+loom {
+    runs {
+        client {
+            client()
+            setConfigName("Fabric Client")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+        server {
+            server()
+            setConfigName("Fabric Server")
+            ideConfigGenerated(true)
+            runDir("run")
+        }
+    }
+}

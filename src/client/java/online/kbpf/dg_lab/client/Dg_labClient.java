@@ -84,8 +84,16 @@ public class Dg_labClient implements ClientModInitializer {
 
     //屏幕强度显示
     private void onHudRender(DrawContext drawContext, RenderTickCounter tickDelta) {
-        MinecraftClient client = MinecraftClient.getInstance();
 
+        MinecraftClient client = MinecraftClient.getInstance();
+// 在onHudRender方法开头添加测试渲染
+        drawContext.drawTextWithShadow(
+                client.textRenderer,
+                Text.literal("测试文本"),
+                10, 10,
+                0xFF00FF00 // 绿色
+        );
+        //
         if (client.player != null && client.world != null && (modConfig.getRenderingPositionX() < client.getWindow().getScaledWidth() || modConfig.getRenderingPositionY() < client.getWindow().getScaledHeight())) {
             // 假设强度数值是一个整数
 //            int strengthValue = getStrengthValue(client.player);

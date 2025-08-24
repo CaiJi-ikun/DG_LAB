@@ -125,7 +125,7 @@ public class webSocketServer extends WebSocketServer {
             if (Number == 405) {
                 if (MinecraftClient.getInstance().player != null)
 
-                    MinecraftClient.getInstance().player.sendMessage(Text.literal("发送的消息长度超过1950").setStyle(Style.EMPTY.withColor(0xFF0000)));
+                    MinecraftClient.getInstance().player.sendMessage(Text.literal("发送的消息长度超过1950").setStyle(Style.EMPTY.withColor(0xFF0000)), false);
             }
 
             // 设置最终的BMaxStrength值
