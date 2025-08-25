@@ -138,8 +138,8 @@ public class ModConfig {
             NetworkAdapter networkInterface = new NetworkAdapter();
             ModConfig modConfig = gson.fromJson(reader, ModConfig.class);
             if(!modConfig.address2 || (modConfig.network2&&networkInterface.getNetworkMap().size() == 1)) modConfig.autoGetNetworkAddress();
-            else{
-                String address = networkInterface.NICGetaddress(modConfig.address);
+            else if(modConfig.network2){
+                String address = networkInterface.NICGetaddress(modConfig.network);
                 if(address != null)
                     modConfig.setAddress(address);
             }
