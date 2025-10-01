@@ -32,8 +32,13 @@ public class ConfigScreen extends Screen {
     public ButtonWidget CustomConfig;
     public ButtonWidget MaxStrength;
 
+
     public SliderWidget RenderingPositionX;
     public SliderWidget RenderingPositionY;
+
+
+
+
 
 
 //    Screen customScreen = new CustomScreen();
@@ -42,8 +47,14 @@ public class ConfigScreen extends Screen {
         // 此参数为屏幕的标题，进入屏幕中，复述功能会复述。
         super(Text.literal("配置界面"));
     }
+
+
+
+
+
     @Override
     protected void init() {
+
 
 //        online.kbpf.dg_lab.client.Config.StrengthConfig StrengthConfig = Dg_labClient.getStrengthConfig();
 //        ModConfig modConfig = Dg_labClient.getModConfig();
@@ -55,6 +66,12 @@ public class ConfigScreen extends Screen {
         CustomConfig = ButtonWidget.builder(Text.literal("test"), button -> {
 //            client.setScreen(customScreen);
         }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140, (int) (width * 0.4), ButtonHeight).build();
+
+
+
+
+
+
 
         RenderingPositionX = new SliderWidget(width / 2 + 5, 140 - ButtonDistance - ButtonHeight, (int) (width * 0.2) - 6, ButtonHeight, Text.literal((modConfig.getRenderingPositionX() >= width1 || modConfig.getRenderingPositionY() >= height1) ? "已关闭强度显示" : ("显示位置X:" + modConfig.getRenderingPositionX())), (double) modConfig.getRenderingPositionX() / width1) {
             @Override
@@ -127,6 +144,8 @@ public class ConfigScreen extends Screen {
         createQR = ButtonWidget.builder(Text.literal("创建连接二维码并打开"), button -> {
             ToolQR.CreateQR();
         }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140 - ButtonDistance - ButtonHeight, (int) (width * 0.4), ButtonHeight).tooltip(Tooltip.of(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir")))).build();
+
+
 
 
         addDrawableChild(saveFile);
