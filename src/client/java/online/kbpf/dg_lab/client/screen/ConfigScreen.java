@@ -1,5 +1,6 @@
 package online.kbpf.dg_lab.client.screen;
 
+import net.minecraft.client.gui.DrawContext;
 import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.createQR.ToolQR;
 import online.kbpf.dg_lab.client.Config.ModConfig;
@@ -58,8 +59,7 @@ public class ConfigScreen extends Screen {
     protected void init() {
 
 
-//        online.kbpf.dg_lab.client.Config.StrengthConfig StrengthConfig = Dg_labClient.getStrengthConfig();
-//        ModConfig modConfig = Dg_labClient.getModConfig();
+
         MinecraftClient client = MinecraftClient.getInstance();
 
 
@@ -160,7 +160,6 @@ public class ConfigScreen extends Screen {
         addDrawableChild(MaxStrength);
 //        addDrawableChild(CustomConfig);
     }
-
 
 
 
