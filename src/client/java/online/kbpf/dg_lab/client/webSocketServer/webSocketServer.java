@@ -1,6 +1,6 @@
 package online.kbpf.dg_lab.client.webSocketServer;
 
-import online.kbpf.dg_lab.client.entity.DGFrequency;
+
 import online.kbpf.dg_lab.client.entity.DGStrength;
 import online.kbpf.dg_lab.client.entity.clientInfo;
 import com.google.gson.Gson;
@@ -54,6 +54,10 @@ public class webSocketServer extends WebSocketServer {
             client = conn;
             // 在连接时发送客户端信息
             client.send(new Gson().toJson(clientInfo, clientInfo.class));
+            MinecraftClient.getInstance().player.sendMessage(Text.literal("==="),true);
+            MinecraftClient.getInstance().player.sendMessage(Text.literal("作者不对使用此模组造成的人身伤害和精神伤害负责"),true);
+            MinecraftClient.getInstance().player.sendMessage(Text.literal("使用此模组请自行注意人身安全"),true);
+            MinecraftClient.getInstance().player.sendMessage(Text.literal("==="),true);
 
             // 创建一个定时器以定期发送心跳和更新强度信息
             Timer timer = new Timer();
@@ -258,9 +262,7 @@ public class webSocketServer extends WebSocketServer {
 
 
     public void sendDGWaveForm(String message, int A1orB2){
-        System.out.println(1);
         if(isConnected){
-            System.out.println(2);
             clientInfo.setType("msg");
             if(A1orB2 == 1) {
                 CleanFrequency(1);
