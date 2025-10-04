@@ -2,6 +2,7 @@ package online.kbpf.dg_lab.client;
 
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
 import net.minecraft.util.Identifier;
+import online.kbpf.dg_lab.Dg_lab;
 import online.kbpf.dg_lab.client.Tool.DGWaveformTool;
 import online.kbpf.dg_lab.client.command.Default;
 import online.kbpf.dg_lab.client.Config.ModConfig;
@@ -62,7 +63,8 @@ public class Dg_labClient implements ClientModInitializer {
                 "打开配置界面",
                 InputUtil.Type.KEYSYM,
                 GLFW.GLFW_KEY_O,
-                "DG_LAB"
+                KeyBinding.Category.create(Identifier.of(Dg_lab.MODID))
+
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {

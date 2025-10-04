@@ -58,7 +58,9 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
     }
 
     public void removeLast(){
-        this.remove(children().size() - 1);
+        if (!this.children().isEmpty()) {
+            this.removeEntry(this.children().get(this.children().size() - 1));
+        }
     }
 
 
@@ -66,7 +68,7 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
 
         final Text manual = Text.literal("手动").styled(style -> style.withBold(true).withUnderline(true)), automatic = Text.literal("平均").styled(style -> style.withColor(TextColor.fromRgb(0xAAAAAA)).withBold(true));
 
-
+        private final CustomListWidget parent; // 添加对父列表的引用
 
         ButtonWidget S_enable, F_enable;
         CustomSliderWidget strength, frequency;
@@ -74,7 +76,8 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
         int index;
 
 
-        public Entry (int index){
+        public Entry (CustomListWidget parent, int index){ // 修改构造函数，添加 parent 参数
+            this.parent = parent; // 保存父列表引用
             this.index = index;
             this.controlBar = list.get(this.index);
 
@@ -234,7 +237,12 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
         }
 
         @Override
-        public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+        public void render(DrawContext context, int mouseX, int mouseY, boolean hovered, float deltaTicks) {
+            // 保存索引、位置和大小等信息
+            int entryWidth = ((CustomListWidget)this.parent).getRowWidth();
+            int y = this.getY();
+            int x = ((CustomListWidget)this.parent).getRowLeft();
+
             F_enable.setDimensionsAndPosition(22, 8, (int) (entryWidth * 0.015), y);
             frequency.setDimensionsAndPosition((int) (entryWidth * 0.2), 8, F_enable.getX() + 22, y);
             S_enable.setDimensionsAndPosition(22, 8, frequency.getX() + frequency.getWidth() + 20, y);
@@ -244,11 +252,10 @@ public class CustomListWidget extends ElementListWidget<CustomListWidget.Entry> 
                 frequency.setValue(list.get(this.index).getFrequency());
             }
 
-
-            F_enable.render(context, mouseX, mouseY, tickDelta);
-            frequency.render(context, mouseX, mouseY, tickDelta);
-            S_enable.render(context, mouseX, mouseY, tickDelta);
-            strength.render(context, mouseX, mouseY, tickDelta);
+            F_enable.render(context, mouseX, mouseY, deltaTicks);
+            frequency.render(context, mouseX, mouseY, deltaTicks);
+            S_enable.render(context, mouseX, mouseY, deltaTicks);
+            strength.render(context, mouseX, mouseY, deltaTicks);
         }
     }
 

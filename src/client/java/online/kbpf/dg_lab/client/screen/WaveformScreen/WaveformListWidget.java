@@ -59,11 +59,13 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
         private final ButtonWidget copyButton, pasteButton, testButton, customButton;          //按钮
         private final TextRenderer textRenderer;        //文本渲染参数
         private final Text text;                        //文本
+        private final WaveformListWidget parent;        // 添加对父列表的引用
 
         private Waveform waveform = new Waveform();
 
-        public Entry(TextRenderer textRenderer, Text text, String key) {
+        public Entry(WaveformListWidget parent, TextRenderer textRenderer, Text text, String key) {
             //设置单个项目相关内容
+            this.parent = parent;  // 保存父列表引用
 
 
             if(waveformMap.containsKey(key)) waveform = waveformMap.get(key);
@@ -119,27 +121,32 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
         }
 
 
+
+
         @Override
-        public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+        public void render(DrawContext context, int mouseX, int mouseY, boolean hovered, float deltaTicks) {
+            // 获取当前 Entry 的位置和尺寸信息
+            int entryWidth = ((WaveformListWidget)this.parent).getRowWidth();
+            int y = this.getY();
+            int x = ((WaveformListWidget)this.parent).getRowLeft();
+
             //渲染相关
             //文本框位置宽高
-
-
             waveformDataText.setDimensionsAndPosition(x + (int) (entryWidth * 0.3), ButtonHeight, x + (int) (entryWidth * 0.4), y);
-            waveformDataText.render(context, mouseX, mouseY, tickDelta);
+            waveformDataText.render(context, mouseX, mouseY, deltaTicks);
 
             customButton.setDimensionsAndPosition(15, ButtonHeight, waveformDataText.getX() + waveformDataText.getWidth(), y);
-            customButton.render(context, mouseX, mouseY, tickDelta);
+            customButton.render(context, mouseX, mouseY, deltaTicks);
 
 //            copyButton.setDimensionsAndPosition(15, 20, customButton.getX() + 15, y);
-//            copyButton.render(context, mouseX, mouseY, tickDelta);
+//            copyButton.render(context, mouseX, mouseY, deltaTicks);
 //
 //
 //            pasteButton.setDimensionsAndPosition(15, 20, copyButton.getX() + 15, y);
-//            pasteButton.render(context, mouseX, mouseY, tickDelta);
+//            pasteButton.render(context, mouseX, mouseY, deltaTicks);
 
             testButton.setDimensionsAndPosition(15, ButtonHeight, customButton.getX() + 15, y);
-            testButton.render(context, mouseX, mouseY, tickDelta);
+            testButton.render(context, mouseX, mouseY, deltaTicks);
 
 
             context.drawTextWithShadow(textRenderer, this.text, x + (int) (entryWidth * 0.15), y + 5, 0xffffffff);
@@ -148,10 +155,6 @@ public class WaveformListWidget extends ElementListWidget<WaveformListWidget.Ent
             if(duration == 0)
                 context.drawTextWithShadow(textRenderer, "ERROR", testButton.getX() + 20, y + 5, 0xffFF0000);
             else context.drawTextWithShadow(textRenderer, (duration * 100) + "ms", testButton.getX() + 15, y + 5, 0xffFFFFFF);
-
         }
-
-
     }
-
 }

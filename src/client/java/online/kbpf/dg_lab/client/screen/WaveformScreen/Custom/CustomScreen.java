@@ -68,7 +68,7 @@ public class CustomScreen extends Screen {
                 add.setMessage(Text.of("+"));
                 for (int i = 1; i <= 4; i++) {
                     list.add(new ControlBar());
-                    customListWidget.addCustomEntry(new CustomListWidget.Entry(list.size() - 1));
+                    customListWidget.addCustomEntry(new CustomListWidget.Entry(customListWidget, list.size() - 1));
                 }
             }
             add.setMessage(Text.literal((list.size() >= 348) ? "---MAX---" : "+"));
@@ -87,7 +87,7 @@ public class CustomScreen extends Screen {
         }).dimensions((int) (width * 0.8), height - 17, (int) (width * 0.1), 15).build();
 
         for (int i = 0; i <list.size(); i++){
-            customListWidget.addCustomEntry(new CustomListWidget.Entry(i));
+            customListWidget.addCustomEntry(new CustomListWidget.Entry(customListWidget, i));
         }
 
 
@@ -101,4 +101,3 @@ public class CustomScreen extends Screen {
 
 
 }
-
