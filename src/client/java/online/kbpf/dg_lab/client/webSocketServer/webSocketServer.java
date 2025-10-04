@@ -1,6 +1,6 @@
 package online.kbpf.dg_lab.client.webSocketServer;
 
-import online.kbpf.dg_lab.client.entity.DGFrequency;
+
 import online.kbpf.dg_lab.client.entity.DGStrength;
 import online.kbpf.dg_lab.client.entity.clientInfo;
 import com.google.gson.Gson;
@@ -54,6 +54,10 @@ public class webSocketServer extends WebSocketServer {
             client = conn;
             // 在连接时发送客户端信息
             client.send(new Gson().toJson(clientInfo, clientInfo.class));
+            MinecraftClient.getInstance().player.sendMessage(Text.literal("==="));
+            MinecraftClient.getInstance().player.sendMessage(Text.literal("作者不对使用此模组造成的人身伤害和精神伤害负责"));
+            MinecraftClient.getInstance().player.sendMessage(Text.literal("使用此模组请自行注意人身安全"));
+            MinecraftClient.getInstance().player.sendMessage(Text.literal("==="));
 
             // 创建一个定时器以定期发送心跳和更新强度信息
             Timer timer = new Timer();
