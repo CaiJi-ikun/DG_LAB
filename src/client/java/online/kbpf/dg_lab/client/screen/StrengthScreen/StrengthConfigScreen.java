@@ -250,6 +250,65 @@ public class StrengthConfigScreen extends Screen {
                 setMessage(Text.literal("B最低强度" + tmp));
                 strengthConfig.setBMin(tmp);
             }
+            // ... (AMin / BMin / Min 的程式碼) ...
+
+// --- 新增以下程式碼 ---
+
+// 破壞方塊強度
+    ABreakBlockStrength = new SliderWidget(width / 2 - 205, 4 * (ButtonHeight + ButtonDistance) + 20, 100, ButtonHeight, Text.literal("A破壞方塊強度" + String.format("%.2f", strengthConfig.getABreakBlockStrength())), strengthConfig.getABreakBlockStrength() / 20) {
+        @Override
+        protected void updateMessage() {}
+
+        @Override
+        protected void applyValue() {
+            float strength = (float) (this.value * 20);
+            strengthConfig.setABreakBlockStrength(strength);
+            this.setMessage(Text.literal("A破壞方塊強度" + String.format("%.2f", strengthConfig.getABreakBlockStrength())));
+    }
+};
+
+    BBreakBlockStrength = new SliderWidget(width / 2 - 105, 4 * (ButtonHeight + ButtonDistance) + 20, 100, ButtonHeight, Text.literal("B破壞方塊強度" + String.format("%.2f", strengthConfig.getBBreakBlockStrength())), strengthConfig.getBBreakBlockStrength() / 20) {
+        @Override
+            protected void updateMessage() {}
+
+        @Override
+        protected void applyValue() {
+            float strength = (float) (this.value * 20);
+            strengthConfig.setBBreakBlockStrength(strength);
+            this.setMessage(Text.literal("B破壞方塊強度" + String.format("%.2f", strengthConfig.getBBreakBlockStrength())));
+       }
+};
+
+    BreakBlockStrength = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 - 215, 4 * (ButtonHeight + ButtonDistance) + 20, 10, ButtonHeight).tooltip(Tooltip.of(Text.literal("破壞方塊時增加的強度"))).build();
+
+// 破壞方塊延遲
+    ABreakBlockDelay = new SliderWidget(width / 2 + 5, 4 * (ButtonHeight + ButtonDistance) + 20, 100, ButtonHeight, Text.literal("A破壞延遲" + strengthConfig.getABreakBlockDelay() * 50 + "ms"), (double) strengthConfig.getABreakBlockDelay() / 120) {
+        @Override
+        protected void updateMessage() {}
+
+        @Override
+        protected void applyValue() {
+            int tmp = (int) (this.value * 120);
+            this.setMessage(Text.literal("A破壞延遲" + tmp * 50 + "ms"));
+            strengthConfig.setABreakBlockDelay(tmp);
+    }
+};
+
+    BBreakBlockDelay = new SliderWidget(width / 2 + 105, 4 * (ButtonHeight + ButtonDistance) + 20, 100, ButtonHeight, Text.literal("B破壞延遲" + strengthConfig.getBBreakBlockDelay() * 50 + "ms"), (double) strengthConfig.getBBreakBlockDelay() / 120) {
+        @Override
+        protected void updateMessage() {}
+
+        @Override
+        protected void applyValue() {
+            int tmp = (int) (this.value * 120);
+            this.setMessage(Text.literal("B破壞延遲" + tmp * 50 + "ms"));
+            strengthConfig.setBBreakBlockDelay(tmp);
+    }
+};
+
+    BreakBlockDelay = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 + 205, 4 * (ButtonHeight + ButtonDistance) + 20, 10, ButtonHeight).tooltip(Tooltip.of(Text.literal("破壞方塊時觸發的強度延遲"))).build();
+
+// --- 新增結束 ---
         };
 
         Min = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 - 215, 3 * (ButtonHeight + ButtonDistance) + 20, 10, ButtonHeight).tooltip(Tooltip.of(Text.literal("通道最低强度\n强度下降时将不会低于此值\n此值实际受血量比例影响\n例如损失10%血量最低强度就为此值x10%\n损失50%血量最低强度就为此值x50%"))).build();
