@@ -32,7 +32,6 @@ public class StrengthConfigScreen extends Screen {
     private ButtonWidget DeathDelay;
     private SliderWidget AMin, BMin;
     private ButtonWidget Min;
-    
     private SliderWidget ABreakBlockStrength, BBreakBlockStrength;
     private ButtonWidget BreakBlockStrength;
     private SliderWidget ABreakBlockDelay, BBreakBlockDelay;
