@@ -73,6 +73,10 @@ public class StrengthConfig {
         this.BDeathDelay = BDelayTime;
         this.AMin = AMin;
         this.BMin = BMin;
+        this.ABreakBlockStrength = 6; // 預設增加 1 強度
+        this.BBreakBlockStrength = 6; // 預設增加 1 強度
+        this.ABreakBlockDelay = 1;   // 預設延遲 10 ticks (0.5秒)
+        this.BBreakBlockDelay = 1;   // 預設延遲 10 ticks (0.5秒)
     }
 
     public int getAMin() {
@@ -189,4 +193,40 @@ public class StrengthConfig {
     public void setBDownTime(int BDownTime) {
         this.BDownTime = Math.max(BDownTime, 1);
     }
+    // --- 新增以下所有程式碼 ---
+
+    public int getABreakBlockDelay() {
+        return ABreakBlockDelay;
+    }
+
+    public void setABreakBlockDelay(int ABreakBlockDelay) {
+        this.ABreakBlockDelay = Math.max(0, ABreakBlockDelay);
+    }
+
+    public int getBBreakBlockDelay() {
+        return BBreakBlockDelay;
+    }
+
+    public void setBBreakBlockDelay(int BBreakBlockDelay) {
+        this.BBreakBlockDelay = Math.max(0, BBreakBlockDelay);
+    }
+
+    public float getABreakBlockStrength() {
+        return ABreakBlockStrength;
+    }
+
+    public void setABreakBlockStrength(float ABreakBlockStrength) {
+        if (ABreakBlockStrength < 0) this.ABreakBlockStrength = 0;
+        else this.ABreakBlockStrength = Math.round(ABreakBlockStrength * 100.0f) / 100.0f;
+    }
+
+    public float getBBreakBlockStrength() {
+        return BBreakBlockStrength;
+    }
+
+    public void setBBreakBlockStrength(float BBreakBlockStrength) {
+        if (BBreakBlockStrength < 0) this.BBreakBlockStrength = 0;
+        else this.BBreakBlockStrength = Math.round(BBreakBlockStrength * 100.0f) / 100.0f;
+    }
+    // --- 新增結束 ---
 }
