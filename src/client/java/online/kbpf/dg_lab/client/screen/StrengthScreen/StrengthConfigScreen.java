@@ -336,6 +336,13 @@ public class StrengthConfigScreen extends Screen {
         addDrawableChild(AMin);
         addDrawableChild(BMin);
         addDrawable(Min);
+        addDrawableChild(ABreakBlockStrength);
+        addDrawableChild(BBreakBlockStrength);
+        addDrawable(BreakBlockStrength);
+        addDrawableChild(ABreakBlockDelay);
+        addDrawableChild(BBreakBlockDelay);
+        addDrawable(BreakBlockDelay);
+
     }
 
 
