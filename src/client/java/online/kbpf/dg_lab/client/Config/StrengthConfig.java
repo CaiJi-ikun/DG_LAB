@@ -11,8 +11,10 @@ public class StrengthConfig {
     private int ADownTime, BDownTime, ADownValue, BDownValue, ADelayTime, BDelayTime, ADeathStrength, BDeathStrength, ADeathDelay, BDeathDelay, AMin = 40, BMin = 40;
     private float ADamageStrength, BDamageStrength;
 
-
-
+    // --- 新增下面這兩行 ---
+    private int ABreakBlockDelay, BBreakBlockDelay;
+    private float ABreakBlockStrength, BBreakBlockStrength;
+    // --- 新增結束 ---
 
     public void savaFile(){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
