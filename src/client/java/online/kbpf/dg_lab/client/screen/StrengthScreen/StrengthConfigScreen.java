@@ -32,6 +32,11 @@ public class StrengthConfigScreen extends Screen {
     private ButtonWidget DeathDelay;
     private SliderWidget AMin, BMin;
     private ButtonWidget Min;
+    
+    private SliderWidget ABreakBlockStrength, BBreakBlockStrength;
+    private ButtonWidget BreakBlockStrength;
+    private SliderWidget ABreakBlockDelay, BBreakBlockDelay;
+    private ButtonWidget BreakBlockDelay;
 
     public StrengthConfigScreen() {
         // 此参数为屏幕的标题，进入屏幕中，复述功能会复述。
