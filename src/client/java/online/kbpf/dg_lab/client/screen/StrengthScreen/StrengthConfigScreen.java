@@ -32,6 +32,7 @@ public class StrengthConfigScreen extends Screen {
     private ButtonWidget DeathDelay;
     private SliderWidget AMin, BMin;
     private ButtonWidget Min;
+    // --- 這是在步驟四, 第 1 點新增的宣告 ---
     private SliderWidget ABreakBlockStrength, BBreakBlockStrength;
     private ButtonWidget BreakBlockStrength;
     private SliderWidget ABreakBlockDelay, BBreakBlockDelay;
@@ -49,7 +50,7 @@ public class StrengthConfigScreen extends Screen {
         client.setScreen(configScreen);
     }
 
-@Override
+    @Override
     protected void init() {
 
         StrengthConfig strengthConfig = Dg_labClient.strengthConfig;
@@ -338,77 +339,6 @@ public class StrengthConfigScreen extends Screen {
         addDrawableChild(BBreakBlockDelay);
         addDrawable(BreakBlockDelay);
         // --- 新增的 addDrawable (到這裡結束) ---
-    }
-
-    BreakBlockDelay = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 + 205, 4 * (ButtonHeight + ButtonDistance) + 20, 10, ButtonHeight).tooltip(Tooltip.of(Text.literal("破壞方塊時觸發的強度延遲"))).build();
-    // --- 新增的程式碼（到這裡結束） ---
-
-
-    addDrawableChild(ADamageStrength);
-    addDrawableChild(BDamageStrength);
-    addDrawable(DamageStrength);
-    addDrawableChild(ADelayTime);
-    addDrawableChild(BDelayTime);
-    addDrawable(DelayTime);
-    addDrawableChild(ADownTime);
-    addDrawableChild(BDownTime);
-    addDrawable(DownTime);
-    addDrawableChild(ADownValue);
-    addDrawableChild(BDownValue);
-    addDrawable(DownValue);
-    addDrawableChild(ADeathStrength);
-    addDrawableChild(BDeathStrength);
-    addDrawable(DeathStrength);
-    addDrawableChild(ADeathDelay);
-    addDrawableChild(BDeathDelay);
-    addDrawable(DeathDelay);
-    addDrawableChild(AMin);
-    addDrawableChild(BMin);
-    addDrawable(Min);
-
-    // --- 新增的 addDrawable (從這裡開始) ---
-    addDrawableChild(ABreakBlockStrength);
-    addDrawableChild(BBreakBlockStrength);
-    addDrawable(BreakBlockStrength);
-    addDrawableChild(ABreakBlockDelay);
-    addDrawableChild(BBreakBlockDelay);
-    addDrawable(BreakBlockDelay);
-    // --- 新增的 addDrawable (到這裡結束) ---
-}
-        };
-
-        Min = ButtonWidget.builder(Text.literal("?"), button -> {}).dimensions(width / 2 - 215, 3 * (ButtonHeight + ButtonDistance) + 20, 10, ButtonHeight).tooltip(Tooltip.of(Text.literal("通道最低强度\n强度下降时将不会低于此值\n此值实际受血量比例影响\n例如损失10%血量最低强度就为此值x10%\n损失50%血量最低强度就为此值x50%"))).build();
-
-
-
-        addDrawableChild(ADamageStrength);
-        addDrawableChild(BDamageStrength);
-        addDrawable(DamageStrength);
-        addDrawableChild(ADelayTime);
-        addDrawableChild(BDelayTime);
-        addDrawable(DelayTime);
-        addDrawableChild(ADownTime);
-        addDrawableChild(BDownTime);
-        addDrawable(DownTime);
-        addDrawableChild(ADownValue);
-        addDrawableChild(BDownValue);
-        addDrawable(DownValue);
-        addDrawableChild(ADeathStrength);
-        addDrawableChild(BDeathStrength);
-        addDrawable(DeathStrength);
-        addDrawableChild(ADeathDelay);
-        addDrawableChild(BDeathDelay);
-        addDrawable(DeathDelay);
-        addDrawableChild(AMin);
-        addDrawableChild(BMin);
-        addDrawable(Min);
-        addDrawableChild(ABreakBlockStrength);
-        addDrawableChild(BBreakBlockStrength);
-        addDrawable(BreakBlockStrength);
-        addDrawableChild(ABreakBlockDelay);
-        addDrawableChild(BBreakBlockDelay);
-        addDrawable(BreakBlockDelay);
-
     }
 
 
