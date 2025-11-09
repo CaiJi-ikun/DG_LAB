@@ -2,7 +2,7 @@
 
 _This mod is developed for Minecraft's Fabric loader, enabling connectivity between the game and DG\_LAB devices._
 
-▌Core Features
+Core Features
 
 *   **Cross-Platform Signal Interaction**  
     • Triggers DG\_LAB device output based on in-game events
@@ -11,7 +11,7 @@ _This mod is developed for Minecraft's Fabric loader, enabling connectivity betw
 *   **Real-Time Monitoring System**  
     • Displays connection status via in-game HUD
 
-▌Important Notes
+Important Notes
 
 1.  Ensure your DG\_LAB device is running version 3.x before use
 2.  High-intensity stimulation parameters should be configured under professional guidance
@@ -25,7 +25,7 @@ _This mod is developed for Minecraft's Fabric loader, enabling connectivity betw
 **DG\_LAB Fabric Mod 模组**  
 _本模组为《我的世界》Fabric端开发，可实现游戏与DG\_LAB终端的连接_
 
-▌核心功能
+核心功能
 
 *   **跨平台信号交互**  
     • 通过游戏事件触发DG\_LAB终端输出
@@ -37,7 +37,7 @@ _本模组为《我的世界》Fabric端开发，可实现游戏与DG\_LAB终端
     • 游戏内HUD显示连接状态
     
 
-▌注意事项
+注意事项
 
 1.  使用前请确认DG\_LAB终端为3.x版本
 2.  建议在专业指导下配置高强度刺激参数
