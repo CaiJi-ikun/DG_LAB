@@ -40,7 +40,7 @@ public class StrengthConfig {
 
         if (!file.exists()) {
             //如果文件是空的
-            return new StrengthConfig(5, 5, 5, 5, 2, 2, 15, 15, 50, 50); // 默认的对象，可以根据需求初始化
+            return new StrengthConfig(5, 2, 5, 5, 2, 2, 15, 15, 50, 50);
         }
         try (Reader reader = new FileReader("config/dg-lab/StrengthConfig.json")) {
             return gson.fromJson(reader, StrengthConfig.class);
