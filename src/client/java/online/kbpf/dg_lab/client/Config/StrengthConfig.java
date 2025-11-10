@@ -15,7 +15,9 @@ public class StrengthConfig {
     private int ABreakBlockDelay, BBreakBlockDelay;
     private float ABreakBlockStrength, BBreakBlockStrength;
     // --- 新增結束 ---
-
+    private int AAttackEntityDelay, BAttackEntityDelay;
+    private float AAttackEntityStrength, BAttackEntityStrength;
+    
     public void savaFile(){
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try {
