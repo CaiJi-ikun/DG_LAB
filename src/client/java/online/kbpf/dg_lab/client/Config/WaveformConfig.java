@@ -26,9 +26,9 @@ public class WaveformConfig {
             }
         }
         Map<String, Waveform> waveform = new HashMap<>();
-        waveform.put("ADamage", new Waveform("\"0A0A0A0A64646464\",\"0A0A0A0A64646464\",\"0A0A0A0A64646464\",\"0A0A0A0A64000000\"").DataToGraph());
-        waveform.put("BDamage", new Waveform("\"0A0A0A0A64646464\",\"0A0A0A0A64646464\",\"0A0A0A0A64646464\",\"0A0A0A0A64000000\"").DataToGraph());
-        waveform.put("AHealing", new Waveform("\"0A0A0A0A1921282F\",\"0A0A0A0A363D444B\",\"0A0A0A0A4B433C35\",\"0A0A0A0A2E272019\"").DataToGraph());
+        waveform.put("ADamage", new Waveform("\"0a0a0a0a64646400\",\"0a0a0a0a00646464\",\"0a0a0a0a64646464\",\"0a0a0a0a64000000\"").DataToGraph());
+        waveform.put("BDamage", new Waveform("\"0a0a0a0a64646400\",\"0a0a0a0a00646464\",\"0a0a0a0a64646464\",\"0a0a0a0a64000000\"").DataToGraph());
+        waveform.put("AHealing", new Waveform("\"0a0a0a0a1921282f\",\"0a0a0a0a363d444b\",\"0a0a0a0a4b004b35\",\"0a0a0a0a2e272020\"").DataToGraph());
         waveform.put("BHealing", new Waveform("\"0A0A0A0A1921282F\",\"0A0A0A0A363D444B\",\"0A0A0A0A4B433C35\",\"0A0A0A0A2E272019\"").DataToGraph());
         return waveform;
     }
