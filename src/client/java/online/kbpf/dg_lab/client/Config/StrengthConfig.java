@@ -70,7 +70,7 @@ public class StrengthConfig {
         this.ADeathStrength = 60;
         this.BDeathStrength = 60;
         this.ADeathDelay = 60;
-        this.BDeathDelay = 60;
+        this.BDeathDelay = 0;
         this.AMin = AMin;
         this.BMin = BMin;
         this.ABreakBlockStrength = 6; // 預設增加 1 強度
