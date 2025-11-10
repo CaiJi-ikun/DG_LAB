@@ -40,7 +40,7 @@ public class StrengthConfig {
 
         if (!file.exists()) {
             //如果文件是空的
-            return new StrengthConfig(5, 5, 5, 5, 2, 2, 60, 60, 50, 50); // 默认的对象，可以根据需求初始化
+            return new StrengthConfig(5, 5, 5, 5, 2, 2, 15, 15, 50, 50); // 默认的对象，可以根据需求初始化
         }
         try (Reader reader = new FileReader("config/dg-lab/StrengthConfig.json")) {
             return gson.fromJson(reader, StrengthConfig.class);
@@ -67,10 +67,10 @@ public class StrengthConfig {
         this.BDownValue = BDownValue;
         this.ADelayTime = ADelayTime;
         this.BDelayTime = BDelayTime;
-        this.ADeathStrength = 50;
-        this.BDeathStrength = 50;
-        this.ADeathDelay = ADelayTime;
-        this.BDeathDelay = BDelayTime;
+        this.ADeathStrength = 60;
+        this.BDeathStrength = 60;
+        this.ADeathDelay = 60;
+        this.BDeathDelay = 60;
         this.AMin = AMin;
         this.BMin = BMin;
         this.ABreakBlockStrength = 6; // 預設增加 1 強度
