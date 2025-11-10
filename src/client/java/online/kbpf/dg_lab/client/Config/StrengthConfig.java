@@ -79,6 +79,10 @@ public class StrengthConfig {
         this.BBreakBlockStrength = 6; // 預設增加 1 強度
         this.ABreakBlockDelay = 1;   // 預設延遲 10 ticks (0.5秒)
         this.BBreakBlockDelay = 1;   // 預設延遲 10 ticks (0.5秒)
+        this.AAttackEntityStrength = 0; // A 通道預設為 0
+        this.BAttackEntityStrength = 2; // B 通道預設為 2 (根據您的要求)
+        this.AAttackEntityDelay = 1; // 預設延遲
+        this.BAttackEntityDelay = 1; // 預設延遲
     }
 
     public int getAMin() {
@@ -195,7 +199,6 @@ public class StrengthConfig {
     public void setBDownTime(int BDownTime) {
         this.BDownTime = Math.max(BDownTime, 1);
     }
-    // --- 新增以下所有程式碼 ---
 
     public int getABreakBlockDelay() {
         return ABreakBlockDelay;
@@ -230,5 +233,38 @@ public class StrengthConfig {
         if (BBreakBlockStrength < 0) this.BBreakBlockStrength = 0;
         else this.BBreakBlockStrength = Math.round(BBreakBlockStrength * 100.0f) / 100.0f;
     }
-    // --- 新增結束 ---
+// +++ 攻擊生物反饋 (由此開始) +++
+    public int getAAttackEntityDelay() {
+        return AAttackEntityDelay;
+    }
+
+    public void setAAttackEntityDelay(int AAttackEntityDelay) {
+        this.AAttackEntityDelay = Math.max(0, AAttackEntityDelay);
+    }
+
+    public int getBAttackEntityDelay() {
+        return BAttackEntityDelay;
+    }
+
+    public void setBAttackEntityDelay(int BAttackEntityDelay) {
+        this.BAttackEntityDelay = Math.max(0, BAttackEntityDelay);
+    }
+
+    public float getAAttackEntityStrength() {
+        return AAttackEntityStrength;
+    }
+
+    public void setAAttackEntityStrength(float AAttackEntityStrength) {
+        if (AAttackEntityStrength < 0) this.AAttackEntityStrength = 0;
+        else this.AAttackEntityStrength = Math.round(AAttackEntityStrength * 100.0f) / 100.0f;
+    }
+
+    public float getBAttackEntityStrength() {
+        return BAttackEntityStrength;
+    }
+
+    public void setBAttackEntityStrength(float BAttackEntityStrength) {
+        if (BAttackEntityStrength < 0) this.BAttackEntityStrength = 0;
+        else this.BAttackEntityStrength = Math.round(BAttackEntityStrength * 100.0f) / 100.0f;
+    }
 }
