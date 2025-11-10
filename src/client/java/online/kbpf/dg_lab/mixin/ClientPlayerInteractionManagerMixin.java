@@ -9,6 +9,10 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+// +++ (由此開始) +++
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.Entity;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public class ClientPlayerInteractionManagerMixin {
@@ -18,7 +22,12 @@ public class ClientPlayerInteractionManagerMixin {
         // 從 Dg_labClient 獲取 server 和 config 的實例
         webSocketServer server = Dg_labClient.getServer();
         StrengthConfig strengthConfig = Dg_labClient.getStrengthConfig();
-
+// +++ 攻擊生物反饋 (由此開始) +++
+    @Inject(method = "attackEntity", at = @At("HEAD"))
+    private void onAttackEntity(PlayerEntity player, Entity target, CallbackInfo ci) {
+        // 從 Dg_labClient 獲取 server 和 config 的實例
+        webSocketServer server = Dg_labClient.getServer();
+        StrengthConfig strengthConfig = Dg_labClient.getStrengthConfig();
         // 檢查 server 是否存在且已連接
         if (server != null && server.getConnected()) {
             
