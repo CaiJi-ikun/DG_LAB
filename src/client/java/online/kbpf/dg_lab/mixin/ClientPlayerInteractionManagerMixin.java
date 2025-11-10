@@ -9,10 +9,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
 // +++ (由此開始) +++
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+// +++ (到此結束) +++
 
 @Mixin(ClientPlayerInteractionManager.class)
 public class ClientPlayerInteractionManagerMixin {
@@ -22,12 +24,7 @@ public class ClientPlayerInteractionManagerMixin {
         // 從 Dg_labClient 獲取 server 和 config 的實例
         webSocketServer server = Dg_labClient.getServer();
         StrengthConfig strengthConfig = Dg_labClient.getStrengthConfig();
-// +++ 攻擊生物反饋 (由此開始) +++
-    @Inject(method = "attackEntity", at = @At("HEAD"))
-    private void onAttackEntity(PlayerEntity player, Entity target, CallbackInfo ci) {
-        // 從 Dg_labClient 獲取 server 和 config 的實例
-        webSocketServer server = Dg_labClient.getServer();
-        StrengthConfig strengthConfig = Dg_labClient.getStrengthConfig();
+
         // 檢查 server 是否存在且已連接
         if (server != null && server.getConnected()) {
             
@@ -50,4 +47,34 @@ public class ClientPlayerInteractionManagerMixin {
             }
         }
     }
+
+    // +++ 攻擊生物反饋 (由此開始) +++
+    @Inject(method = "attackEntity", at = @At("HEAD"))
+    private void onAttackEntity(PlayerEntity player, Entity target, CallbackInfo ci) {
+        // 從 Dg_labClient 獲取 server 和 config 的實例
+        webSocketServer server = Dg_labClient.getServer();
+        StrengthConfig strengthConfig = Dg_labClient.getStrengthConfig();
+
+        // 檢查 server 是否存在且已連接
+        if (server != null && server.getConnected()) {
+            
+            // 獲取攻擊生物的強度和延遲
+            float aStrength = strengthConfig.getAAttackEntityStrength();
+            float bStrength = strengthConfig.getBAttackEntityStrength();
+            int aDelay = strengthConfig.getAAttackEntityDelay();
+            int bDelay = strengthConfig.getBAttackEntityDelay();
+
+            // 設置延遲
+            server.setDelayTime(aDelay, bDelay);
+
+            // 發送增加強度的訊號
+            if (aStrength > 0) {
+                server.sendStrengthToClient(Math.max(1, (int) aStrength), 1, 1);
+            }
+            if (bStrength > 0) {
+                server.sendStrengthToClient(Math.max(1, (int) bStrength), 1, 2);
+            }
+        }
+    }
+    // +++ (到此結束) +++
 }
