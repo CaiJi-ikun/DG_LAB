@@ -1,6 +1,11 @@
 package online.kbpf.dg_lab.client.screen;
 
 
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.server.integrated.IntegratedServer;
+import net.minecraft.text.TextColor;
+import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.createQR.ToolQR;
 import online.kbpf.dg_lab.client.Config.WaveformConfig;
 import online.kbpf.dg_lab.client.screen.StrengthScreen.StrengthConfigScreen;
@@ -12,9 +17,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
 
-import static online.kbpf.dg_lab.client.Dg_labClient.waveformMap;
-import static online.kbpf.dg_lab.client.Dg_labClient.strengthConfig;
-import static online.kbpf.dg_lab.client.Dg_labClient.modConfig;
+import static online.kbpf.dg_lab.client.Dg_labClient.*;
 
 
 @Environment(EnvType.CLIENT)
@@ -29,9 +32,13 @@ public class ConfigScreen extends Screen {
     public ButtonWidget WaveFormConfig;
     public ButtonWidget CustomConfig;
     public ButtonWidget MaxStrength;
+    public ButtonWidget TwoPlayerMode;
 
     public SliderWidget RenderingPositionX;
     public SliderWidget RenderingPositionY;
+    public net.minecraft.client.gui.widget.SliderWidget SPQS;//第二个玩家退出强度 Second Player Quit Strength
+
+    public TextFieldWidget secondPlayerName;
 
 
 //    Screen customScreen = new CustomScreen();
@@ -43,8 +50,8 @@ public class ConfigScreen extends Screen {
     @Override
     protected void init() {
 
-//        online.kbpf.dg_lab.client.Config.StrengthConfig StrengthConfig = Dg_labClient.getStrengthConfig();
-//        ModConfig modConfig = Dg_labClient.getModConfig();
+
+
         MinecraftClient client = MinecraftClient.getInstance();
 
 
@@ -55,6 +62,22 @@ public class ConfigScreen extends Screen {
         }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140, (int) (width * 0.4), ButtonHeight).build();
 
         int buttonX = width / 2 + 5;
+
+
+
+        SPQS = new net.minecraft.client.gui.widget.SliderWidget((int) ((double) width / 2 + 5), 140 - (2 * (ButtonDistance + ButtonHeight)), (int) (width * 0.2), ButtonHeight,Text.literal("2P退出强度：" + secondPlayerQuitStrength), secondPlayerQuitStrength * 0.005) {
+            @Override
+            protected void updateMessage() {
+
+            }
+
+            @Override
+            protected void applyValue() {
+                int tmp = (int) (this.value * 200);
+                secondPlayerQuitStrength = tmp;
+                SPQS.setMessage(Text.literal("2P退出强度：" + ((tmp == 0)? "已关闭" : tmp)));
+            }
+        };
 
         RenderingPositionX = new SliderWidget(buttonX, 140 - ButtonDistance - ButtonHeight, (int) (width * 0.2) - 6, ButtonHeight, Text.literal((modConfig.getRenderingPositionX() >= width1 || modConfig.getRenderingPositionY() >= height1) ? "已关闭强度显示" : ("显示位置X:" + modConfig.getRenderingPositionX())), (double) modConfig.getRenderingPositionX() / width1) {
             @Override
@@ -132,6 +155,23 @@ public class ConfigScreen extends Screen {
         createQR = ButtonWidget.builder(Text.literal("创建连接二维码并打开"), button -> {
             ToolQR.CreateQR();
         }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140 - ButtonDistance - ButtonHeight, (int) (width * 0.4), ButtonHeight).tooltip(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir"))).build();
+//        }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140 - ButtonDistance - ButtonHeight, (int) (width * 0.4), ButtonHeight).tooltip(Tooltip.of(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir")))).build();
+
+
+        TwoPlayerMode = ButtonWidget.builder(Text.literal((twoPlayerMode) ? "本地双人模式：开" : "本地双人模式：关"), button -> {
+            if(!client.isIntegratedServerRunning()) return;
+            IntegratedServer server = client.getServer();
+            if(!(server != null && server.isRemote())) return;
+            twoPlayerMode = !twoPlayerMode;
+            TwoPlayerMode.setMessage(Text.literal((twoPlayerMode) ? "本地双人模式：开" : "本地双人模式：关"));
+        }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140 - (2 * (ButtonDistance + ButtonHeight)), (int) (width * 0.4), ButtonHeight).tooltip(Text.literal("只有在单人模式开启局域网联机\n并且2p设置有人且在线才可启用\n2p退出游戏自动关闭\n本地双人模式每次启动游戏需要重新设置")).build();
+
+        secondPlayerName = new TextFieldWidget(this.textRenderer, (int) ((double) width / 2 + 6 + (int) (width * 0.2)), 140 - (2 * (ButtonDistance + ButtonHeight)), (int) (width * 0.2), ButtonHeight, Text.literal("输入玩家名字"));
+        secondPlayerName.setMaxLength(16);
+        secondPlayerName.setPlaceholder(Text.literal(secondPlayer).styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
+        secondPlayerName.setChangedListener(this::secondPlayerNameText);
+
+
 
 
         addDrawableChild(saveFile);
@@ -142,10 +182,21 @@ public class ConfigScreen extends Screen {
         addDrawableChild(RenderingPositionX);
         addDrawableChild(RenderingPositionY);
         addDrawableChild(MaxStrength);
+        addDrawableChild(TwoPlayerMode);
+        addDrawableChild(SPQS);
+        addDrawableChild(secondPlayerName);
 //        addDrawableChild(CustomConfig);
     }
 
+    private void secondPlayerNameText(String PlayerName){
+        secondPlayer = PlayerName;
+    }
 
+    @Override
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
+        TwoPlayerMode.setMessage(Text.literal((twoPlayerMode) ? "本地双人模式：开" : "本地双人模式：关"));
+    }
 
 
 }
