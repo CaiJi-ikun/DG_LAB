@@ -29,7 +29,7 @@ public class WebSocketConfigScreen extends Screen {
         super(Text.of("连接配置界面"));
     }
 
-    public ModConfig modConfig = Dg_labClient.getModConfig();
+    public ModConfig modConfig = Dg_labClient.modConfig;
     public ButtonWidget autoStartWebSocketServer;
     public ButtonWidget createQR;
     public TextFieldWidget host;
@@ -51,7 +51,7 @@ public class WebSocketConfigScreen extends Screen {
 
     @Override
     protected void init() {
-        modConfig = Dg_labClient.getModConfig();
+        modConfig = Dg_labClient.modConfig;
         autoStartWebSocketServer = ButtonWidget.builder(Text.of("自动启动连接服务器:已" + ((modConfig.getAutoStartWebSocketServer()) ? "开启" : "关闭")), button -> {
             if (modConfig.getAutoStartWebSocketServer()) {
                 modConfig.setAutoStartWebSocketServer(false);
@@ -160,8 +160,6 @@ public class WebSocketConfigScreen extends Screen {
     }
 
 
-
-
     private void serverPortText(String serverPort) {
         int number;
         try {
@@ -183,8 +181,6 @@ public class WebSocketConfigScreen extends Screen {
         drawTextWithShadow(matrices, textRenderer, Text.of(modConfig.getNetwork()), (int) (width * 0.1), 61, 0xaaaaaa);
         drawTextWithShadow(matrices, textRenderer, Text.of("二维码连接的端口"), (int) (width * 0.1), 74, 0xffffff);
         drawTextWithShadow(matrices, textRenderer, Text.of("服务器开放的端口"), (int) (width * 0.1), 99, 0xffffff);
-
-
 
 
     }

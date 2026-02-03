@@ -33,6 +33,9 @@ public class Dg_labClient implements ClientModInitializer {
     public static StrengthConfig strengthConfig = new StrengthConfig();
     public static final ModConfig modConfig = ModConfig.loadJson();
     public static Map<String, Waveform> waveformMap = WaveformConfig.LoadWaveform();
+    public static boolean twoPlayerMode = false;
+    public static String secondPlayer = "null";
+    public static int secondPlayerQuitStrength = 200;
 
     private static KeyBinding keyBinding;
     private final Screen configScreen = new ConfigScreen();
@@ -76,13 +79,6 @@ public class Dg_labClient implements ClientModInitializer {
 
 
 
-    public static webSocketServer getServer() {return webSocketServer;}
-
-    public static StrengthConfig getStrengthConfig() {return strengthConfig;}
-
-    public static ModConfig getModConfig(){return modConfig;}
-
-
     //屏幕强度显示
     private void onHudRender(MatrixStack matrices, float tickDelta) {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -101,16 +97,25 @@ public class Dg_labClient implements ClientModInitializer {
             if(webSocketServer.getConnected()) {
                 Text strengthText;
                 Text strengthText1;
+                String A = "A", B = "B";
+                if(twoPlayerMode){
+                    A = MinecraftClient.getInstance().getSession().getUsername() + ":";
+                    B = secondPlayer + ":";
+                }
+                else {
+                    A = "A:";
+                    B = "B:";
+                }
                 if(modConfig.isRenderingMax()) {
-                    strengthText = Text.of("A:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
+                    strengthText = Text.of(A + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
 
-                    strengthText1 = Text.of("B:" + webSocketServer.getStrength().getBStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
+                    strengthText1 = Text.of(B + webSocketServer.getStrength().getBStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
 
                 }
                 else {
-                    strengthText = Text.of("A:" + webSocketServer.getStrength().getAStrength());
+                    strengthText = Text.of(A + webSocketServer.getStrength().getAStrength());
 
-                    strengthText1 = Text.of("B:" + webSocketServer.getStrength().getBStrength());
+                    strengthText1 = Text.of(B + webSocketServer.getStrength().getBStrength());
                 }
 
                 drawTextWithShadow(matrices, client.textRenderer, strengthText, x, y, 0xFFFFFF);

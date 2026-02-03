@@ -167,8 +167,14 @@ public class webSocketServer extends WebSocketServer {
      * @param A A通道的倒计时时间
      * @param B B通道的倒计时时间
      */
-    public void setDelayTime(int A, int B) {
+    public void  setDelayTime(int A, int B) {
         dgStrength.setADelayTime(A);
+        dgStrength.setBDelayTime(B);
+    }
+    public void  setADelayTime(int A) {
+        dgStrength.setADelayTime(A);
+    }
+    public void  setBDelayTime(int B) {
         dgStrength.setBDelayTime(B);
     }
 
