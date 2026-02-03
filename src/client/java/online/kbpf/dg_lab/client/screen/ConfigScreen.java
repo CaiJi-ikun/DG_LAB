@@ -66,7 +66,7 @@ public class ConfigScreen extends Screen {
 
 
 
-        SPQS = new net.minecraft.client.gui.widget.SliderWidget((int) ((double) width / 2 + 5), 140 - (2 * (ButtonDistance + ButtonHeight)), (int) (width * 0.2), ButtonHeight,Text.literal("2P退出强度：" + secondPlayerQuitStrength), secondPlayerQuitStrength * 0.005) {
+        SPQS = new net.minecraft.client.gui.widget.SliderWidget((int) ((double) width / 2 + 5), 140 - (2 * (ButtonDistance + ButtonHeight)), (int) (width * 0.2), ButtonHeight,Text.of("2P退出强度：" + secondPlayerQuitStrength), secondPlayerQuitStrength * 0.005) {
             @Override
             protected void updateMessage() {
 
@@ -76,7 +76,7 @@ public class ConfigScreen extends Screen {
             protected void applyValue() {
                 int tmp = (int) (this.value * 200);
                 secondPlayerQuitStrength = tmp;
-                SPQS.setMessage(Text.literal("2P退出强度：" + ((tmp == 0)? "已关闭" : tmp)));
+                SPQS.setMessage(Text.of("2P退出强度：" + ((tmp == 0)? "已关闭" : tmp)));
             }
         };
 
@@ -159,15 +159,15 @@ public class ConfigScreen extends Screen {
         }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140 - ButtonDistance - ButtonHeight, (int) (width * 0.4), ButtonHeight).tooltip(Text.of("图片默认生成于此地址:\n" + System.getProperty("user.dir"))).build();
 
 
-        TwoPlayerMode = ButtonWidget.builder(Text.literal((twoPlayerMode) ? "本地双人模式：开" : "本地双人模式：关"), button -> {
+        TwoPlayerMode = ButtonWidget.builder(Text.of((twoPlayerMode) ? "本地双人模式：开" : "本地双人模式：关"), button -> {
             if(!client.isIntegratedServerRunning()) return;
             IntegratedServer server = client.getServer();
             if(!(server != null && server.isRemote())) return;
             twoPlayerMode = !twoPlayerMode;
-            TwoPlayerMode.setMessage(Text.literal((twoPlayerMode) ? "本地双人模式：开" : "本地双人模式：关"));
-        }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140 - (2 * (ButtonDistance + ButtonHeight)), (int) (width * 0.4), ButtonHeight).tooltip(Text.literal("只有在单人模式开启局域网联机\n并且2p设置有人且在线才可启用\n2p退出游戏自动关闭\n本地双人模式每次启动游戏需要重新设置")).build();
+            TwoPlayerMode.setMessage(Text.of((twoPlayerMode) ? "本地双人模式：开" : "本地双人模式：关"));
+        }).dimensions((int) ((double) width / 2 - (width * 0.4) - 5), 140 - (2 * (ButtonDistance + ButtonHeight)), (int) (width * 0.4), ButtonHeight).tooltip(Text.of("只有在单人模式开启局域网联机\n并且2p设置有人且在线才可启用\n2p退出游戏自动关闭\n本地双人模式每次启动游戏需要重新设置")).build();
 
-        secondPlayerName = new TextFieldWidget(this.textRenderer, (int) ((double) width / 2 + 6 + (int) (width * 0.2)), 140 - (2 * (ButtonDistance + ButtonHeight)), (int) (width * 0.2), ButtonHeight, Text.literal("输入玩家名字"));
+        secondPlayerName = new TextFieldWidget(this.textRenderer, (int) ((double) width / 2 + 6 + (int) (width * 0.2)), 140 - (2 * (ButtonDistance + ButtonHeight)), (int) (width * 0.2), ButtonHeight, Text.of("输入玩家名字"));
         secondPlayerName.setMaxLength(16);
 //        secondPlayerName.setPlaceholder(Text.literal(secondPlayer).styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
         secondPlayerName.setChangedListener(this::secondPlayerNameText);
@@ -196,7 +196,7 @@ public class ConfigScreen extends Screen {
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
         super.render(matrices, mouseX, mouseY, delta);
-        TwoPlayerMode.setMessage(Text.literal((twoPlayerMode) ? "本地双人模式：开" : "本地双人模式：关"));
+        TwoPlayerMode.setMessage(Text.of((twoPlayerMode) ? "本地双人模式：开" : "本地双人模式：关"));
     }
 
 
