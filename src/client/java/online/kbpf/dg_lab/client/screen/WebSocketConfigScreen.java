@@ -1,6 +1,7 @@
 package online.kbpf.dg_lab.client.screen;
 
 
+import net.minecraft.client.MinecraftClient;
 import online.kbpf.dg_lab.client.Dg_labClient;
 import online.kbpf.dg_lab.client.createQR.ToolQR;
 import online.kbpf.dg_lab.client.Config.ModConfig;
@@ -52,6 +53,8 @@ public class WebSocketConfigScreen extends Screen {
     @Override
     protected void init() {
         modConfig = Dg_labClient.modConfig;
+        MinecraftClient client = MinecraftClient.getInstance();
+
         autoStartWebSocketServer = ButtonWidget.builder(Text.literal("自动启动连接服务器:已" + ((modConfig.getAutoStartWebSocketServer()) ? "开启" : "关闭")), button -> {
             if (modConfig.getAutoStartWebSocketServer()) {
                 modConfig.setAutoStartWebSocketServer(false);
@@ -68,7 +71,7 @@ public class WebSocketConfigScreen extends Screen {
             ToolQR.CreateQR();
         }).dimensions(width / 2 + 5, 20, (int) (width * 0.4), ButtonHeight).tooltip(Tooltip.of(Text.literal("图片默认生成于此地址:\n" + System.getProperty("user.dir")))).build();
 
-        host = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 20 + ButtonHeight + ButtonDistance, (int) (width * 0.25), ButtonHeight, Text.literal("Enter address..."));
+        host = new TextFieldWidget(client.textRenderer, (int) (width * 0.66), 20 + ButtonHeight + ButtonDistance, (int) (width * 0.25), ButtonHeight, Text.literal("Enter address..."));
         host.setText(modConfig.getAddress());
         host.setPlaceholder(Text.literal("this").withColor(0xffaaaaaa));
         host.setChangedListener(this::hostText);
@@ -78,7 +81,7 @@ public class WebSocketConfigScreen extends Screen {
             toggleNetworkAdapter();
         }).dimensions((int) (width * 0.59), 20 + ButtonHeight + ButtonDistance, (int) (width * 0.04), ButtonHeight).tooltip(Tooltip.of(Text.literal("切换网卡"))).build();
 
-        port = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 2 * (ButtonHeight + ButtonDistance) + 20, (int) (width * 0.25), ButtonHeight, Text.literal("Enter port..."));
+        port = new TextFieldWidget(client.textRenderer, (int) (width * 0.66), 2 * (ButtonHeight + ButtonDistance) + 20, (int) (width * 0.25), ButtonHeight, Text.literal("Enter port..."));
         port.setText(String.valueOf(modConfig.getPort()));
         port.setPlaceholder(Text.literal("9999").withColor(0xffaaaaaa));
         port.setChangedListener(this::portText);
@@ -86,7 +89,7 @@ public class WebSocketConfigScreen extends Screen {
         port1 = ButtonWidget.builder(Text.literal("?"), button -> {
         }).dimensions((int) (width * 0.63), 2 * (ButtonHeight + ButtonDistance) + 20, (int) (width * 0.03), ButtonHeight).tooltip(Tooltip.of(Text.literal("扫描二维码连接的端口,非服务器端口\n非必要无需修改"))).build();
 
-        serverPort = new TextFieldWidget(this.textRenderer, (int) (width * 0.66), 3 * (ButtonHeight + ButtonDistance) + 20, (int) (width * 0.25), ButtonHeight, Text.literal("Enter port..."));
+        serverPort = new TextFieldWidget(client.textRenderer, (int) (width * 0.66), 3 * (ButtonHeight + ButtonDistance) + 20, (int) (width * 0.25), ButtonHeight, Text.literal("Enter port..."));
         serverPort.setText(String.valueOf(modConfig.getPort()));
         serverPort.setPlaceholder(Text.literal("9999").withColor(0xffaaaaaa));
         serverPort.setChangedListener(this::serverPortText);
