@@ -6,8 +6,8 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
-import static online.kbpf.dg_lab.client.Dg_labClient.modConfig;
-import static online.kbpf.dg_lab.client.Dg_labClient.webSocketServer;
+
+import static online.kbpf.dg_lab.client.Dg_labClient.*;
 
 public class hud implements HudElement {
 
@@ -40,16 +40,25 @@ public class hud implements HudElement {
             if(webSocketServer.getConnected()) {
                 Text strengthText;
                 Text strengthText1;
+                String A = "A", B = "B";
+                if(twoPlayerMode){
+                    A = MinecraftClient.getInstance().getSession().getUsername() + ":";
+                    B = secondPlayer + ":";
+                }
+                else {
+                    A = "A:";
+                    B = "B:";
+                }
                 if(modConfig.isRenderingMax()) {
-                    strengthText = Text.literal("A:" + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
+                    strengthText = Text.literal(A + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
 
-                    strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getBStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
+                    strengthText1 = Text.literal(B + webSocketServer.getStrength().getBStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
 
                 }
                 else {
-                    strengthText = Text.literal("A:" + webSocketServer.getStrength().getAStrength());
+                    strengthText = Text.literal(A + webSocketServer.getStrength().getAStrength());
 
-                    strengthText1 = Text.literal("B:" + webSocketServer.getStrength().getBStrength());
+                    strengthText1 = Text.literal(B + webSocketServer.getStrength().getBStrength());
                 }
                 drawContext.drawTextWithShadow(client.textRenderer, strengthText, x, y, 0xFFFFFFFF);
                 drawContext.drawTextWithShadow(client.textRenderer, strengthText1, x, y + 9, 0xFFFFFFFF);

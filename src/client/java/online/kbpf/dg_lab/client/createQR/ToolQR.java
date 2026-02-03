@@ -23,7 +23,7 @@ public class ToolQR {
     }
 
     public static void CreateQR() {
-        ModConfig modConfig = Dg_labClient.getModConfig();
+        ModConfig modConfig = Dg_labClient.modConfig;
         String ipAddress = modConfig.getAddress();
         if(ipAddress.equals("error")) {
             MinecraftClient client = MinecraftClient.getInstance();

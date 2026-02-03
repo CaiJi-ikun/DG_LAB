@@ -16,6 +16,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -37,6 +38,9 @@ public class Dg_labClient implements ClientModInitializer {
     public static StrengthConfig strengthConfig = new StrengthConfig();
     public static final ModConfig modConfig = ModConfig.loadJson();
     public static Map<String, Waveform> waveformMap = WaveformConfig.LoadWaveform();
+    public static boolean twoPlayerMode = false;
+    public static String secondPlayer = "null";
+    public static int secondPlayerQuitStrength = 200;
 
     private static KeyBinding keyBinding;
     private final Screen configScreen = new ConfigScreen();
@@ -77,17 +81,6 @@ public class Dg_labClient implements ClientModInitializer {
 
         if(modConfig.getAutoStartWebSocketServer()) webSocketServer.start();
     }
-
-
-
-    public static webSocketServer getServer() {return webSocketServer;}
-
-    public static StrengthConfig getStrengthConfig() {return strengthConfig;}
-
-    public static ModConfig getModConfig(){return modConfig;}
-
-
-
 
 
 }
