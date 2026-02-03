@@ -1,8 +1,9 @@
 package online.kbpf.dg_lab.client.screen;
 
 
-import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.text.TextColor;
 import online.kbpf.dg_lab.client.Dg_labClient;
@@ -168,7 +169,7 @@ public class ConfigScreen extends Screen {
 
         secondPlayerName = new TextFieldWidget(this.textRenderer, (int) ((double) width / 2 + 6 + (int) (width * 0.2)), 140 - (2 * (ButtonDistance + ButtonHeight)), (int) (width * 0.2), ButtonHeight, Text.literal("输入玩家名字"));
         secondPlayerName.setMaxLength(16);
-        secondPlayerName.setPlaceholder(Text.literal(secondPlayer).styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
+//        secondPlayerName.setPlaceholder(Text.literal(secondPlayer).styled(style -> style.withColor(TextColor.fromRgb(0xaaaaaa))));
         secondPlayerName.setChangedListener(this::secondPlayerNameText);
 
 
@@ -193,8 +194,8 @@ public class ConfigScreen extends Screen {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        super.render(context, mouseX, mouseY, delta);
+    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
+        super.render(matrices, mouseX, mouseY, delta);
         TwoPlayerMode.setMessage(Text.literal((twoPlayerMode) ? "本地双人模式：开" : "本地双人模式：关"));
     }
 
