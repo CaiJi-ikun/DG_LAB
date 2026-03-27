@@ -134,5 +134,11 @@ public class Dg_labClient implements ClientModInitializer {
         }
     }
 
+    public static webSocketServer getServer() {
+        return webSocketServer;
+    }
 
+    public static StrengthConfig getStrengthConfig() {
+        return strengthConfig;
+    }
 }
