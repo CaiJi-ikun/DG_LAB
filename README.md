@@ -37,22 +37,22 @@ Important Notes
 
 *   Configure all strength options for the mod here.
     
-*   强度设置界面 - 可以配置模组所有强度相关设置
+*   強度設定界面 - 可以配置模组所有强度相關設定
     
     ![强度设置界面](https://media.forgecdn.net/attachments/description/1233394/description_82352ad5-36c3-4e84-a0c9-a2b62ae6f887.png)
     
 
 ### Connection Settings Screen
 
-*   Configure and manage links to DG\_LAB terminals.
-*   连接设置界面 - 管理与DG\_LAB终端的连接设置  
+*   Configure and manage links to DG_LAB terminals.
+*   連接設定界面 - 管理與DG_LAB终端的連接設定  
     ![连接设置界面](https://media.forgecdn.net/attachments/description/1233394/description_11790b39-1f10-4d15-aee8-48967c894144.png)
 
 ### Waveform Settings
 
 *   Configure waveforms to be sent under different conditions.
     
-*   波形设置界面 - 设置各种情况下发送的波形
+*   波形設定界面 - 設定各種情況下發送的波形
     
     ![波形设置界面](https://media.forgecdn.net/attachments/description/1233394/description_7be6e87c-5e7f-44e2-ba5e-ca039a8d8ba8.png)
     
@@ -61,6 +61,6 @@ Important Notes
 
 *   Set detailed waveform parameters. Accessible from the Waveform Settings screen.
     
-*   波形自定义界面 - 设置发送的波形具体参数。在波形设置界面内打开
+*   波形自定義界面 - 設定發送的波形具體參數。在波形設定界面内打開
     
     ![波形自定义界面](https://media.forgecdn.net/attachments/description/1233394/description_f2ab6882-1783-40d8-86f2-35e8b1a3a8aa.png)
