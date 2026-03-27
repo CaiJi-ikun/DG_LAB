@@ -1,6 +1,10 @@
 package online.kbpf.dg_lab.mixin;
 
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.server.integrated.IntegratedServer;
+import net.minecraft.server.network.ServerPlayerEntity;
+import online.kbpf.dg_lab.client.Config.StrengthConfig;
 import online.kbpf.dg_lab.client.entity.DGStrength;
 import net.minecraft.client.MinecraftClient;
 import org.jetbrains.annotations.Nullable;
@@ -21,6 +25,8 @@ public abstract class tick {
     public abstract void tick();
 
     @Shadow @Nullable public ClientPlayerEntity player;
+    @Shadow @Nullable public ClientWorld world;
+    @Shadow @Nullable private IntegratedServer server;
     @Unique
     private int tickCounter = 0; // 计数器，用于跟踪游戏刻
     @Unique
@@ -39,6 +45,9 @@ public abstract class tick {
     private boolean ClearB = false; // 标志，表示是否检测到B的延迟第一次不为0
 
     @Unique
+    private float Health2P = -1.0f; //2p血量
+
+    @Unique
     private boolean hasDetectedADelayZeroAndStrength = false; // 标志，表示是否检测到A的延迟为0且强度大于0
     @Unique
     private boolean hasDetectedBDelayZeroAndStrength = false; // 标志，表示是否检测到B的延迟为0且强度大于0
@@ -49,9 +58,10 @@ public abstract class tick {
     public void onTick(CallbackInfo info) {
 
 
-
-
         DGStrength dgStrength = webSocketServer.getStrength(); // 获取DGStrength对象
+
+        TwoPlayer();
+
         int ADelayTime = dgStrength.getADelayTime(), BDelayTime = dgStrength.getBDelayTime(); // 获取A和B的等待时间
 
 
@@ -144,6 +154,69 @@ public abstract class tick {
 
         if (tickCounter == 2147483625) tickCounter = 0; // 如果计数器达到2147483625，则重置为0
     }
+
+    @Unique
+    private void TwoPlayer(){
+        if(!twoPlayerMode) return;
+        MinecraftClient client = MinecraftClient.getInstance();
+        // 1. 判断是否是单人模式
+        if(!client.isIntegratedServerRunning()) {
+            quit2PMode();
+            return;
+        }
+        IntegratedServer server = client.getServer();
+        // 2. 判断是否开启了局域网 (isRemote 在 Yarn 中表示是否公开)
+        if(server != null && server.isRemote()){
+
+
+            if (server.getPlayerManager().getPlayer(secondPlayer) == null) {
+                if(Health2P > 0.0F){
+                    webSocketServer.sendStrengthToClient((Math.min(webSocketServer.getStrength().getBStrength() + secondPlayerQuitStrength, webSocketServer.getStrength().getBMaxStrength())), 2, 2);
+                }
+                quit2PMode();
+                return;
+            }
+
+            float health2P = server.getPlayerManager().getPlayer(secondPlayer).getHealth();
+
+            if (Health2P == -1.0F){
+                Health2P = health2P;
+                return;
+            }
+            if(Health2P == -2.0f){
+                if(health2P > 0.0f)
+                    Health2P = health2P;
+                return;
+            }
+            float damage = Health2P - health2P;
+
+
+            if (damage > 0.0F) {
+                if (strengthConfig.getBDelayTime() > 0) {
+                    webSocketServer.setBDelayTime(strengthConfig.getBDeathDelay());
+                    webSocketServer.sendStrengthToClient((int) Math.max(1.0F,  damage * strengthConfig.getBDamageStrength()), 1, 2);
+                }
+            }
+            if (health2P <= 0) {
+                DGStrength dgStrength = webSocketServer.getStrength();
+                webSocketServer.setBDelayTime(strengthConfig.getBDeathDelay());
+                webSocketServer.sendStrengthToClient((Math.min(dgStrength.getBStrength() + strengthConfig.getBDeathStrength(), dgStrength.getBMaxStrength())), 2, 2);
+                Health2P = -2.0F;
+                return;
+            }
+
+            Health2P = health2P;
+
+        }
+
+    }
+
+    @Unique
+    private void quit2PMode(){
+        twoPlayerMode = false;
+        Health2P = -1.0F;
+    }
+
 
 
 }

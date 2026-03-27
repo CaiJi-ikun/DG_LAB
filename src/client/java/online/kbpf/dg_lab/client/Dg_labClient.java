@@ -16,11 +16,11 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.Text;
@@ -37,6 +37,9 @@ public class Dg_labClient implements ClientModInitializer {
     public static StrengthConfig strengthConfig = new StrengthConfig();
     public static final ModConfig modConfig = ModConfig.loadJson();
     public static Map<String, Waveform> waveformMap = WaveformConfig.LoadWaveform();
+    public static boolean twoPlayerMode = false;
+    public static String secondPlayer = "null";
+    public static int secondPlayerQuitStrength = 200;
 
     private static KeyBinding keyBinding;
     private final Screen configScreen = new ConfigScreen();
@@ -80,14 +83,56 @@ public class Dg_labClient implements ClientModInitializer {
 
 
 
-    public static webSocketServer getServer() {return webSocketServer;}
+    //屏幕强度显示
+    private void onHudRender(DrawContext drawContext, RenderTickCounter tickDelta) {
+        MinecraftClient client = MinecraftClient.getInstance();
 
-    public static StrengthConfig getStrengthConfig() {return strengthConfig;}
+        if (client.player != null && client.world != null && (modConfig.getRenderingPositionX() < client.getWindow().getScaledWidth() || modConfig.getRenderingPositionY() < client.getWindow().getScaledHeight())) {
+            // 假设强度数值是一个整数
+//            int strengthValue = getStrengthValue(client.player);
 
-    public static ModConfig getModConfig(){return modConfig;}
+            // 计算图标和文本的位置
+            int x = modConfig.getRenderingPositionX();
+            int y = modConfig.getRenderingPositionY();
 
 
+            // 创建并渲染 OrderedText
 
+            if(webSocketServer.getConnected()) {
+                Text strengthText;
+                Text strengthText1;
+                String A = "A", B = "B";
+                if(twoPlayerMode){
+                    A = MinecraftClient.getInstance().getSession().getUsername() + ":";
+                    B = secondPlayer + ":";
+                }
+                else {
+                    A = "A:";
+                    B = "B:";
+                }
+                if(modConfig.isRenderingMax()) {
+                    strengthText = Text.literal(A + webSocketServer.getStrength().getAStrength() + ",Max:" + webSocketServer.getStrength().getAMaxStrength());
+
+                    strengthText1 = Text.literal(B + webSocketServer.getStrength().getBStrength() + ",Max:" + webSocketServer.getStrength().getBMaxStrength());
+
+                }
+                else {
+                    strengthText = Text.literal(A + webSocketServer.getStrength().getAStrength());
+
+                    strengthText1 = Text.literal(B + webSocketServer.getStrength().getBStrength());
+                }
+                OrderedText orderedText = strengthText.asOrderedText();
+                OrderedText orderedText1 = strengthText1.asOrderedText();
+                drawContext.drawTextWithShadow(client.textRenderer, orderedText, x, y, 0xFFFFFF);
+                drawContext.drawTextWithShadow(client.textRenderer, orderedText1, x, y + 9, 0xFFFFFF);
+            }
+            else {
+                Text strengthText = Text.literal("未连接");
+                OrderedText orderedText = strengthText.asOrderedText();
+                drawContext.drawTextWithShadow(client.textRenderer, orderedText, x, y, 0xFF0000);
+            }
+        }
+    }
 
 
 }
